@@ -1,0 +1,52 @@
+<div class="main">
+  <div class="main__container">
+    <mat-card class="card">
+      <mat-card-header>
+        <mat-card-title>Registro</mat-card-title>
+      </mat-card-header>
+
+      <form
+        [formGroup]="signUpForm"
+        (ngSubmit)="onSubmit()"
+        class="form-content">
+        <mat-card-content>
+          <mat-form-field class="form-content__input">
+            <mat-icon matPrefix>person_outline</mat-icon>
+            <input matInput placeholder="Nombre" required />
+            <mat-error>El campo nombre es requerido</mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="form-content__input">
+            <mat-icon matPrefix> person_outline</mat-icon>
+            <input matInput placeholder="Apellido" required />
+            <mat-error>El campo apellido es requerido</mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="form-content__input">
+            <mat-icon matPrefix>alternate_email</mat-icon>
+            <input matInput placeholder="Correo" required />
+            <mat-error>El campo correo es requerido</mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="form-content__input">
+            <mat-icon matPrefix>person_outline </mat-icon>
+            <input matInput placeholder="Nombre de Usuario" required />
+            <mat-error>El campo nombre de usuario es requerido</mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="form-content__input">
+            <mat-icon matPrefix>lock</mat-icon>
+            <input matInput placeholder="Contraseña" required type="password" />
+            <mat-error>El campo contraseña es requerido</mat-error>
+          </mat-form-field>
+
+          <div class="card__form-element">
+            <button mat-raised-button type="submit" class="card__button">
+              Guardar
+            </button>
+          </div>
+        </mat-card-content>
+      </form>
+    </mat-card>
+  </div>
+</div>

@@ -1,0 +1,40 @@
+<div class="main">
+  <div class="main__container">
+    <mat-card class="card">
+      <mat-card-header>
+        <mat-card-title>Iniciar Sesión</mat-card-title>
+      </mat-card-header>
+
+      <form
+        [formGroup]="logInForm"
+        (ngSubmit)="onSubmit()"
+        class="form-content">
+        <mat-card-content>
+          <mat-form-field class="form-content__input">
+            <mat-icon matPrefix>person_outline </mat-icon>
+            <input
+              matInput
+              placeholder="Nombre de Usuario o Correo Electrónico"
+              required />
+            <mat-error
+              >El campo nombre de usuario o correo electrónico es
+              requerido</mat-error
+            >
+          </mat-form-field>
+
+          <mat-form-field class="form-content__input">
+            <mat-icon matPrefix>lock</mat-icon>
+            <input matInput placeholder="Contraseña" required type="password" />
+            <mat-error>El campo contraseña es requerido</mat-error>
+          </mat-form-field>
+
+          <div class="card__form-element">
+            <button mat-raised-button type="submit" class="card__button">
+              Iniciar Sesión
+            </button>
+          </div>
+        </mat-card-content>
+      </form>
+    </mat-card>
+  </div>
+</div>

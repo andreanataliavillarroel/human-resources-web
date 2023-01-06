@@ -1,0 +1,64 @@
+@import "../../../styles/colors";
+
+.main {
+  background-image: url('/assets/images/background-image.png');
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  background-position: bottom;
+  height: 100%;
+
+  &__container{
+    padding-top: 200px;
+    display: flex;
+    align-content: center;
+    justify-content: center; 
+  }
+}
+
+.card {
+  background-color: white;
+  color: $dark-grey;
+  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  display: block;
+  position: relative;
+  border-radius: 15px;
+  box-shadow: 3px 3px 8px 0px $shadow;
+  border: 1px solid $border;
+  width: 500px;
+  align-self: center;
+  align-content: center;
+  align-items: center;
+
+  &__form-element {
+    padding: 25px 0px;
+    width: 100%;
+  }
+
+  &__button {
+    background-color: $button;
+    color: white;
+    width: 100%;
+  }
+}
+
+.form-content{
+  width: 100%;
+
+  &__input{
+    width: 94%;
+    padding-left: 10px ;
+  }
+}
+
+mat-card-header {
+  text-align: center;
+  width: 100%;
+  display: block;
+  font-weight: bold;
+  padding: 20px 0px;
+}
+
+mat-form-field{
+  width: 90%;
+  margin-top: 0.75em;
+}
