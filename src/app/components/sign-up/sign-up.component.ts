@@ -35,7 +35,7 @@ export class SignUpComponent implements OnInit {
         this.snackBar.open(successfulMessage, 'OK', { duration: 5000 });
         this.signUpForm.reset();
       },
-      error: (message) => {
+      error: message => {
         this.snackBar.open(message, 'OK', { duration: 5000 });
       },
     });

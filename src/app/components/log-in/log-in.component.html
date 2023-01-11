@@ -15,7 +15,7 @@
             <input
               matInput
               placeholder="Nombre de Usuario o Correo Electrónico"
-              required />
+              formControlName="user" />
             <mat-error
               >El campo nombre de usuario o correo electrónico es
               requerido</mat-error
@@ -24,7 +24,11 @@
 
           <mat-form-field class="form-content__input">
             <mat-icon matPrefix>lock</mat-icon>
-            <input matInput placeholder="Contraseña" required type="password" />
+            <input
+              matInput
+              placeholder="Contraseña"
+              type="password"
+              formControlName="password" />
             <mat-error>El campo contraseña es requerido</mat-error>
           </mat-form-field>
 
