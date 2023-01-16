@@ -3,6 +3,7 @@ import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { RouterModule, Routes } from '@angular/router';
 import { LogInComponent } from './components/log-in/log-in.component';
 import { FormsComponent } from './components/forms/forms.component';
+import { MapsComponent } from './components/mapsPrueba/maps/maps.component';
 
 const routes: Routes = [
   {
@@ -16,6 +17,10 @@ const routes: Routes = [
   {
     path: 'forms',
     component: FormsComponent,
+  },
+  {
+    path: '/',
+    component: MapsComponent,
   },
 ];
 

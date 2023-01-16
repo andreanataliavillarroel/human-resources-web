@@ -4,8 +4,11 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { AppRoutingModule } from './app-routing.module';
+import { MatNativeDateModule } from '@angular/material/core';
+// import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+// import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -15,13 +18,31 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
-import { LogInComponent } from './components/log-in/log-in.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatSelectModule } from '@angular/material/select';
+
 import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { LogInComponent } from './components/log-in/log-in.component';
+
+import { FormsComponent } from './components/forms/forms.component';
+import { GoogleMapsModule } from '@angular/google-maps';
+import { MapsComponent } from './components/mapsPrueba/maps/maps.component';
+
+// export function HttpLoaderFactory(http: HttpClient) {
+//   return new TranslateHttpLoader(http);
+// }
 
 @NgModule({
-  declarations: [AppComponent, SignUpComponent, LogInComponent],
+  declarations: [
+    AppComponent,
+    SignUpComponent,
+    LogInComponent,
+    FormsComponent,
+    MapsComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -29,7 +50,9 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    MatNativeDateModule,
     HttpClientModule,
+    // GoogleMapsModule,
 
     MatCardModule,
     MatTableModule,
@@ -39,6 +62,16 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
     MatIconModule,
     MatButtonModule,
     MatSnackBarModule,
+    MatDatepickerModule,
+    MatSelectModule,
+
+    // TranslateModule.forRoot({
+    //   loader: {
+    //     provide: TranslateLoader,
+    //     useFactory: HttpLoaderFactory,
+    //     deps: [HttpClient],
+    //   },
+    // }),
   ],
   providers: [
     {
