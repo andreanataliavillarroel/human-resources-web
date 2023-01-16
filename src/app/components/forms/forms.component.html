@@ -1,0 +1,170 @@
+<div class="main">
+  <div class="main__container">
+    <mat-card class="card">
+      <mat-card-header>
+        <mat-card-title>Registro de Datos Personales</mat-card-title>
+      </mat-card-header>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-content">
+        <mat-card-content class="form-content__column">
+          <!--  -->
+          <!--  -->
+          <mat-form-field class="form-content__input">
+            <input matInput placeholder="Nombres" formControlName="firstName" />
+            <mat-error *ngIf="form.hasError('pattern', 'firstName')">
+              No se permiten números ni caracteres especiales en este campo.
+            </mat-error>
+            <mat-error *ngIf="form.hasError('required', 'firstName')">
+              El campo Nombre es requerido
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="form-content__input">
+            <input
+              matInput
+              placeholder="Apellidos"
+              formControlName="lastName" />
+            <mat-error *ngIf="form.hasError('pattern', 'lastName')">
+              No se permiten números ni caracteres especiales en este campo.
+            </mat-error>
+            <mat-error *ngIf="form.hasError('required', 'lastName')">
+              El campo Apellidos es requerido
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="form-content__input">
+            <mat-label>Genero</mat-label>
+            <mat-select matNativeControl required formControlName="gender">
+              <mat-option *ngFor="let gender of genderOptions" [value]="gender"
+                >{{ gender }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="form.hasError('required', 'gender')">
+              Este campo es requerido.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="form-content__input">
+            <mat-label>Fecha de Nacimiento</mat-label>
+            <input
+              matInput
+              readonly
+              [matDatepicker]="datepicker"
+              formControlName="birthDate" />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="datepicker"></mat-datepicker-toggle>
+            <mat-datepicker #datepicker disabled="false"></mat-datepicker>
+            <!-- <mat-error> Este campo es requerido. </mat-error> -->
+          </mat-form-field>
+
+          <mat-form-field class="form-content__input">
+            <input
+              matInput
+              placeholder="Correo Electrónico"
+              formControlName="mail" />
+            <mat-error *ngIf="form.hasError('pattern', 'mail')">
+              No se permiten números ni caracteres especiales en este campo.
+            </mat-error>
+            <mat-error *ngIf="form.hasError('required', 'mail')">
+              El campo Correo Electrónico es requerido
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="form-content__input">
+            <mat-label>DNI/CI</mat-label>
+            <input matInput placeholder="DNI/CI" formControlName="dni" />
+            <mat-error *ngIf="form.hasError('required', 'dni')">
+              El campo de CI es requerido
+            </mat-error>
+          </mat-form-field>
+        </mat-card-content>
+
+        <mat-card-content class="form-content__column">
+          <!-- Column 2 content -->
+          <mat-form-field class="form-content__input">
+            <mat-label>Categoria</mat-label>
+            <mat-select matNativeControl required formControlName="category">
+              <mat-option
+                *ngFor="let category of categories"
+                [value]="category.id"
+                >{{ category.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="form.hasError('required', 'category')">
+              El campo de Categoria es requerido
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="form-content__input">
+            <mat-label>Clasificacion</mat-label>
+            <mat-select
+              matNativeControl
+              required
+              formControlName="classification">
+              <mat-option
+                *ngFor="let classification of classificationOptions"
+                [value]="classification"
+                >{{ classification }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="form.hasError('required', 'classification')">
+              El campo de Clasificacion es requerido
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="form-content__input">
+            <mat-label>Telefono</mat-label>
+            <input matInput placeholder="Telefono" formControlName="phone" />
+            <mat-error *ngIf="form.hasError('required', 'phone')">
+              El campo de classification es requerido
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="form-content__input">
+            <mat-label>Telefono de Emergencia</mat-label>
+            <input
+              matInput
+              placeholder="Telefono de emergencia"
+              formControlName="emergencyPhone" />
+            <mat-error *ngIf="form.hasError('required', 'emergencyPhone')">
+              El campo Telefono de emergencia es requerido
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="form-content__input">
+            <mat-label>Numero de Cuenta</mat-label>
+            <input
+              matInput
+              placeholder="Numero de Cuenta"
+              formControlName="accountNumber" />
+            <!-- <mat-error *ngIf="form.hasError('required', 'accountNumber')">
+              El campo Numero de cuenta de emergencia es requerido
+            </mat-error> -->
+          </mat-form-field>
+
+          <mat-form-field class="form-content__input">
+            <mat-label>Tipo de Cuenta</mat-label>
+            <mat-select
+              matNativeControl
+              required
+              placeholder="Tipo de cuenta"
+              formControlName="accountType">
+              <mat-option
+                *ngFor="let account of accountOptions"
+                [value]="account"
+                >{{ account }}
+              </mat-option>
+            </mat-select>
+            <!-- <mat-error *ngIf="form.hasError('required', 'accountType')">
+              El campo Tipo de Cuenta de emergencia es requerido
+            </mat-error> -->
+          </mat-form-field>
+
+          <mat-card-actions class="form-content__actions">
+            <button mat-raised-button class="card__button">Siguiente</button>
+          </mat-card-actions>
+        </mat-card-content>
+      </form>
+    </mat-card>
+  </div>
+</div>
