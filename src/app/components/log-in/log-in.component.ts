@@ -52,6 +52,17 @@ export class LogInComponent implements OnInit {
     });
   }
 
+  public getUser() {
+    this.authenticationService.getUser().subscribe({
+      next: (data: any) => {
+        console.log(data);
+      },
+      error: (data: any) => {
+        this.snackBar.open(data.error.message, 'OK', { duration: 5000 });
+      },
+    });
+  }
+
   private buildLogInForm() {
     this.logInForm = this.formBuilder.group({
       user: new FormControl('', [Validators.required]),

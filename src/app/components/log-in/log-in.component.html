@@ -33,7 +33,11 @@
           </mat-form-field>
 
           <div class="card__form-element">
-            <button mat-raised-button type="submit" class="card__button">
+            <button
+              mat-raised-button
+              type="submit"
+              class="card__button"
+              [disabled]="logInForm.invalid">
               Iniciar Sesión
             </button>
           </div>
