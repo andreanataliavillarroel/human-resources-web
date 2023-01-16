@@ -12,4 +12,8 @@ export class AuthenticationService {
   public login(UserDto: UserLogInDto) {
     return this.http.post(`${environment.userApiUrl}/auth/login`, UserDto);
   }
+
+  public getUser() {
+    return this.http.get(`${environment.userApiUrl}/auth/user`);
+  }
 }
