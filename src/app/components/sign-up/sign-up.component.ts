@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {
+  AbstractControl,
   FormBuilder,
   FormControl,
   FormGroup,
@@ -9,6 +10,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { CreateUserDto } from 'src/app/dto/create-user.dto';
 import { RoleType } from 'src/app/enum/role-type.enum';
 import { UserService } from 'src/app/services/user/user.service';
+import {
+  NAME_REGULAR_EXPRESSION,
+  EMAIL_REGULAR_EXPRESSION,
+  PASSWORD_REGULAR_EXPRESSION,
+} from 'src/regex';
 
 @Component({
   selector: 'app-sign-up',
@@ -41,13 +47,40 @@ export class SignUpComponent implements OnInit {
     });
   }
 
+  private validateConfirmPassword() {
+    return (control: AbstractControl) => {
+      return !!control.parent &&
+        !!control.parent.value &&
+        control.value !== control.parent.get('password')?.value
+        ? { errorMatching: true }
+        : null;
+    };
+  }
+
   private buildSignUpForm() {
     this.signUpForm = this.formBuilder.group({
-      firstName: new FormControl('', [Validators.required]),
-      lastName: new FormControl('', [Validators.required]),
-      mail: new FormControl('', [Validators.required]),
+      firstName: new FormControl('', [
+        Validators.required,
+        Validators.pattern(NAME_REGULAR_EXPRESSION),
+      ]),
+      lastName: new FormControl('', [
+        Validators.required,
+        Validators.pattern(NAME_REGULAR_EXPRESSION),
+      ]),
+      mail: new FormControl('', [
+        Validators.required,
+        Validators.pattern(EMAIL_REGULAR_EXPRESSION),
+      ]),
       username: new FormControl('', [Validators.required]),
-      password: new FormControl('', [Validators.required]),
+      password: new FormControl('', [
+        Validators.required,
+        Validators.pattern(PASSWORD_REGULAR_EXPRESSION),
+      ]),
+      confirmPassword: new FormControl('', [
+        Validators.required,
+        Validators.pattern(PASSWORD_REGULAR_EXPRESSION),
+        this.validateConfirmPassword(),
+      ]),
     });
   }
 
@@ -58,8 +91,8 @@ export class SignUpComponent implements OnInit {
     newUser.mail = this.signUpForm.get('mail')?.value;
     newUser.username = this.signUpForm.get('username')?.value;
     newUser.password = this.signUpForm.get('password')?.value;
-    newUser.role = [RoleType.HUMAN_RESOURCES_USER];
 
+    newUser.role = [RoleType.HUMAN_RESOURCES_USER];
     return newUser;
   }
 }

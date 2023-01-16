@@ -13,7 +13,12 @@
           <mat-form-field class="form-content__input">
             <mat-icon matPrefix>person_outline</mat-icon>
             <input matInput placeholder="Nombres" formControlName="firstName" />
-            <mat-error>El campo nombre es requerido</mat-error>
+            <mat-error *ngIf="signUpForm.hasError('pattern', 'firstName')">
+              No se permiten números ni caracteres especiales en este campo.
+            </mat-error>
+            <mat-error *ngIf="signUpForm.hasError('required', 'firstName')">
+              El campo Nombre es requerido
+            </mat-error>
           </mat-form-field>
 
           <mat-form-field class="form-content__input">
@@ -22,7 +27,12 @@
               matInput
               placeholder="Apellidos"
               formControlName="lastName" />
-            <mat-error>El campo apellido es requerido</mat-error>
+            <mat-error *ngIf="signUpForm.hasError('pattern', 'lastName')">
+              No se permiten números ni caracteres especiales en este campo.
+            </mat-error>
+            <mat-error *ngIf="signUpForm.hasError('required', 'lastName')">
+              El campo Apellido es requerido
+            </mat-error>
           </mat-form-field>
 
           <mat-form-field class="form-content__input">
@@ -31,7 +41,12 @@
               matInput
               placeholder="Correo electrónico"
               formControlName="mail" />
-            <mat-error>El campo correo es requerido</mat-error>
+            <mat-error *ngIf="signUpForm.hasError('pattern', 'mail')">
+              Ingrese un correo valido.
+            </mat-error>
+            <mat-error *ngIf="signUpForm.hasError('required', 'mail')">
+              El campo para el Correo Electrónico es requerido.
+            </mat-error>
           </mat-form-field>
 
           <mat-form-field class="form-content__input">
@@ -40,7 +55,9 @@
               matInput
               placeholder="Nombre de Usuario"
               formControlName="username" />
-            <mat-error>El campo nombre de usuario es requerido</mat-error>
+            <mat-error *ngIf="signUpForm.hasError('required', 'username')">
+              El campo nombre de usuario es requerido
+            </mat-error>
           </mat-form-field>
 
           <mat-form-field class="form-content__input">
@@ -50,11 +67,43 @@
               placeholder="Contraseña"
               formControlName="password"
               type="password" />
-            <mat-error>El campo contraseña es requerido</mat-error>
+            <mat-error *ngIf="signUpForm.hasError('pattern', 'password')">
+              Ingrese una contraseña válida. La contraseña debe tener una
+              mayúscula, minúscula y un número.
+            </mat-error>
+            <mat-error *ngIf="signUpForm.hasError('required', 'password')">
+              El campo contraseña es requerido
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="form-content__input">
+            <mat-icon matPrefix>lock</mat-icon>
+            <input
+              matInput
+              placeholder="Confirmar Contraseña"
+              formControlName="confirmPassword"
+              type="password" />
+            <mat-error
+              *ngIf="signUpForm.hasError('pattern', 'confirmPassword')">
+              Ingrese una contraseña válida. La contraseña debe tener una
+              mayúscula, minúscula y un número.
+            </mat-error>
+            <mat-error
+              *ngIf="signUpForm.hasError('required', 'confirmPassword')">
+              El campo para confirmar contraseña es requerido
+            </mat-error>
+            <mat-error
+              *ngIf="signUpForm.hasError('errorMatching', 'confirmPassword')">
+              Las contraseñas no coinciden.
+            </mat-error>
           </mat-form-field>
 
           <div class="card__form-element">
-            <button mat-raised-button type="submit" class="card__button">
+            <button
+              mat-raised-button
+              type="submit"
+              class="card__button"
+              [disabled]="signUpForm.invalid">
               Guardar
             </button>
           </div>
