@@ -12,12 +12,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import {
+  MatFormFieldModule,
+  MAT_FORM_FIELD_DEFAULT_OPTIONS,
+} from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-// import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 
 import { MAT_DATE_LOCALE } from '@angular/material/core';
@@ -55,7 +58,7 @@ import { MapsComponent } from './components/mapsPrueba/maps/maps.component';
     MatIconModule,
     MatButtonModule,
     MatSnackBarModule,
-    // MatDatepickerModule,
+    MatDatepickerModule,
     MatSelectModule,
   ],
   providers: [

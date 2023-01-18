@@ -14,7 +14,9 @@ export class MapsComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log('maps');
+  }
 
   moveMap(event: google.maps.MapMouseEvent) {
     if (event.latLng !== null) {

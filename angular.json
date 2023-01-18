@@ -13,6 +13,11 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "opentelemetry",
+              "lodash",
+              "rxjs-compat"
+           ],
             "outputPath": "dist/human-resources-web",
             "index": "src/index.html",
             "main": "src/main.ts",
