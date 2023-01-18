@@ -25,7 +25,7 @@ import { MatSelectModule } from '@angular/material/select';
 
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
-import { LogInComponent } from './components/log-in/log-in.component';
+import { LogInComponent } from './components/login/login.component';
 
 import { FormsComponent } from './components/forms/forms.component';
 import { GoogleMapsModule } from '@angular/google-maps';

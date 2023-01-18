@@ -10,10 +10,14 @@ export class AuthenticationService {
   constructor(private http: HttpClient) {}
 
   public login(UserDto: UserLogInDto) {
-    return this.http.post(`${environment.userApiUrl}/auth/login`, UserDto);
+    return this.http.post(`${environment.userApiUrl}/auth/login`, UserDto, {
+      withCredentials: true,
+    });
   }
 
   public getUser() {
-    return this.http.get(`${environment.userApiUrl}/auth/user`);
+    return this.http.get(`${environment.userApiUrl}/auth/user`, {
+      withCredentials: true,
+    });
   }
 }

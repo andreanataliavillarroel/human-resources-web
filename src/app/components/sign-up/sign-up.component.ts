@@ -7,6 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { CreateUserDto } from 'src/app/dto/create-user.dto';
 import { RoleType } from 'src/app/enum/role-type.enum';
 import { UserService } from 'src/app/services/user/user.service';
@@ -25,6 +26,7 @@ export class SignUpComponent implements OnInit {
   signUpForm!: FormGroup;
 
   constructor(
+    private router: Router,
     private formBuilder: FormBuilder,
     private userService: UserService,
     private snackBar: MatSnackBar
@@ -40,6 +42,7 @@ export class SignUpComponent implements OnInit {
       next: () => {
         this.snackBar.open(successfulMessage, 'OK', { duration: 5000 });
         this.signUpForm.reset();
+        this.router.navigate(['/login']);
       },
       error: message => {
         this.snackBar.open(message, 'OK', { duration: 5000 });

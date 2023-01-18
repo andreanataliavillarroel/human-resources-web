@@ -7,13 +7,12 @@ import {
 } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { UserLogInDto } from 'src/app/dto/user-log-in.dto';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 
 @Component({
   selector: 'app-log-in',
-  templateUrl: './log-in.component.html',
-  styleUrls: ['./log-in.component.scss'],
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss'],
 })
 export class LogInComponent implements OnInit {
   logInForm!: FormGroup;
@@ -33,18 +32,13 @@ export class LogInComponent implements OnInit {
     return this.logInForm.controls;
   }
 
-  private buildUserPayload(): UserLogInDto {
-    let user = new UserLogInDto();
-    user.user = this.logInForm.get('user')?.value;
-    user.password = this.logInForm.get('password')?.value;
-    return user;
-  }
-
   public onSubmit() {
-    this.authenticationService.login(this.buildUserPayload()).subscribe({
+    this.authenticationService.login(this.logInForm.getRawValue()).subscribe({
       next: (data: any) => {
         this.snackBar.open(data.message.toString(), 'OK', { duration: 5000 });
         this.logInForm.reset();
+        this.router.navigate(['/maps']);
+        this.getUser();
       },
       error: (data: any) => {
         this.snackBar.open(data.error.message, 'OK', { duration: 5000 });
