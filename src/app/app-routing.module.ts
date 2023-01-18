@@ -19,7 +19,7 @@ const routes: Routes = [
     component: FormsComponent,
   },
   {
-    path: '/',
+    path: 'maps',
     component: MapsComponent,
   },
 ];

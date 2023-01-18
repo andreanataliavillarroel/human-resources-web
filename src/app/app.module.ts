@@ -6,9 +6,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { MatNativeDateModule } from '@angular/material/core';
-// import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-// import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -20,7 +17,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatDatepickerModule } from '@angular/material/datepicker';
+// import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 
 import { MAT_DATE_LOCALE } from '@angular/material/core';
@@ -30,10 +27,6 @@ import { LogInComponent } from './components/log-in/log-in.component';
 import { FormsComponent } from './components/forms/forms.component';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { MapsComponent } from './components/mapsPrueba/maps/maps.component';
-
-// export function HttpLoaderFactory(http: HttpClient) {
-//   return new TranslateHttpLoader(http);
-// }
 
 @NgModule({
   declarations: [
@@ -52,7 +45,7 @@ import { MapsComponent } from './components/mapsPrueba/maps/maps.component';
     ReactiveFormsModule,
     MatNativeDateModule,
     HttpClientModule,
-    // GoogleMapsModule,
+    GoogleMapsModule,
 
     MatCardModule,
     MatTableModule,
@@ -62,16 +55,8 @@ import { MapsComponent } from './components/mapsPrueba/maps/maps.component';
     MatIconModule,
     MatButtonModule,
     MatSnackBarModule,
-    MatDatepickerModule,
+    // MatDatepickerModule,
     MatSelectModule,
-
-    // TranslateModule.forRoot({
-    //   loader: {
-    //     provide: TranslateLoader,
-    //     useFactory: HttpLoaderFactory,
-    //     deps: [HttpClient],
-    //   },
-    // }),
   ],
   providers: [
     {
