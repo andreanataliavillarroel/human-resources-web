@@ -7,6 +7,7 @@ export const environment = {
   userApiUrl: 'http://localhost:4006',
   employeeApiUrl: 'http://localhost:4000',
   categoryApiUrl: 'http://localhost:4005',
+  documentationApiUrl: 'http://localhost:4007',
 };
 
 /*

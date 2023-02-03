@@ -1,5 +1,4 @@
 import {
-  IsArray,
   IsDate,
   IsEmail,
   IsEnum,
@@ -9,6 +8,7 @@ import {
 } from 'class-validator';
 import { Classification } from '../enum/classification.enum';
 import { Sex } from '../enum/gender.enum';
+import { MaritalStatus } from '../enum/marital-status.enum';
 
 export class createEmployeeDto {
   @IsNotEmpty()
@@ -95,4 +95,20 @@ export class createEmployeeDto {
   @IsNotEmpty()
   @IsNumber()
   category_id!: number;
+
+  @IsNotEmpty()
+  @IsDate()
+  birthdate!: string;
+
+  @IsDate()
+  end_date!: string;
+
+  @IsEnum(
+    [MaritalStatus.SINGLE, MaritalStatus.MARRIED, MaritalStatus.DIVORCED],
+    {
+      each: true,
+      message: 'SINGLE, MARRIED or DIVORCED.',
+    }
+  )
+  marital_status!: MaritalStatus;
 }

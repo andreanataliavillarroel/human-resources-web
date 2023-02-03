@@ -1,4 +1,4 @@
 export enum AfpType {
-  FUTURO = 'AFU Futuro',
+  FUTURO = 'AFP Futuro',
   PREVISION = 'AFP Prevision',
 }

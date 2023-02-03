@@ -1,4 +1,4 @@
-export enum accountType {
-  CHECKING = 'CHECKING ACCOUNT',
-  SAVINGS = 'SAVINGS ACCOUNT',
+export enum AccountType {
+  CHECKING = 'Checking Account',
+  SAVINGS = 'Savings Account',
 }

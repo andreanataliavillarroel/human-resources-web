@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { CreateUserDto } from 'src/app/dto/create-user.dto';
+import { CreateUserDto } from 'src/app/dto/user.dto';
 import { RoleType } from 'src/app/enum/role-type.enum';
 import { UserService } from 'src/app/services/user/user.service';
 import {
