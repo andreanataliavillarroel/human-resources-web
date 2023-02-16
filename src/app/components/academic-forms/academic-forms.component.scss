@@ -81,11 +81,10 @@ mat-form-field{
 
 .modal-content{
   width: 100%;
-  
-  &__input{
+  &input{
       width: 95%;
   };
-  &__radio-and-checkbox{
+  &radio-and-checkbox{
       display: flex;
       flex-direction: row;
       align-items: center;

@@ -1,6 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { createAddressDto } from 'src/app/dto/address.dto';
+import { createChildDto } from 'src/app/dto/child.dto';
 import { createEmployeeDto } from 'src/app/dto/employee.dto';
+import { createFinantialInformationDto } from 'src/app/dto/finantial-information.dto';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -13,5 +16,22 @@ export class EmployeeService {
       `${environment.employeeApiUrl}/employee`,
       employeeDto
     );
+  }
+
+  public createFinantialInformationForEmployee(
+    finantialInformation: createFinantialInformationDto
+  ) {
+    return this.http.post(
+      `${environment.employeeApiUrl}/finantial-information`,
+      finantialInformation
+    );
+  }
+
+  public createAddressForEmployee(addressDto: createAddressDto) {
+    return this.http.post(`${environment.employeeApiUrl}/address`, addressDto);
+  }
+
+  public createChildrenForEmployee(childDto: createChildDto) {
+    return this.http.post(`${environment.employeeApiUrl}/children`, childDto);
   }
 }

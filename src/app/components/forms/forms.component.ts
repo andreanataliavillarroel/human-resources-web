@@ -16,12 +16,24 @@ import { CategoryService } from 'src/app/services/category/category.service';
 import { EmployeeService } from 'src/app/services/employee/employee.service';
 import { EMAIL_REGULAR_EXPRESSION, NAME_REGULAR_EXPRESSION } from 'src/regex';
 import { DatePipe } from '@angular/common';
-import { GoogleMap, MapInfoWindow, MapMarker } from '@angular/google-maps';
+import { GoogleMap } from '@angular/google-maps';
+import { createFinantialInformationDto } from 'src/app/dto/finantial-information.dto';
+import * as uuid from 'uuid';
+import { createAddressDto } from 'src/app/dto/address.dto';
+import { createChildDto } from 'src/app/dto/child.dto';
+import {
+  MatTreeFlatDataSource,
+  MatTreeFlattener,
+} from '@angular/material/tree';
+import { FlatTreeControl } from '@angular/cdk/tree';
+import { ItemFlatNode, ItemNode, TreeList } from './tree-list.component';
+import { MatRadioChange } from '@angular/material/radio';
 
 @Component({
   selector: 'app-forms',
   templateUrl: './forms.component.html',
   styleUrls: ['./forms.component.scss'],
+  providers: [TreeList],
 })
 export class FormsComponent implements OnInit {
   @ViewChild(GoogleMap, { static: false }) map!: GoogleMap;
@@ -30,6 +42,7 @@ export class FormsComponent implements OnInit {
   public contactForm!: FormGroup;
   public finaltialInformationForm!: FormGroup;
   public addressForm!: FormGroup;
+  public childForm!: FormGroup;
 
   public genderOptions = Object.values(Sex);
   public classificationOptions = Object.values(Classification);
@@ -39,7 +52,7 @@ export class FormsComponent implements OnInit {
   public categories: any;
   public pipe = new DatePipe('en-US');
   public currentDate = this.pipe.transform(Date.now(), 'yyyy-MM-dd');
-
+  private employeeId: string = '';
   public center!: google.maps.LatLngLiteral;
   public zoom = 15;
 
@@ -47,14 +60,72 @@ export class FormsComponent implements OnInit {
   public markerPosition!: google.maps.LatLngLiteral;
   public linkGoogleMaps!: string;
   // @ViewChild(MapInfoWindow) info!: MapInfoWindow;
+  public childNumber: Number = 0;
+  /////////////////////////////////
+  public isAddItem: boolean = false;
+  public hasChild!: boolean;
+
+  flatNodeMap = new Map<ItemFlatNode, ItemNode>(); //help to find the nested node to be modified
+  nestedNodeMap = new Map<ItemNode, ItemFlatNode>(); // keep the same object for selection
+
+  treeControl: FlatTreeControl<ItemFlatNode>;
+  treeFlattener: MatTreeFlattener<ItemNode, ItemFlatNode>;
+  dataSource: MatTreeFlatDataSource<ItemNode, ItemFlatNode>;
+
+  getLevel = (node: ItemFlatNode) => node.level;
+
+  isExpandable = (node: ItemFlatNode) => node.expandable;
+
+  getChildren = (node: ItemNode): ItemNode[] => node.children;
+
+  hasNodeChild = (_: number, _nodeData: ItemFlatNode) => _nodeData.level === 0;
+
+  hasEditChild = (_: number, _nodeData: ItemFlatNode) => _nodeData.level === 1;
+
+  hasNoContent = (_: number, _nodeData: ItemFlatNode) =>
+    _nodeData.data.name === '';
+
+  public transformer = (node: ItemNode, level: number) => {
+    const existingNode = this.nestedNodeMap.get(node);
+    const flatNode =
+      existingNode && existingNode.data === node.data
+        ? existingNode
+        : new ItemFlatNode();
+    flatNode.data = node.data;
+    flatNode.level = level;
+    flatNode.expandable = !!node.children?.length;
+    this.flatNodeMap.set(flatNode, node);
+    this.nestedNodeMap.set(node, flatNode);
+    return flatNode;
+  };
+  /////////////////////////////////
 
   constructor(
     private formBuilder: FormBuilder,
     private snackBar: MatSnackBar,
     private employeeService: EmployeeService,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private _database: TreeList
   ) {
     this.loadCategories();
+    this.treeFlattener = new MatTreeFlattener(
+      this.transformer,
+      this.getLevel,
+      this.isExpandable,
+      this.getChildren
+    );
+    this.treeControl = new FlatTreeControl<ItemFlatNode>(
+      this.getLevel,
+      this.isExpandable
+    );
+    this.dataSource = new MatTreeFlatDataSource(
+      this.treeControl,
+      this.treeFlattener
+    );
+
+    _database.dataChange.subscribe(data => {
+      this.dataSource.data = data;
+    });
   }
 
   ngOnInit(): void {
@@ -79,9 +150,10 @@ export class FormsComponent implements OnInit {
 
   public onSubmit() {
     this.employeeService.createEmployee(this.buildEmployeePayload()).subscribe({
-      next: () => {
+      next: (data: any) => {
+        this.employeeId = data.id;
+        console.log(data);
         this.snackBar.open('Success', 'OK', { duration: 5000 });
-        this.form.reset();
         this.onSubmitFinantialInformation();
       },
       error: (data: any) => {
@@ -91,16 +163,64 @@ export class FormsComponent implements OnInit {
   }
 
   public onSubmitFinantialInformation() {
-    this.employeeService.createEmployee(this.buildEmployeePayload()).subscribe({
-      next: () => {
-        this.snackBar.open('Success', 'OK', { duration: 5000 });
-        this.form.reset();
-      },
-      error: (data: any) => {
-        this.snackBar.open(data.error.message, 'OK', { duration: 5000 });
-      },
-    });
+    console.log(this.buildFinantialInformationPayload());
+    this.employeeService
+      .createFinantialInformationForEmployee(
+        this.buildFinantialInformationPayload()
+      )
+      .subscribe({
+        next: () => {
+          this.snackBar.open('Success', 'OK', { duration: 5000 });
+          this.onSubmitAddress();
+        },
+        error: (data: any) => {
+          this.snackBar.open(data.error.message, 'OK', { duration: 5000 });
+        },
+      });
   }
+
+  public onSubmitAddress() {
+    console.log(this.builAddressPayload());
+    this.employeeService
+      .createAddressForEmployee(this.builAddressPayload())
+      .subscribe({
+        next: () => {
+          this.snackBar.open('Success', 'OK', { duration: 5000 });
+          this.onSubmitChildren();
+        },
+        error: (data: any) => {
+          this.snackBar.open(data.error.message, 'OK', { duration: 5000 });
+        },
+      });
+  }
+
+  public onSubmitChildren() {
+    console.log(this.buildChildrenPayload());
+    // if (this.hasChild) {
+    this.employeeService
+      .createChildrenForEmployee(this.buildChildrenPayload())
+      .subscribe({
+        next: () => {
+          this.snackBar.open('Success', 'OK', { duration: 5000 });
+          this.form.reset();
+          this.finaltialInformationForm.reset();
+          this.contactForm.reset();
+          this.addressForm.reset();
+          this.childForm.reset();
+        },
+        error: (data: any) => {
+          this.snackBar.open(data.error.message, 'OK', { duration: 5000 });
+        },
+      });
+    // } else {
+    //   this.childForm.controls['name'].clearValidators();
+    //   this.childForm.controls['gender'].clearValidators();
+    //   this.childForm.controls['birthdate'].clearValidators();
+
+    //   this.childForm.updateValueAndValidity();
+    // }
+  }
+
   public async loadCategories() {
     await this.categoryService.getCategories().subscribe({
       next: (data: any) => {
@@ -122,6 +242,7 @@ export class FormsComponent implements OnInit {
         Validators.required,
         Validators.pattern(NAME_REGULAR_EXPRESSION),
       ]),
+      nickname: new FormControl('', [Validators.required]),
       birthdate: new FormControl('', [Validators.required]), // TODO: comment // backend
       gender: new FormControl('', [Validators.required]),
       maritalStatus: new FormControl('', [Validators.required]), // TODO: comment // backend
@@ -155,6 +276,61 @@ export class FormsComponent implements OnInit {
       zone: new FormControl('', [Validators.required]), // TODO: comment  --- Table: Address
       linkGoogleMaps: new FormControl('', []), // TODO: comment  --- Table: Address
     });
+
+    this.childForm = this.formBuilder.group({
+      name: new FormControl('', [Validators.required]),
+      gender: new FormControl('', [Validators.required]),
+      birthdate: new FormControl('', [Validators.required]),
+    });
+  }
+
+  private buildChildrenPayload(): createChildDto {
+    let newChild = new createChildDto();
+    newChild.name = this.childForm.get('name')?.value;
+    newChild.sex = this.childForm.get('gender')?.value.toString();
+    let birthdate = this.childForm.get('birthdate')?.value
+      ? this.pipe.transform(
+          new Date(this.childForm.get('birthdate')?.value),
+          'yyyy-MM-dd'
+        )
+      : '';
+
+    newChild.birthdate = birthdate ? birthdate : '';
+    newChild.employee_id = this.employeeId;
+
+    return newChild;
+  }
+
+  private buildFinantialInformationPayload(): createFinantialInformationDto {
+    let newFinantialInformation = new createFinantialInformationDto();
+    newFinantialInformation.account_number = parseInt(
+      this.finaltialInformationForm.get('accountNumber')?.value
+    );
+    newFinantialInformation.account_type =
+      this.finaltialInformationForm.get('accountType')?.value;
+    newFinantialInformation.afp_number = parseInt(
+      this.finaltialInformationForm.get('afpNumber')?.value
+    );
+    newFinantialInformation.afp_type =
+      this.finaltialInformationForm.get('afpType')?.value;
+
+    newFinantialInformation.employee_id = this.employeeId;
+    return newFinantialInformation;
+  }
+
+  private builAddressPayload(): createAddressDto {
+    let newAddress = new createAddressDto();
+    newAddress.country = this.addressForm.get('country')?.value;
+    newAddress.department = this.addressForm.get('department')?.value;
+    newAddress.city = this.addressForm.get('city')?.value;
+    newAddress.workplace_district = this.addressForm.get('district')?.value;
+    newAddress.address = this.addressForm.get('address')?.value;
+    newAddress.zone = this.addressForm.get('zone')?.value;
+    newAddress.link_google_maps = this.getGoogleMapsLink(); //cambiar [position]
+
+    newAddress.employee_id = this.employeeId;
+
+    return newAddress;
   }
 
   private buildEmployeePayload(): createEmployeeDto {
@@ -169,12 +345,12 @@ export class FormsComponent implements OnInit {
     newEmployee.classification = this.form.get('classification')?.value;
 
     newEmployee.dni = this.form.get('dni')?.value;
-    newEmployee.nickname = this.form.get('firstName')?.value;
+    newEmployee.nickname = this.form.get('nickname')?.value;
     newEmployee.sex = this.form.get('gender')?.value;
-    newEmployee.account_id = '083ee0a9-f4f6-4784-8265-294cb4d0eb5c'; //TODO: EndPoint ...
+    newEmployee.account_id = uuid.v4(); //TODO: EndPoint ...
     newEmployee.marital_status = this.form.get('maritalStatus')?.value;
 
-    //address table -- need refactor in backend
+    //address table -- need refactor in backend employee table
     newEmployee.country_id = 1; // TODO: Volver a pedir country ms
     newEmployee.city = this.addressForm.get('city')?.value;
     newEmployee.workLocation = this.addressForm.get('district')?.value;
@@ -219,4 +395,35 @@ export class FormsComponent implements OnInit {
   //     this.info.open(marker);
   //   }
   // }
+
+  ///////////////////////////////////
+  public addNewItem(node: ItemFlatNode) {
+    this.buildForm();
+    this.isAddItem = true;
+
+    this.treeControl.expand(node);
+
+    const parentNode = this.flatNodeMap.get(node);
+    this._database.insertItem(parentNode!, this.buildChildrenPayload());
+  }
+
+  public saveNode(node: ItemFlatNode) {
+    const nestedNode = this.flatNodeMap.get(node);
+    this._database.updateItem(nestedNode!, this.buildChildrenPayload());
+    this.isAddItem = false;
+  }
+
+  public updateNode(node: ItemFlatNode) {
+    this.isAddItem = true;
+    const nestedNode = this.flatNodeMap.get(node);
+    this._database.updateItemData(nestedNode!, this.buildChildrenPayload());
+  }
+
+  public deleteNode(node: ItemFlatNode) {
+    this._database.removeItem(node.data);
+  }
+  public radioChange(event: MatRadioChange) {
+    this.hasChild = event.value;
+  }
+  ///////////////////////////////////
 }

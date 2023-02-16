@@ -4,6 +4,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { LogInComponent } from './components/login/login.component';
 import { FormsComponent } from './components/forms/forms.component';
 import { MapsComponent } from './components/mapsPrueba/maps/maps.component';
+import { AcademicFormsComponent } from './components/academic-forms/academic-forms.component';
+import { EmployeesComponent } from './components/employees/employees.component';
 
 const routes: Routes = [
   {
@@ -15,12 +17,20 @@ const routes: Routes = [
     component: LogInComponent,
   },
   {
-    path: 'forms',
+    path: 'personal-information-form',
     component: FormsComponent,
+  },
+  {
+    path: 'academic-profile-form',
+    component: AcademicFormsComponent,
   },
   {
     path: 'maps',
     component: MapsComponent,
+  },
+  {
+    path: 'a',
+    component: EmployeesComponent,
   },
 ];
 

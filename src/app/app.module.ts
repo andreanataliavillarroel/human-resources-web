@@ -21,12 +21,16 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { MatStepperModule } from '@angular/material/stepper';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatTreeModule } from '@angular/material/tree';
 
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { LogInComponent } from './components/login/login.component';
 import { FormsComponent } from './components/forms/forms.component';
 import { MapsComponent } from './components/mapsPrueba/maps/maps.component';
+import { AcademicFormsComponent } from './components/academic-forms/academic-forms.component';
+import { EmployeesComponent } from './components/employees/employees.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +38,9 @@ import { MapsComponent } from './components/mapsPrueba/maps/maps.component';
     SignUpComponent,
     LogInComponent,
     FormsComponent,
+    AcademicFormsComponent,
     MapsComponent,
+    EmployeesComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,6 +64,8 @@ import { MapsComponent } from './components/mapsPrueba/maps/maps.component';
     MatDatepickerModule,
     MatSelectModule,
     MatStepperModule,
+    MatRadioModule,
+    MatTreeModule,
   ],
   providers: [
     {
