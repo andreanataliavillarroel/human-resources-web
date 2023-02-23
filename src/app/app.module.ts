@@ -27,9 +27,15 @@ import { MatTreeModule } from '@angular/material/tree';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { LogInComponent } from './components/login/login.component';
-import { FormsComponent } from './components/forms/forms.component';
+import { EmployeeFormComponent } from './components/personal-information-form/employee-form/employee-form.component';
+import { ContactFormComponent } from './components/personal-information-form/contact-form/contact-form.component';
+import { AddressFormComponent } from './components/personal-information-form/address-form/address-form.component';
+import { FinantialInformationFormComponent } from './components/personal-information-form/finantial-information-form/finantial-information-form.component';
+import { ChildFormComponent } from './components/personal-information-form/child-form/child-form.component';
+import { PersonalInformationFormComponent } from './components/personal-information-form/personal-information-form.component';
+
 import { MapsComponent } from './components/mapsPrueba/maps/maps.component';
-import { AcademicFormsComponent } from './components/academic-forms/academic-forms.component';
+import { AcademicFormComponent } from './components/academic-forms/academic-form.component';
 import { EmployeesComponent } from './components/employees/employees.component';
 
 @NgModule({
@@ -37,8 +43,13 @@ import { EmployeesComponent } from './components/employees/employees.component';
     AppComponent,
     SignUpComponent,
     LogInComponent,
-    FormsComponent,
-    AcademicFormsComponent,
+    EmployeeFormComponent,
+    ContactFormComponent,
+    AddressFormComponent,
+    FinantialInformationFormComponent,
+    ChildFormComponent,
+    PersonalInformationFormComponent,
+    AcademicFormComponent,
     MapsComponent,
     EmployeesComponent,
   ],

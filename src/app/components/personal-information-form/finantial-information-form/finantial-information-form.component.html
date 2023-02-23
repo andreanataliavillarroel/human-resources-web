@@ -1,0 +1,58 @@
+<form [formGroup]="form" class="form-content">
+  <mat-card-content class="form-content__column">
+    <mat-form-field class="form-content__input">
+      <mat-label>Numero de Cuenta</mat-label>
+      <input
+        matInput
+        placeholder="Numero de Cuenta"
+        formControlName="accountNumber" />
+      <mat-error *ngIf="form.hasError('required', 'accountNumber')">
+        El campo de Numero de Cuenta es requerido
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form-content__input">
+      <mat-label>Tipo de Cuenta</mat-label>
+      <mat-select
+        matNativeControl
+        required
+        placeholder="Tipo de cuenta"
+        formControlName="accountType">
+        <mat-option *ngFor="let account of accountOptions" [value]="account"
+          >{{ account }}
+        </mat-option>
+        <mat-error *ngIf="form.hasError('required', 'accountType')">
+          El campo de Tipo de Cuenta es requerido
+        </mat-error>
+      </mat-select>
+    </mat-form-field>
+  </mat-card-content>
+  <mat-card-content class="form-content__column">
+    <mat-form-field class="form-content__input">
+      <mat-label>Numero de NUA/CUA</mat-label>
+      <input
+        matInput
+        placeholder="Numero de NUA/CUA"
+        formControlName="afpNumber" />
+      <mat-error *ngIf="form.hasError('required', 'afpNumber')">
+        El campo de NUA/CUA es requerido
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form-content__input">
+      <mat-label>Tipo de AFP</mat-label>
+      <mat-select
+        matNativeControl
+        required
+        placeholder="Tipo de AFP"
+        formControlName="afpType">
+        <mat-option *ngFor="let afpOption of afpOptions" [value]="afpOption"
+          >{{ afpOption }}
+        </mat-option>
+        <mat-error *ngIf="form.hasError('required', 'afpType')">
+          El campo de Tipo de AFP es requerido
+        </mat-error>
+      </mat-select>
+    </mat-form-field>
+  </mat-card-content>
+</form>

@@ -7,18 +7,17 @@ import {
 } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { EmployeeService } from 'src/app/services/employee/employee.service';
-import { NAME_REGULAR_EXPRESSION } from 'src/regex';
 import { DatePipe } from '@angular/common';
 import { EnglishLevel } from 'src/app/enum/english-level.enum';
 import { AcademicDegree } from 'src/app/enum/academic-degree.enum';
 import { AcademiaDigitalType } from 'src/app/enum/academia-digital-type.enum';
 
 @Component({
-  selector: 'app-forms',
-  templateUrl: './academic-forms.component.html',
-  styleUrls: ['./academic-forms.component.scss'],
+  selector: 'app-form',
+  templateUrl: './academic-form.component.html',
+  styleUrls: ['./academic-form.component.scss'],
 })
-export class AcademicFormsComponent implements OnInit {
+export class AcademicFormComponent implements OnInit {
   public academiaDigitalProfileForm!: FormGroup;
   public academicProfileForm!: FormGroup;
   // public personalDocumentationForm!: FormGroup;

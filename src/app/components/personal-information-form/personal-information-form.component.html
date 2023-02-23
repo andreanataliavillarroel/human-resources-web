@@ -1,0 +1,105 @@
+<div class="main">
+  <div class="main__container">
+    <mat-card class="card">
+      <mat-card-header>
+        <mat-card-title>Registro de Datos Personales</mat-card-title>
+      </mat-card-header>
+      <!-- <mat-vertical-stepper [linear]="true" #stepper> -->
+      <mat-horizontal-stepper [linear]="false" #stepper>
+        <mat-step [stepControl]="employee_form && employee_form.form">
+          <ng-template matStepLabel>Información personal</ng-template>
+          <app-employee-form></app-employee-form>
+          <mat-card-footer>
+            <mat-card-actions class="form-content__actions">
+              <button
+                mat-raised-button
+                matStepperNext
+                class="card__button"
+                [disabled]="employee_form && employee_form.form.invalid"
+                (click)="getEmployeeFormData()">
+                Siguiente
+              </button>
+            </mat-card-actions>
+          </mat-card-footer>
+        </mat-step>
+
+        <mat-step [stepControl]="contact_form && contact_form.form">
+          <ng-template matStepLabel> Información de contacto </ng-template>
+          <app-contact-form></app-contact-form>
+          <mat-card-footer>
+            <mat-card-actions class="form-content__actions">
+              <button mat-raised-button matStepperPrevious>Atras</button>
+              <button
+                mat-raised-button
+                matStepperNext
+                class="card__button"
+                [disabled]="contact_form && contact_form.form.invalid"
+                (click)="getContactFormData()">
+                Siguiente
+              </button>
+            </mat-card-actions>
+          </mat-card-footer>
+        </mat-step>
+
+        <mat-step [stepControl]="address_form && address_form.form">
+          <ng-template matStepLabel> Ubicación </ng-template>
+          <app-address-form></app-address-form>
+          <mat-card-footer>
+            <mat-card-actions class="form-content__actions">
+              <button mat-raised-button matStepperPrevious>Atras</button>
+              <button
+                mat-raised-button
+                matStepperNext
+                class="card__button"
+                [disabled]="address_form && address_form.form.invalid"
+                (click)="getAddressFormData()">
+                Siguiente
+              </button>
+            </mat-card-actions>
+          </mat-card-footer>
+        </mat-step>
+
+        <mat-step
+          [stepControl]="
+            finantial_information_form && finantial_information_form.form
+          ">
+          <ng-template matStepLabel>Información bancaria</ng-template>
+          <app-finantial-information-form></app-finantial-information-form>
+          <mat-card-footer>
+            <mat-card-actions class="form-content__actions">
+              <button mat-raised-button matStepperPrevious>Atras</button>
+              <button
+                mat-raised-button
+                matStepperNext
+                class="card__button"
+                [disabled]="
+                  finantial_information_form &&
+                  finantial_information_form.form.invalid
+                "
+                (click)="getFinantialInformationFormData()">
+                Siguiente
+              </button>
+            </mat-card-actions>
+          </mat-card-footer>
+        </mat-step>
+
+        <mat-step [stepControl]="child_form && child_form.form">
+          <ng-template matStepLabel>Hijos</ng-template>
+          <app-child-form></app-child-form>
+          <mat-card-footer>
+            <mat-card-actions class="form-content__actions">
+              <button mat-raised-button matStepperPrevious>Atras</button>
+              <button
+                mat-raised-button
+                matStepperNext
+                class="card__button"
+                (click)="getChildrenFormData()">
+                Siguiente
+              </button>
+            </mat-card-actions>
+          </mat-card-footer>
+        </mat-step>
+      </mat-horizontal-stepper>
+    </mat-card>
+  </div>
+</div>

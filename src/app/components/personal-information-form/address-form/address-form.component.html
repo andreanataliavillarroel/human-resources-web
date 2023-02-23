@@ -1,0 +1,83 @@
+<form [formGroup]="form" class="form-content">
+  <mat-card-content class="form-content__column">
+    <mat-form-field class="form-content__input">
+      <mat-label>Pais</mat-label>
+      <input matInput placeholder="Pais" formControlName="country" />
+    </mat-form-field>
+
+    <mat-form-field class="form-content__input">
+      <mat-label>Departamento</mat-label>
+      <input matInput placeholder="Departamento" formControlName="department" />
+    </mat-form-field>
+
+    <mat-form-field class="form-content__input">
+      <mat-label>Ciudad</mat-label>
+      <input matInput placeholder="Ciudad" formControlName="city" />
+      <mat-error *ngIf="form.hasError('required', 'city')">
+        El campo de Ciudad es requerido
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form-content__input">
+      <mat-label>Distrito de lugar de trabajo</mat-label>
+      <input
+        matInput
+        placeholder="Distrito de lugar de trabajo"
+        formControlName="district" />
+      <mat-error *ngIf="form.hasError('required', 'district')">
+        El campo de Distrito es requerido
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form-content__input">
+      <mat-label>Dirección de domicilio</mat-label>
+      <input
+        matInput
+        placeholder="Dirección de domicilio"
+        formControlName="address" />
+      <mat-error *ngIf="form.hasError('required', 'address')">
+        El campo de Dirección de domicilio es requerido
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form-content__input">
+      <mat-label>Zona</mat-label>
+      <input matInput placeholder="Zona" formControlName="zone" />
+    </mat-form-field>
+  </mat-card-content>
+  <mat-card-content class="form-content__column">
+    <mat-label>
+      Coloque el pin para obtener el link de su domicilio.
+    </mat-label>
+    <div>
+      <google-map
+        height="340px"
+        width="450px"
+        [center]="center"
+        [zoom]="zoom"
+        (mapClick)="addMarker($event)">
+        <map-marker
+          #marker="mapMarker"
+          [position]="markerPosition"
+          [options]="markerOptions">
+        </map-marker>
+        <!-- (mapClick)="openMarkerInfo(marker)"
+        <map-info-window>
+          {{ linkGoogleMaps }}
+        </map-info-window> -->
+      </google-map>
+    </div>
+    <!-- <mat-card-actions class="form-content__actions"> -->
+
+    <!-- <div>
+      <mat-card-actions align="end">
+        <button mat-raised-button matStepperPrevious>Atras</button
+        ><button mat-raised-button matStepperNext class="card__button">
+          Siguiente
+        </button>
+      </mat-card-actions>
+    </div> -->
+
+    <!-- </mat-card-actions> -->
+  </mat-card-content>
+</form>

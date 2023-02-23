@@ -1,14 +1,6 @@
-import { SelectionModel } from '@angular/cdk/collections';
-import { FlatTreeControl } from '@angular/cdk/tree';
-import { Component, Injectable } from '@angular/core';
-import { MatRadioChange } from '@angular/material/radio';
-import {
-  MatTreeFlatDataSource,
-  MatTreeFlattener,
-} from '@angular/material/tree';
+import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { createChildDto } from 'src/app/dto/child.dto';
-import { Sex } from 'src/app/enum/gender.enum';
 
 export class ItemNode {
   children!: ItemNode[];
@@ -25,11 +17,6 @@ export class ItemFlatNode {
     this.level = level;
   }
 }
-
-let child = new createChildDto();
-child.name = 'Andrea';
-child.birthdate = new Date().toString();
-child.sex = Sex.FEMALE;
 
 const Children_Data = { Hijos: [] };
 

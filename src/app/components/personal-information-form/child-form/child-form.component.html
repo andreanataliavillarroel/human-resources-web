@@ -1,0 +1,108 @@
+<mat-card-content class="form-content__all">
+  <div class="form-content__input">
+    <mat-label> ¿Tiene hijos? </mat-label>
+    <br />
+    <mat-radio-group
+      required="Debe escoger una opcion"
+      class="modal-content__radio-and-checkbox"
+      [(ngModel)]="hasChild">
+      <mat-radio-button [value]="true" (change)="radioChange($event)">
+        Si
+      </mat-radio-button>
+      <mat-radio-button [value]="false" (change)="radioChange($event)">
+        No
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>
+  <br />
+  <br />
+
+  <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+    <mat-tree-node
+      *matTreeNodeDef="let node"
+      matTreeNodeToggle
+      matTreeNodePadding>
+      <button mat-icon-button disabled></button>
+      <button
+        mat-icon-button
+        matTreeNodeToggle
+        [attr.aria-label]="'Toggle ' + node.data.name">
+        <mat-icon class="mat-icon-rtl-mirror">
+          {{ treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right' }}
+        </mat-icon>
+      </button>
+      <mat-label>
+        Hijo:
+
+        {{ node.data.name }}, {{ node.data.birthdate }},
+        {{ node.data.sex }}
+      </mat-label>
+
+      <button mat-button (click)="updateNode(node)">Update</button>
+      <button mat-button (click)="deleteNode(node)">Delete</button>
+    </mat-tree-node>
+
+    <mat-tree-node
+      *matTreeNodeDef="let node; when: hasNoContent"
+      matTreeNodePadding>
+      <button mat-icon-button disabled></button>
+      <form [formGroup]="form" *ngIf="isAddItem" (ngSubmit)="saveNode(node)">
+        <mat-form-field class="form-content__input">
+          <mat-label>Agregue datos de su hijo...</mat-label>
+          <input matInput placeholder="Nombres" formControlName="name" />
+          <mat-error *ngIf="form.hasError('required', 'name')">
+            El campo Nombre es requerido
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="form-content__input">
+          <mat-label>Fecha de Nacimiento</mat-label>
+          <input
+            matInput
+            readonly
+            [matDatepicker]="datepicker"
+            formControlName="birthdate" />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="datepicker"></mat-datepicker-toggle>
+          <mat-datepicker #datepicker disabled="false"></mat-datepicker>
+          <mat-error> Este campo es requerido. </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="form-content__input">
+          <mat-label>Genero</mat-label>
+          <mat-select matNativeControl required formControlName="gender">
+            <mat-option *ngFor="let gender of genderOptions" [value]="gender"
+              >{{ gender }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="form.hasError('required', 'gender')">
+            Este campo es requerido.
+          </mat-error>
+        </mat-form-field>
+        <button mat-button type="submit" [disabled]="form.invalid">Save</button>
+      </form>
+    </mat-tree-node>
+
+    <mat-tree-node
+      *matTreeNodeDef="let node; when: hasNodeChild"
+      matTreeNodePadding>
+      <button
+        mat-icon-button
+        matTreeNodeToggle
+        [attr.aria-label]="'Toggle ' + node.data.name">
+        <mat-icon class="mat-icon-rtl-mirror">
+          {{ treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right' }}
+        </mat-icon>
+      </button>
+      <mat-label> Hijos </mat-label>
+
+      <button
+        mat-icon-button
+        (click)="addNewItem(node)"
+        [disabled]="(isAddItem && form.invalid) || !hasChild">
+        <mat-icon>add</mat-icon>
+      </button>
+    </mat-tree-node>
+  </mat-tree>
+</mat-card-content>

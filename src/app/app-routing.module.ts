@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { RouterModule, Routes } from '@angular/router';
 import { LogInComponent } from './components/login/login.component';
-import { FormsComponent } from './components/forms/forms.component';
+import { PersonalInformationFormComponent } from './components/personal-information-form/personal-information-form.component';
 import { MapsComponent } from './components/mapsPrueba/maps/maps.component';
-import { AcademicFormsComponent } from './components/academic-forms/academic-forms.component';
+import { AcademicFormComponent } from './components/academic-forms/academic-form.component';
 import { EmployeesComponent } from './components/employees/employees.component';
 
 const routes: Routes = [
@@ -18,11 +18,11 @@ const routes: Routes = [
   },
   {
     path: 'personal-information-form',
-    component: FormsComponent,
+    component: PersonalInformationFormComponent,
   },
   {
     path: 'academic-profile-form',
-    component: AcademicFormsComponent,
+    component: AcademicFormComponent,
   },
   {
     path: 'maps',
