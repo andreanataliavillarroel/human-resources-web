@@ -1,0 +1,26 @@
+@import "src/styles/colors";
+.layout {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    &__header {
+        height: 70px;
+    }
+    &__content {
+        flex: auto;
+        background-color: $backgroud;
+    }
+    &__footer {
+        height: 40px;
+        text-align: center;
+    }
+}
+// mat-toolbar {
+  // color: $toolbar-sidenav-text-color;
+// }
+mat-sidenav {
+  width: 220px;
+  border-right: none;
+  // color: $toolbar-sidenav-text-color;
+  text-align: left;
+}

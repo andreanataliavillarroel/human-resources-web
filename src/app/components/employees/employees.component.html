@@ -1,89 +1,59 @@
-<mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
-  <mat-tree-node
-    *matTreeNodeDef="let node"
-    matTreeNodeToggle
-    matTreeNodePadding>
-    <button mat-icon-button disabled></button>
-    <button
-      mat-icon-button
-      matTreeNodeToggle
-      [attr.aria-label]="'Toggle ' + node.data.name">
-      <mat-icon class="mat-icon-rtl-mirror">
-        {{ treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right' }}
-      </mat-icon>
-    </button>
-    <mat-label>
-      Hijo:
+<table mat-table [dataSource]="data" class="mat-elevation-z8 demo-table">
+  <!-- Position Column -->
+  <ng-container matColumnDef="firstName">
+    <th mat-header-cell *matHeaderCellDef>Nombre</th>
+    <td mat-cell *matCellDef="let element">{{ element.firstName }}</td>
+  </ng-container>
 
-      {{ node.data.name }}, {{ node.data.birthdate }}, {{ node.data.sex }}
-    </mat-label>
+  <!-- Name Column -->
+  <ng-container matColumnDef="lastName">
+    <th mat-header-cell *matHeaderCellDef>Apellido</th>
+    <td mat-cell *matCellDef="let element">{{ element.lastName }}</td>
+  </ng-container>
 
-    <button mat-button (click)="updateNode(node)">Update</button>
-    <button mat-button (click)="deleteNode(node)">Delete</button>
-  </mat-tree-node>
+  <!-- Weight Column -->
+  <ng-container matColumnDef="birthdate">
+    <th mat-header-cell *matHeaderCellDef>Fecha de Nacimiento</th>
+    <td mat-cell *matCellDef="let element">{{ element.birthdate }}</td>
+  </ng-container>
 
-  <mat-tree-node
-    *matTreeNodeDef="let node; when: hasNoContent"
-    matTreeNodePadding>
-    <button mat-icon-button disabled></button>
-    <form [formGroup]="childForm" *ngIf="isAddItem" (ngSubmit)="saveNode(node)">
-      <mat-form-field class="form-content__input">
-        <mat-label>Agregue datos de su hijo...</mat-label>
-        <input matInput placeholder="Nombres" formControlName="name" />
-        <mat-error *ngIf="childForm.hasError('required', 'name')">
-          El campo Nombre es requerido
-        </mat-error>
-      </mat-form-field>
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="category">
+    <th mat-header-cell *matHeaderCellDef>Categoria</th>
+    <td mat-cell *matCellDef="let element">{{ element.category }}</td>
+  </ng-container>
 
-      <mat-form-field class="form-content__input">
-        <mat-label>Fecha de Nacimiento</mat-label>
-        <input
-          matInput
-          readonly
-          [matDatepicker]="datepicker"
-          formControlName="birthdate" />
-        <mat-datepicker-toggle
-          matSuffix
-          [for]="datepicker"></mat-datepicker-toggle>
-        <mat-datepicker #datepicker disabled="false"></mat-datepicker>
-        <mat-error> Este campo es requerido. </mat-error>
-      </mat-form-field>
+  <ng-container matColumnDef="email">
+    <th mat-header-cell *matHeaderCellDef>Email</th>
+    <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+  </ng-container>
 
-      <mat-form-field class="form-content__input">
-        <mat-label>Genero</mat-label>
-        <mat-select matNativeControl required formControlName="gender">
-          <mat-option *ngFor="let gender of genderOptions" [value]="gender"
-            >{{ gender }}
-          </mat-option>
-        </mat-select>
-        <mat-error *ngIf="childForm.hasError('required', 'gender')">
-          Este campo es requerido.
-        </mat-error>
-      </mat-form-field>
-      <button mat-button type="submit" [disabled]="childForm.invalid">
-        Save
-      </button>
-    </form>
-  </mat-tree-node>
+  <ng-container matColumnDef="city">
+    <th mat-header-cell *matHeaderCellDef>Ciudad</th>
+    <td mat-cell *matCellDef="let element">{{ element.city }}</td>
+  </ng-container>
 
-  <mat-tree-node
-    *matTreeNodeDef="let node; when: hasNodeChild"
-    matTreeNodePadding>
-    <button
-      mat-icon-button
-      matTreeNodeToggle
-      [attr.aria-label]="'Toggle ' + node.data.name">
-      <mat-icon class="mat-icon-rtl-mirror">
-        {{ treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right' }}
-      </mat-icon>
-    </button>
-    <mat-label> Hijos </mat-label>
+  <ng-container matColumnDef="status">
+    <th mat-header-cell *matHeaderCellDef>Status</th>
+    <td mat-cell *matCellDef="let element">{{ element.status }}</td>
+  </ng-container>
 
-    <button
-      mat-icon-button
-      (click)="addNewItem(node)"
-      [disabled]="isAddItem && childForm.invalid">
-      <mat-icon>add</mat-icon>
-    </button>
-  </mat-tree-node>
-</mat-tree>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr
+    mat-row
+    (click)="clickedRows.add(row)"
+    [class.demo-row-is-clicked]="clickedRows.has(row)"
+    *matRowDef="let row; columns: displayedColumns"></tr>
+</table>
+
+<!-- <div>
+  <h3>Click Log</h3>
+</div> -->
+
+<!-- <div *ngIf="!clickedRows.size">Clicked rows will be logged here</div> -->
+
+<!-- <ul>
+  <li *ngFor="let clickedRow of clickedRows">
+    Clicked on {{ clickedRow.firstName }}
+  </li>
+</ul> -->

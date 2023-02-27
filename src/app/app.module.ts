@@ -23,6 +23,10 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatTreeModule } from '@angular/material/tree';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
 
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
@@ -37,6 +41,10 @@ import { PersonalInformationFormComponent } from './components/personal-informat
 import { MapsComponent } from './components/mapsPrueba/maps/maps.component';
 import { AcademicFormComponent } from './components/academic-forms/academic-form.component';
 import { EmployeesComponent } from './components/employees/employees.component';
+import { ToolbarComponent } from './components/toolbar/toolbar.component';
+import { SidenavContentComponent } from './components/sidenav-content/sidenav-content.component';
+import { LayoutComponent } from './components/layout/layout.component';
+import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +60,10 @@ import { EmployeesComponent } from './components/employees/employees.component';
     AcademicFormComponent,
     MapsComponent,
     EmployeesComponent,
+    ToolbarComponent,
+    SidenavContentComponent,
+    LayoutComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,
@@ -63,7 +75,10 @@ import { EmployeesComponent } from './components/employees/employees.component';
     MatNativeDateModule,
     HttpClientModule,
     GoogleMapsModule,
-
+    MatToolbarModule,
+    MatSidenavModule,
+    MatListModule,
+    MatMenuModule,
     MatCardModule,
     MatTableModule,
     MatSortModule,

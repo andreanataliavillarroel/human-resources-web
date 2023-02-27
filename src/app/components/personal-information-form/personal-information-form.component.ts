@@ -1,10 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { createEmployeeDto } from 'src/app/dto/employee.dto';
-import { Sex } from 'src/app/enum/gender.enum';
-
 import { EmployeeService } from 'src/app/services/employee/employee.service';
-import { DatePipe } from '@angular/common';
 import { createFinantialInformationDto } from 'src/app/dto/finantial-information.dto';
 import { createAddressDto } from 'src/app/dto/address.dto';
 import { createChildDto } from 'src/app/dto/child.dto';

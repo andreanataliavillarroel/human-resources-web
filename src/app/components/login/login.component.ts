@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { CreateUserDto } from 'src/app/dto/user.dto';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 
 @Component({
@@ -16,6 +17,7 @@ import { AuthenticationService } from 'src/app/services/authentication/authentic
 })
 export class LogInComponent implements OnInit {
   logInForm!: FormGroup;
+  public user!: CreateUserDto;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -37,7 +39,7 @@ export class LogInComponent implements OnInit {
       next: (data: any) => {
         this.snackBar.open(data.message.toString(), 'OK', { duration: 5000 });
         this.logInForm.reset();
-        this.router.navigate(['/maps']);
+        this.router.navigate(['/home']);
         this.getUser();
       },
       error: (data: any) => {
@@ -50,6 +52,7 @@ export class LogInComponent implements OnInit {
     this.authenticationService.getUser().subscribe({
       next: (data: any) => {
         console.log(data);
+        this.user = data;
       },
       error: (data: any) => {
         this.snackBar.open(data.error.message, 'OK', { duration: 5000 });

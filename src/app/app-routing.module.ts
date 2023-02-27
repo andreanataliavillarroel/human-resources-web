@@ -6,6 +6,8 @@ import { PersonalInformationFormComponent } from './components/personal-informat
 import { MapsComponent } from './components/mapsPrueba/maps/maps.component';
 import { AcademicFormComponent } from './components/academic-forms/academic-form.component';
 import { EmployeesComponent } from './components/employees/employees.component';
+import { ToolbarComponent } from './components/toolbar/toolbar.component';
+import { LayoutComponent } from './components/layout/layout.component';
 
 const routes: Routes = [
   {
@@ -15,6 +17,10 @@ const routes: Routes = [
   {
     path: 'login',
     component: LogInComponent,
+  },
+  {
+    path: 'home',
+    component: ToolbarComponent,
   },
   {
     path: 'personal-information-form',
@@ -29,7 +35,7 @@ const routes: Routes = [
     component: MapsComponent,
   },
   {
-    path: 'a',
+    path: 'employees',
     component: EmployeesComponent,
   },
 ];

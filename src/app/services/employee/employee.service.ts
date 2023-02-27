@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { createAddressDto } from 'src/app/dto/address.dto';
 import { createChildDto } from 'src/app/dto/child.dto';
@@ -18,6 +18,12 @@ export class EmployeeService {
     );
   }
 
+  public getEmployees() {
+    let header = new HttpHeaders().set('Type-content', 'application/json');
+    return this.http.get(environment.employeeApiUrl.concat('/employee'), {
+      headers: header,
+    });
+  }
   public createFinantialInformationForEmployee(
     finantialInformation: createFinantialInformationDto
   ) {
