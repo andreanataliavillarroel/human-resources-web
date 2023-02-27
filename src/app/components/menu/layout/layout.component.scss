@@ -1,0 +1,30 @@
+@import "src/styles/colors";
+.layout {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+
+    &__header {
+        height: 60px;
+    }
+    &__content {
+        flex: auto;
+        // margin: 20px;
+    }
+}
+mat-toolbar {
+  background: $background-menu-color;
+  color: $dark-purple-text-color;
+}
+
+mat-sidenav {
+  margin: 15px 0 12px 12px;
+  width: 250px;
+  border-right: none;
+  background: $background-menu-color;
+  color: $dark-purple-text-color;
+  border-radius: 10px;
+  text-align: center;
+}
+
+

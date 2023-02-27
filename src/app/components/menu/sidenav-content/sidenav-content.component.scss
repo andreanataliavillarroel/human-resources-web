@@ -1,0 +1,24 @@
+@import "src/styles/colors";
+
+mat-sidenav-container {
+  height: calc(100vh - 65px);
+}
+
+.container{
+  padding-top: 10px;
+}
+.menu-button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: .8rem;
+
+}
+
+mat-divider {
+  // margin-top: 16px;
+  // margin-bottom: 16px;
+  margin: 5px 12px;
+  background-color: $line-background-color;
+}

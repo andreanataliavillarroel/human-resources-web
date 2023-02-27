@@ -1,0 +1,34 @@
+@import "src/styles/colors";
+
+.header{
+  background-color: white;
+  // background: rgb(113,81,186);
+  // background: linear-gradient(90deg, rgba(113,81,186,1) 0%, rgba(245,245,245,1) 53%, rgba(91,170,217,1) 100%);
+  // background: rgb(106,99,214);
+  // background: linear-gradient(90deg, rgba(106,99,214,1) 0%, rgba(181,238,250,1) 51%, rgba(129,70,160,1) 90%);
+  padding-left: 15px;
+  z-index: 100;
+
+  &__menu-button {
+    color: $dark-purple-icon-color;
+  }
+}
+.spacer {
+  flex: 1 1 auto;
+}
+
+.icon {
+  &__user-display{
+    color: $border;
+    transform: scale(1.5);
+  }
+  &__menu-display{
+    color: $dark-purple-icon-color;
+    transform: scale(1);
+  }
+}
+
+.mat-elevation-z5 {
+  position: relative;
+  z-index: 2;
+}

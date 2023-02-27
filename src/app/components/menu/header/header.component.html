@@ -1,0 +1,31 @@
+<div class="mat-elevation-z5">
+  <mat-toolbar class="header">
+    <mat-toolbar-row>
+      <button mat-icon-button>
+        <mat-icon class="icon__menu-display" (click)="inputSideNav.toggle()">
+          menu
+        </mat-icon>
+      </button>
+      <h1>Recursos Humanos</h1>
+      <span class="menu-spacer"></span>
+      <!-- <div>
+        <a mat-button [routerLink]="'/accounts'"> Accounts </a>
+        <a mat-button [routerLink]="'/create-account'"> Create Account </a>
+        <a mat-button [routerLink]="'/contacts'"> Contacts </a>
+        <a mat-button [routerLink]="'/create-contact'"> Create Contact </a>
+        <a mat-button [routerLink]="'/activities'"> Activities </a>
+        <a mat-button [routerLink]="'/create-activity'"> Create Activity </a>
+      </div> -->
+      <span class="spacer"></span>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="goToProfile()">Profile</button>
+        <button mat-menu-item (click)="logout()">Logout</button>
+      </mat-menu>
+
+      <span *ngIf="user">{{ user.username }}</span>
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon class="icon__user-display">account_circle</mat-icon>
+      </button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+</div>
