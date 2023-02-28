@@ -1,8 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { createEmployeeDto } from 'src/app/dto/employee.dto';
+import { Category } from 'src/app/models/category.model';
 import { Employee } from 'src/app/interfaces/employee.interface';
+import { CategoryService } from 'src/app/services/category/category.service';
 import { EmployeeService } from 'src/app/services/employee/employee.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort, Sort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
 
 @Component({
   selector: 'app-employees',
@@ -10,7 +15,7 @@ import { EmployeeService } from 'src/app/services/employee/employee.service';
   styleUrls: ['./employees.component.scss'],
 })
 export class EmployeesComponent implements OnInit {
-  displayedColumns: string[] = [
+  public displayedColumns: string[] = [
     'firstName',
     'lastName',
     'birthdate',
@@ -19,37 +24,84 @@ export class EmployeesComponent implements OnInit {
     'city',
     'status',
   ];
-  data: any;
+  public dataSource!: MatTableDataSource<any>;
 
-  // dataSource = data;
+  public employees: any;
+  public categories!: Category[];
+
   clickedRows = new Set<Employee>();
+  @ViewChild(MatSort) matSort!: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
   ngOnInit() {
+    this.getCategories();
     this.getEmployees();
   }
 
   constructor(
     private employeeService: EmployeeService,
-    private snackBar: MatSnackBar
+    private categoryService: CategoryService,
+    private snackBar: MatSnackBar,
+    private _liveAnnouncer: LiveAnnouncer
   ) {}
 
-  public async getEmployees() {
-    await this.employeeService.getEmployees().subscribe((response: any) => {
-      this.data = response.map(function (item: any) {
+  public getEmployees() {
+    this.employeeService.getEmployees().subscribe((response: any) => {
+      this.employees = response;
+      this.employees = response.map((item: any) => {
         return {
+          id: item.id,
           firstName: item.firstName,
           lastName: item.lastName,
           birthdate: item.birthdate,
-          category: item.category_id,
+          category: this.getCategory(item.category_id),
           email: item.email,
           city: item.city,
-          status: item.status,
+          status: item.status ? 'Activo' : 'Inactivo',
         };
       });
-
-      // this.getMatTable(this.data);
+      this.getMatTable(this.employees);
     });
   }
 
-  public getMatTable() {}
+  public getCategories() {
+    this.categoryService.getCategories().subscribe({
+      next: (data: any) => {
+        this.categories = data;
+      },
+      error: (data: any) => {
+        this.snackBar.open(data.error.message, 'OK', { duration: 5000 });
+      },
+    });
+  }
+
+  public getCategory(id: number): string {
+    let category = this.categories.find(item => item.id === id);
+    return category ? category.name : 'Sin Categoria?';
+  }
+
+  public getMatTable(data: any) {
+    this.dataSource = new MatTableDataSource(data);
+    this.dataSource.sort = this.matSort;
+    this.dataSource.paginator = this.paginator;
+    // this.getPaginatedData(data);
+
+    // this.dataSource.filter = this.target.value;
+    console.log(data.length);
+    this.dataSource.paginator.length = data.length;
+  }
+
+  public getPaginatedData(data: any) {
+    const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
+    const endIndex = startIndex + this.paginator.pageSize;
+    return data.slice(startIndex, endIndex);
+  }
+
+  announceSortChange(sortState: Sort) {
+    if (sortState.direction) {
+      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
+    } else {
+      this._liveAnnouncer.announce('Sorting cleared');
+    }
+  }
 }
