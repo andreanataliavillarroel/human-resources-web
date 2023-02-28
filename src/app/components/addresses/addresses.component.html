@@ -1,0 +1,141 @@
+<div class="container">
+  <div class="title-container">
+    <h1 class="title-container__title">
+      Registro de los domicilios de empleados
+    </h1>
+  </div>
+  <!-- <div class="mat-elevation-z8 align-table">
+    <google-map height="400px" width="2180px" [center]="center" [zoom]="zoom">
+      <map-marker
+        #marker="mapMarker"
+        [position]="markerPosition"
+        [options]="markerOptions">
+      </map-marker>
+      (mapClick)="openMarkerInfo(marker)"
+      <map-info-window> prueb</map-info-window>
+    </google-map>
+  </div> -->
+
+  <div class="mat-elevation-z8 align-table" *ngIf="addresses && dataSource">
+    <table mat-table matSort [dataSource]="dataSource" class="table">
+      <ng-container matColumnDef="employee_name">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          class="table__column-title">
+          Nombre del empleado
+        </th>
+        <td mat-cell *matCellDef="let element">{{ element.employee }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="country">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          class="table__column-title">
+          Pais
+        </th>
+        <td mat-cell *matCellDef="let element">{{ element.country }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="department">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          class="table__column-title">
+          Departamento
+        </th>
+        <td mat-cell *matCellDef="let element">{{ element.department }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="city">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          class="table__column-title">
+          Ciudad
+        </th>
+        <td mat-cell *matCellDef="let element">{{ element.city }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="district">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          class="table__column-title">
+          Distrito de lugar de trabajo
+        </th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.workplace_district }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="address">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          class="table__column-title">
+          Address
+        </th>
+        <td mat-cell *matCellDef="let element">{{ element.address }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="zone">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          class="table__column-title">
+          Zona
+        </th>
+        <td mat-cell *matCellDef="let element">{{ element.zone }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="link">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          class="table__column-title">
+          Link de Google Maps
+        </th>
+        <td mat-cell *matCellDef="let element">
+          <a href="{{ element.link_google_maps }}">
+            {{ element.link_google_maps }}
+          </a>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr
+        mat-row
+        (click)="clickedRows.add(row)"
+        [class.demo-row-is-clicked]="clickedRows.has(row)"
+        *matRowDef="let row; columns: displayedColumns"
+        matRipple></tr>
+    </table>
+    <mat-paginator
+      showFirstLastButtons
+      class="paginator-container"
+      [length]="dataSource.paginator?.length"
+      [pageSizeOptions]="[5, 10, 20, 30]">
+    </mat-paginator>
+    <!-- <div>
+      <h3>Click Log</h3>
+    </div> -->
+
+    <!-- <div *ngIf="!clickedRows.size">Clicked rows will be logged here</div> -->
+
+    <!-- <ul>
+      <li *ngFor="let clickedRow of clickedRows">
+        Clicked on {{ clickedRow.link_google_maps }}
+      </li>
+    </ul> -->
+  </div>
+</div>
