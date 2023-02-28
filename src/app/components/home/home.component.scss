@@ -1,0 +1,20 @@
+@import "../../../styles/colors";
+
+.container {
+  display: flex;
+  justify-content: end;
+  padding: 40px
+}
+
+.item {
+  background: $pale-white;
+  border: 1px solid $line-background-color;
+  padding: 15px 25px;
+  font-size: 11pt;
+  color: $dark-purple-text-color;
+  font-weight: 500;
+  border-radius: 5px;
+  box-shadow: 8px 12px 12px 0px #cdcdcd;
+  min-width: 200px;
+  text-align: center;
+}
