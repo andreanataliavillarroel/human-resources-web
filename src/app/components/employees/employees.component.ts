@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Category } from 'src/app/models/category.model';
+import { Category } from 'src/app/interfaces/category.model';
 import { Employee } from 'src/app/interfaces/employee.interface';
 import { CategoryService } from 'src/app/services/category/category.service';
 import { EmployeeService } from 'src/app/services/employee/employee.service';
@@ -23,6 +23,7 @@ export class EmployeesComponent implements OnInit {
     'email',
     'city',
     'status',
+    'actions',
   ];
   public dataSource!: MatTableDataSource<any>;
 
@@ -87,8 +88,7 @@ export class EmployeesComponent implements OnInit {
     // this.getPaginatedData(data);
 
     // this.dataSource.filter = this.target.value;
-    console.log(data.length);
-    this.dataSource.paginator.length = data.length;
+    // this.dataSource.paginator.length = data.length;
   }
 
   public getPaginatedData(data: any) {
@@ -104,4 +104,8 @@ export class EmployeesComponent implements OnInit {
       this._liveAnnouncer.announce('Sorting cleared');
     }
   }
+
+  public openDetail(element: any) {}
+  public openEditModal(element: any) {}
+  public changeStatus(element: any, status: boolean) {}
 }

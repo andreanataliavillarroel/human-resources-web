@@ -22,7 +22,6 @@ export class AddressFormComponent implements OnInit {
   public markerOptions!: google.maps.MarkerOptions;
   public markerPosition!: google.maps.LatLngLiteral;
   public linkGoogleMaps!: string;
-  // @ViewChild(MapInfoWindow) info!: MapInfoWindow;
 
   ngOnInit() {
     this.buildForm();

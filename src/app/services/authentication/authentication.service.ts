@@ -20,4 +20,10 @@ export class AuthenticationService {
       withCredentials: true,
     });
   }
+
+  public logout() {
+    return this.http.post(`${environment.userApiUrl}/auth/logout`, {
+      withCredentials: true,
+    });
+  }
 }

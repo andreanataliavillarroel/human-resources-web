@@ -24,6 +24,7 @@ export class EmployeeService {
       headers: header,
     });
   }
+
   public createFinantialInformationForEmployee(
     finantialInformation: createFinantialInformationDto
   ) {
@@ -39,5 +40,12 @@ export class EmployeeService {
 
   public createChildrenForEmployee(childDto: createChildDto) {
     return this.http.post(`${environment.employeeApiUrl}/children`, childDto);
+  }
+
+  public getAddresses() {
+    let header = new HttpHeaders().set('Type-content', 'application/json');
+    return this.http.get(environment.employeeApiUrl.concat('/address'), {
+      headers: header,
+    });
   }
 }

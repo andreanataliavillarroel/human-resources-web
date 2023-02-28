@@ -68,8 +68,9 @@ export class PersonalInformationFormComponent implements OnInit {
   public getFinantialInformationFormData() {
     this.finantialInformation =
       this.finantial_information_form.buildFinantialInformationPayload();
-
+    console.log(this.employeeId);
     this.finantialInformation.employee_id = this.employeeId;
+
     this.onSubmitFinantialInformation();
   }
 
@@ -94,8 +95,10 @@ export class PersonalInformationFormComponent implements OnInit {
       next: (data: any) => {
         this.employeeId = data.id;
         this.address.employee_id = this.employeeId;
-        this.snackBar.open('Success', 'OK', { duration: 5000 });
         this.onSubmitAddressData();
+        this.snackBar.open('Employee-Address-Data was saved', 'OK', {
+          duration: 5000,
+        });
       },
       error: (data: any) => {
         this.snackBar.open(data.error.message, 'OK', { duration: 5000 });
