@@ -9,12 +9,10 @@
     }
     &__content {
         flex: auto;
-        // margin: 20px;
     }
 }
 mat-toolbar {
   background: $background-menu-color;
-  color: $dark-purple-text-color;
 }
 
 mat-sidenav {
@@ -25,6 +23,7 @@ mat-sidenav {
   color: $dark-purple-text-color;
   border-radius: 10px;
   text-align: center;
+ 
 }
 
 

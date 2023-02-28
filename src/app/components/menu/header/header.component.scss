@@ -7,23 +7,23 @@
   // background: rgb(106,99,214);
   // background: linear-gradient(90deg, rgba(106,99,214,1) 0%, rgba(181,238,250,1) 51%, rgba(129,70,160,1) 90%);
   padding-left: 15px;
-  z-index: 100;
 
   &__menu-button {
     color: $dark-purple-icon-color;
   }
 }
 .spacer {
-  flex: 1 1 auto;
+  flex: 1 1 auto ;
 }
 
 .icon {
   &__user-display{
-    color: $border;
+    color: $purple-text-color;
     transform: scale(1.5);
+    padding-right: 15px;
   }
   &__menu-display{
-    color: $dark-purple-icon-color;
+    // color: $lblue-text-color;
     transform: scale(1);
   }
 }
@@ -31,4 +31,28 @@
 .mat-elevation-z5 {
   position: relative;
   z-index: 2;
+}
+
+.container{
+
+    &__username{
+      width: 80px;
+      display: flex;
+      justify-content: right;
+    }
+}
+
+.text{
+  &__username {
+    margin: 15px;
+    font-size: 12pt;
+    color: $purple-text-color;
+  }
+
+  &__title {
+  font-weight: 450;
+  font-size: 16pt;
+  color: $dark-grey;
+  margin-left: 10px
+}
 }
