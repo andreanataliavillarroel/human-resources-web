@@ -1,0 +1,123 @@
+<div class="container">
+  <div class="title-container">
+    <h1 class="title-container__title">Mi cuenta</h1>
+  </div>
+
+  <div class="main">
+    <div class="main__container">
+      <mat-card class="card">
+        <!-- <mat-card-header>
+        <mat-card-title>Actualizar datos de usuario</mat-card-title>
+      </mat-card-header> -->
+
+        <form
+          [formGroup]="form"
+          (ngSubmit)="onSubmit()"
+          class="form-content"
+          *ngIf="user">
+          <mat-card-content>
+            <mat-form-field class="form-content__input">
+              <mat-icon matPrefix>person_outline</mat-icon>
+              <input
+                matInput
+                placeholder="Nombres"
+                value="user.firstName"
+                formControlName="firstName" />
+              <mat-error *ngIf="form.hasError('pattern', 'firstName')">
+                No se permiten números ni caracteres especiales en este campo.
+              </mat-error>
+              <mat-error *ngIf="form.hasError('required', 'firstName')">
+                El campo Nombre es requerido
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="form-content__input">
+              <mat-icon matPrefix> person_outline</mat-icon>
+              <input
+                matInput
+                placeholder="Apellidos"
+                formControlName="lastName" />
+              <mat-error *ngIf="form.hasError('pattern', 'lastName')">
+                No se permiten números ni caracteres especiales en este campo.
+              </mat-error>
+              <mat-error *ngIf="form.hasError('required', 'lastName')">
+                El campo Apellido es requerido
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="form-content__input">
+              <mat-icon matPrefix>alternate_email</mat-icon>
+              <input
+                matInput
+                placeholder="Correo electrónico"
+                formControlName="mail" />
+              <mat-error *ngIf="form.hasError('pattern', 'mail')">
+                Ingrese un correo valido.
+              </mat-error>
+              <mat-error *ngIf="form.hasError('required', 'mail')">
+                El campo para el Correo Electrónico es requerido.
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="form-content__input">
+              <mat-icon matPrefix>person_outline </mat-icon>
+              <input
+                matInput
+                placeholder="Nombre de Usuario"
+                formControlName="username" />
+              <mat-error *ngIf="form.hasError('required', 'username')">
+                El campo nombre de usuario es requerido
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="form-content__input">
+              <mat-icon matPrefix>lock</mat-icon>
+              <input
+                matInput
+                placeholder="Contraseña"
+                formControlName="password"
+                type="password" />
+              <mat-error *ngIf="form.hasError('pattern', 'password')">
+                Ingrese una contraseña válida. La contraseña debe tener una
+                mayúscula, minúscula y un número.
+              </mat-error>
+              <mat-error *ngIf="form.hasError('required', 'password')">
+                El campo contraseña es requerido
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="form-content__input">
+              <mat-icon matPrefix>lock</mat-icon>
+              <input
+                matInput
+                placeholder="Confirmar Contraseña"
+                formControlName="confirmPassword"
+                type="password" />
+              <mat-error *ngIf="form.hasError('pattern', 'confirmPassword')">
+                Ingrese una contraseña válida. La contraseña debe tener una
+                mayúscula, minúscula y un número.
+              </mat-error>
+              <mat-error *ngIf="form.hasError('required', 'confirmPassword')">
+                El campo para confirmar contraseña es requerido
+              </mat-error>
+              <mat-error
+                *ngIf="form.hasError('errorMatching', 'confirmPassword')">
+                Las contraseñas no coinciden.
+              </mat-error>
+            </mat-form-field>
+
+            <div class="card__form-element">
+              <button
+                mat-raised-button
+                type="submit"
+                class="card__button"
+                [disabled]="form.invalid">
+                Actualizar
+              </button>
+            </div>
+          </mat-card-content>
+        </form>
+      </mat-card>
+    </div>
+  </div>
+</div>
