@@ -2,6 +2,23 @@
   <div class="title-container">
     <h1 class="title-container__title">Registro de empleados</h1>
   </div>
+
+  <div class="search-container">
+    <input
+      id="focus"
+      matTooltip="Buscar"
+      matTooltipPosition="below"
+      matTooltipShowDelay="600"
+      matInput
+      type="text"
+      class="search-container__input search-container-active"
+      matInput
+      placeholder="Buscar..."
+      autocomplete="off"
+      (keyup)="onSearchKeyUp($event)" />
+    <mat-icon class="search-container__icon">search</mat-icon>
+  </div>
+
   <div class="mat-elevation-z8 align-table" *ngIf="employees && dataSource">
     <table
       mat-table
@@ -114,11 +131,21 @@
         *matRowDef="let row; columns: displayedColumns"
         matRipple></tr>
     </table>
+
     <mat-paginator
+      #paginator
+      (page)="pageChangeEvent($event)"
+      [pageSize]="pageSize"
+      [pageIndex]="pageIndex"
+      [length]="totalRecords"
+      [pageSizeOptions]="[5, 10, 20, 30, 50, 100]"
+      showFirstLastButtons>
+    </mat-paginator>
+    <!-- <mat-paginator
       showFirstLastButtons
       class="paginator-container"
       [length]="dataSource.paginator?.length"
       [pageSizeOptions]="[5, 10, 20, 30]">
-    </mat-paginator>
+    </mat-paginator> -->
   </div>
 </div>
