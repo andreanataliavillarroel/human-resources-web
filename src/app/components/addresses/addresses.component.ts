@@ -1,5 +1,5 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { GoogleMap, MapInfoWindow, MapMarker } from '@angular/google-maps';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -8,6 +8,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Address } from 'src/app/models/address.model';
 import { Employee } from 'src/app/models/employee.model';
 import { EmployeeService } from 'src/app/services/employee/employee.service';
+import { StylePaginatorDirective } from '../directives/style-paginator.directive';
 
 @Component({
   selector: 'app-addresses',
@@ -25,14 +26,19 @@ export class AddressesComponent implements OnInit {
     'zone',
     'link',
   ];
+  public target: any;
+  public isToggleSelected: boolean = false;
   public dataSource!: MatTableDataSource<any>;
 
   public employees!: Employee[];
   public addresses!: Address[];
 
   clickedRows = new Set<Address>();
-  @ViewChild(MatSort) matSort!: MatSort;
-  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+
+  @ViewChild(MatSort, { static: false }) matSort!: MatSort;
+  @ViewChild(MatPaginator, { static: false }) paginator!: MatPaginator;
+  @ViewChild(StylePaginatorDirective) stylePaginator!: StylePaginatorDirective;
+
   @ViewChild(GoogleMap, { static: false }) map!: GoogleMap;
   @ViewChild(MapInfoWindow) info!: MapInfoWindow;
 
@@ -44,9 +50,13 @@ export class AddressesComponent implements OnInit {
   ngOnInit() {
     this.getEmployees();
     this.getAddresses();
+    this.target = '';
   }
 
-  constructor(private employeeService: EmployeeService) {}
+  constructor(
+    private employeeService: EmployeeService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   public initMap() {
     navigator.geolocation.getCurrentPosition(position => {
@@ -54,7 +64,7 @@ export class AddressesComponent implements OnInit {
         lat: position.coords.latitude,
         lng: position.coords.longitude,
       };
-      // this.markerPosition = this.center;
+      this.markerPosition = this.center;
     });
 
     this.markerOptions = {
@@ -70,7 +80,6 @@ export class AddressesComponent implements OnInit {
 
   public getAddresses() {
     this.employeeService.getAddresses().subscribe((response: any) => {
-      this.addresses = response;
       this.addresses = response.map((item: any) => {
         return {
           id: item.id,
@@ -90,13 +99,26 @@ export class AddressesComponent implements OnInit {
 
   public getEmployee(id: string): string {
     let employee = this.employees.find(item => item.id === id);
-    return employee ? employee.firstName + ' ' + employee.lastName : 'Error!';
+    return employee
+      ? employee.firstName + ' ' + employee.lastName
+      : 'Sin Employee?';
   }
 
   public getMatTable(data: any) {
     this.dataSource = new MatTableDataSource(data);
-    this.dataSource.sort = this.matSort;
+    this.cdr.detectChanges();
     this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.matSort;
+
+    if (this.target !== '') {
+      this.dataSource.filter = this.target.value;
+    }
+    if (!this.isToggleSelected) {
+      this.stylePaginator?.switchPage(0);
+      this.isToggleSelected = false;
+    }
+
+    this.stylePaginator.buildPageNumbers(2);
   }
 
   public moveMap(event: google.maps.MapMouseEvent) {

@@ -1,14 +1,14 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Category } from 'src/app/interfaces/category.model';
 import { Employee } from 'src/app/interfaces/employee.interface';
 import { CategoryService } from 'src/app/services/category/category.service';
 import { EmployeeService } from 'src/app/services/employee/employee.service';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatSort, Sort } from '@angular/material/sort';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
 import { Router } from '@angular/router';
+import { StylePaginatorDirective } from '../directives/style-paginator.directive';
 
 @Component({
   selector: 'app-employees',
@@ -26,41 +26,35 @@ export class EmployeesComponent implements OnInit {
     'status',
     'actions',
   ];
-  totalRecords = 0;
-  pageSize = 10;
-  pageIndex = 0;
+
   public target: any;
+  public isToggleSelected: boolean = false;
 
   public dataSource!: MatTableDataSource<any>;
 
   public employees: any;
   public categories!: Category[];
 
-  clickedRows = new Set<Employee>();
-  // @ViewChild(MatSort) matSort!: MatSort;
-  @ViewChild(MatSort, { static: true }) matSort!: MatSort;
-
-  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
-  // @ViewChild('paginator', { static: true }) paginator!: MatPaginator;
+  @ViewChild(MatSort, { static: false }) matSort!: MatSort;
+  @ViewChild(MatPaginator, { static: false }) paginator!: MatPaginator;
+  @ViewChild(StylePaginatorDirective) stylePaginator!: StylePaginatorDirective;
 
   ngOnInit() {
     this.getCategories();
     this.getEmployees();
+    this.target = '';
   }
 
   constructor(
     private employeeService: EmployeeService,
     private categoryService: CategoryService,
     private snackBar: MatSnackBar,
-    private _liveAnnouncer: LiveAnnouncer,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) {}
 
   public getEmployees() {
     this.employeeService.getEmployees().subscribe((response: any) => {
-      // this.employees = response;
-      this.totalRecords = response?.length ? response[0].totalRecords : 0;
-
       this.employees = response.map((item: any) => {
         return {
           id: item.id,
@@ -95,13 +89,19 @@ export class EmployeesComponent implements OnInit {
 
   public getMatTable(data: any) {
     this.dataSource = new MatTableDataSource(data);
-    this.dataSource.sort = this.matSort;
-    this.dataSource.filter = this.target.value;
+    this.cdr.detectChanges();
     this.dataSource.paginator = this.paginator;
-    // this.getPaginatedData(data);
+    this.dataSource.sort = this.matSort;
 
-    // this.dataSource.filter = this.target.value;
-    this.dataSource.paginator.length = data.length;
+    if (this.target !== '') {
+      this.dataSource.filter = this.target.value;
+    }
+    if (!this.isToggleSelected) {
+      this.stylePaginator?.switchPage(0);
+      this.isToggleSelected = false;
+    }
+
+    this.stylePaginator.buildPageNumbers(3);
   }
 
   public getPaginatedData(data: any) {
@@ -110,19 +110,11 @@ export class EmployeesComponent implements OnInit {
     return data.slice(startIndex, endIndex);
   }
 
-  announceSortChange(sortState: Sort) {
-    if (sortState.direction) {
-      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
-    } else {
-      this._liveAnnouncer.announce('Sorting cleared');
-    }
-  }
-
-  public pageChangeEvent(event: PageEvent) {
-    this.pageIndex = event.pageIndex;
-    this.pageSize = event.pageSize;
-    this.getMatTable(this.employees);
-  }
+  // public pageChangeEvent(event: PageEvent) {
+  //   this.pageIndex = event.pageIndex;
+  //   this.pageSize = event.pageSize;
+  //   this.getMatTable(this.employees);
+  // }
 
   public onSearchKeyUp($event: Event) {
     this.target = $event.target as HTMLInputElement;

@@ -20,17 +20,12 @@
   </div>
 
   <div class="mat-elevation-z8 align-table" *ngIf="employees && dataSource">
-    <table
-      mat-table
-      matSort
-      [dataSource]="dataSource"
-      (matSortChange)="announceSortChange($event)"
-      class="table">
+    <table mat-table [dataSource]="dataSource" matSort class="table">
       <ng-container matColumnDef="firstName">
         <th
           mat-header-cell
-          *matHeaderCellDef
           mat-sort-header
+          *matHeaderCellDef
           class="table__column-title">
           Nombre
         </th>
@@ -132,7 +127,7 @@
         matRipple></tr>
     </table>
 
-    <mat-paginator
+    <!-- <mat-paginator
       #paginator
       (page)="pageChangeEvent($event)"
       [pageSize]="pageSize"
@@ -140,12 +135,20 @@
       [length]="totalRecords"
       [pageSizeOptions]="[5, 10, 20, 30, 50, 100]"
       showFirstLastButtons>
-    </mat-paginator>
+    </mat-paginator> -->
     <!-- <mat-paginator
       showFirstLastButtons
       class="paginator-container"
       [length]="dataSource.paginator?.length"
       [pageSizeOptions]="[5, 10, 20, 30]">
     </mat-paginator> -->
+
+    <mat-paginator
+      tableStylePaginator
+      showFirstLastButtons
+      [showTotalPages]="3"
+      [length]="dataSource.data.length"
+      [pageSizeOptions]="[5, 10, 20, 30, 50]">
+    </mat-paginator>
   </div>
 </div>

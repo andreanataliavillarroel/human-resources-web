@@ -121,11 +121,18 @@
         matRipple></tr>
     </table>
     <mat-paginator
+      tableStylePaginator
+      showFirstLastButtons
+      [showTotalPages]="2"
+      [length]="dataSource.data.length"
+      [pageSizeOptions]="[5, 10, 20, 30, 50]">
+    </mat-paginator>
+    <!-- <mat-paginator
       showFirstLastButtons
       class="paginator-container"
       [length]="dataSource.paginator?.length"
       [pageSizeOptions]="[5, 10, 20, 30]">
-    </mat-paginator>
+    </mat-paginator> -->
     <!-- <div>
       <h3>Click Log</h3>
     </div> -->
