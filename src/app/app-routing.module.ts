@@ -6,10 +6,45 @@ import { PersonalInformationFormComponent } from './components/personal-informat
 import { MapsComponent } from './components/mapsPrueba/maps/maps.component';
 import { AcademicFormComponent } from './components/academic-forms/academic-form.component';
 import { EmployeesComponent } from './components/employees/employees.component';
-import { ToolbarComponent } from './components/toolbar/toolbar.component';
-import { LayoutComponent } from './components/layout/layout.component';
+import { LayoutComponent } from './components/menu/layout/layout.component';
+import { HomeComponent } from './components/home/home.component';
+import { AddressesComponent } from './components/addresses/addresses.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { EmployeeComponent } from './components/employee/employee.component';
+import { DocumentationComponent } from './components/documentation/documentation.component';
 
 const routes: Routes = [
+  {
+    path: '',
+    component: LayoutComponent,
+    // canActivate: [AuthenticationGuard],
+    children: [
+      {
+        path: '',
+        component: HomeComponent,
+      },
+      {
+        path: 'maps',
+        component: MapsComponent,
+      },
+      {
+        path: 'employees',
+        component: EmployeesComponent,
+      },
+      {
+        path: 'addresses',
+        component: AddressesComponent,
+      },
+      {
+        path: 'my-profile',
+        component: ProfileComponent,
+      },
+      {
+        path: 'employees/:id',
+        component: EmployeeComponent,
+      },
+    ],
+  },
   {
     path: 'sign-up',
     component: SignUpComponent,
@@ -17,10 +52,6 @@ const routes: Routes = [
   {
     path: 'login',
     component: LogInComponent,
-  },
-  {
-    path: 'home',
-    component: ToolbarComponent,
   },
   {
     path: 'personal-information-form',
@@ -31,12 +62,12 @@ const routes: Routes = [
     component: AcademicFormComponent,
   },
   {
-    path: 'maps',
-    component: MapsComponent,
+    path: 'doc',
+    component: DocumentationComponent,
   },
   {
-    path: 'employees',
-    component: EmployeesComponent,
+    path: '**',
+    redirectTo: '/',
   },
 ];
 

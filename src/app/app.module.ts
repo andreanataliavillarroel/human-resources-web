@@ -27,6 +27,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
@@ -41,10 +43,14 @@ import { PersonalInformationFormComponent } from './components/personal-informat
 import { MapsComponent } from './components/mapsPrueba/maps/maps.component';
 import { AcademicFormComponent } from './components/academic-forms/academic-form.component';
 import { EmployeesComponent } from './components/employees/employees.component';
-import { ToolbarComponent } from './components/toolbar/toolbar.component';
-import { SidenavContentComponent } from './components/sidenav-content/sidenav-content.component';
-import { LayoutComponent } from './components/layout/layout.component';
-import { HeaderComponent } from './components/header/header.component';
+import { SidenavContentComponent } from './components/menu/sidenav-content/sidenav-content.component';
+import { LayoutComponent } from './components/menu/layout/layout.component';
+import { HeaderComponent } from './components/menu/header/header.component';
+import { HomeComponent } from './components/home/home.component';
+import { AddressesComponent } from './components/addresses/addresses.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { EmployeeComponent } from './components/employee/employee.component';
+import { DocumentationComponent } from './components/documentation/documentation.component';
 
 @NgModule({
   declarations: [
@@ -60,10 +66,14 @@ import { HeaderComponent } from './components/header/header.component';
     AcademicFormComponent,
     MapsComponent,
     EmployeesComponent,
-    ToolbarComponent,
     SidenavContentComponent,
     LayoutComponent,
     HeaderComponent,
+    HomeComponent,
+    AddressesComponent,
+    ProfileComponent,
+    EmployeeComponent,
+    DocumentationComponent,
   ],
   imports: [
     BrowserModule,
@@ -92,6 +102,8 @@ import { HeaderComponent } from './components/header/header.component';
     MatStepperModule,
     MatRadioModule,
     MatTreeModule,
+    MatPaginatorModule,
+    MatGridListModule,
   ],
   providers: [
     {

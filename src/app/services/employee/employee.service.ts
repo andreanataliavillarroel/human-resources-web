@@ -25,6 +25,10 @@ export class EmployeeService {
     });
   }
 
+  public getEmployeeById(id: string) {
+    return this.http.get(`${environment.employeeApiUrl}/employee/${id}`);
+  }
+
   public createFinantialInformationForEmployee(
     finantialInformation: createFinantialInformationDto
   ) {

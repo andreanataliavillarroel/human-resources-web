@@ -40,19 +40,6 @@ export class LogInComponent implements OnInit {
         this.snackBar.open(data.message.toString(), 'OK', { duration: 5000 });
         this.logInForm.reset();
         this.router.navigate(['/home']);
-        this.getUser();
-      },
-      error: (data: any) => {
-        this.snackBar.open(data.error.message, 'OK', { duration: 5000 });
-      },
-    });
-  }
-
-  public getUser() {
-    this.authenticationService.getUser().subscribe({
-      next: (data: any) => {
-        console.log(data);
-        this.user = data;
       },
       error: (data: any) => {
         this.snackBar.open(data.error.message, 'OK', { duration: 5000 });
