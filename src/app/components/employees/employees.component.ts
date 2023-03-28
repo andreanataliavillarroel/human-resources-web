@@ -100,8 +100,6 @@ export class EmployeesComponent implements OnInit {
       this.stylePaginator?.switchPage(0);
       this.isToggleSelected = false;
     }
-
-    this.stylePaginator.buildPageNumbers(3);
   }
 
   public getPaginatedData(data: any) {

@@ -117,8 +117,6 @@ export class AddressesComponent implements OnInit {
       this.stylePaginator?.switchPage(0);
       this.isToggleSelected = false;
     }
-
-    this.stylePaginator.buildPageNumbers(2);
   }
 
   public moveMap(event: google.maps.MapMouseEvent) {
