@@ -1,0 +1,142 @@
+<div class="container">
+  <mat-card>
+    <mat-vertical-stepper [linear]="true" #stepper>
+      <mat-step>
+        <ng-template matStepLabel>
+          <span class="title">
+            Adjunte la foto del anverso y reverso de su carnet de Identidad
+          </span>
+        </ng-template>
+        <mat-card-header>
+          <mat-card-subtitle>
+            Verifique que las imagenes esten correctamente enfocadas y no estén
+            borrosas o ilegibles.
+            <br />Formatos permitidos: .png, .jpeg .pdf.
+          </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="file-drop" appDnd (fileDropped)="onFileDropped($event)">
+            <input
+              type="file"
+              name="file"
+              id="uploadCI"
+              (change)="onFileSelected($event, false)"
+              required
+              #uploadCI
+              multiple />
+            <mat-icon class="file-drop__icon">cloud_upload</mat-icon>
+            <div class="file-drop-text">
+              Arrastra y suelta tus archivos aquí
+            </div>
+            <div class="file-drop-text">o</div>
+            <label for="uploadCI">Explorar archivos</label>
+          </div>
+          <div>
+            <div class="files-list" *ngIf="filesCI && filesCI.length > 0">
+              <div
+                class="single-file"
+                *ngFor="let file of filesCI; let i = index">
+                <mat-icon class="file-icon" alt="file">cloud_upload</mat-icon>
+                <div class="info">
+                  <h4 class="name">
+                    {{ file?.name }}
+                  </h4>
+                  <p class="size">
+                    {{ formatBytes(file?.size) }}
+                  </p>
+                  <mat-progress-bar mode="determinate" [value]="file?.progress">
+                  </mat-progress-bar>
+                </div>
+                <button (click)="deleteFile(i)">
+                  <mat-icon class="file-icon" alt="file">delete</mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+        <mat-card-actions class="actions">
+          <button
+            mat-raised-button
+            matStepperNext
+            class="card__button"
+            [disabled]="!filesCI">
+            Siguiente
+          </button>
+        </mat-card-actions>
+      </mat-step>
+      <mat-step>
+        <mat-card-header>
+          <mat-card-title> Adjunte su Curriculum </mat-card-title>
+          <mat-card-subtitle>
+            <br />Formatos permitidos: .pdf, .xlsx y .docx
+          </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="file-drop" appDnd (fileDropped)="onFileDropped($event)">
+            <input
+              type="file"
+              name="file"
+              id="uploadCV"
+              (change)="onFileSelected($event, true)"
+              required
+              #uploadCV
+              multiple />
+            <mat-icon class="file-drop__icon">cloud_upload</mat-icon>
+            <div class="file-drop-text">
+              Arrastra y suelta tus archivos aquí
+            </div>
+            <div class="file-drop-text">o</div>
+            <label for="uploadCV">Explorar archivos</label>
+          </div>
+          <div>
+            <div class="files-list" *ngIf="filesCV && filesCV.length > 0">
+              <div
+                class="single-file"
+                *ngFor="let file of filesCV; let i = index">
+                <mat-icon class="file-icon" alt="file">cloud_upload</mat-icon>
+                <div class="info">
+                  <h4 class="name">
+                    {{ file?.name }}
+                  </h4>
+                  <p class="size">
+                    {{ formatBytes(file?.size) }}
+                  </p>
+                  <mat-progress-bar mode="determinate" [value]="file?.progress">
+                  </mat-progress-bar>
+                </div>
+                <button (click)="deleteFile(i)">
+                  <mat-icon class="file-icon" alt="file">delete</mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-step>
+    </mat-vertical-stepper>
+  </mat-card>
+
+  <!-- <mat-card>
+    <form [formGroup]="form" class="form-content">
+      <mat-card-content class="form-content__all">
+        <mat-label> Subir el Carnet de Identidad (Anverso y reverso)</mat-label>
+        <div class="file-upload">
+          <br />
+          <input
+            type="file"
+            name="file"
+            formControlName="file"
+            (change)="onFileSelected($event)"
+            required
+            multiple />
+          <button
+            mat-raised-button
+            (click)="onFileSubmit()"
+            [disabled]="form.invalid"
+            class="card__button">
+            Subir archivo
+          </button>
+        </div>
+      </mat-card-content>
+    </form>
+  </mat-card> -->
+</div>

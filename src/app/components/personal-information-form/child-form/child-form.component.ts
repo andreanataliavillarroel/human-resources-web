@@ -30,7 +30,7 @@ export class ChildFormComponent implements OnInit {
   public currentDate = this.pipe.transform(Date.now(), 'yyyy-MM-dd');
 
   public isAddItem: boolean = false;
-  public hasChild: boolean = true;
+  public hasChild: boolean = false;
 
   flatNodeMap = new Map<ItemFlatNode, ItemNode>(); //help to find the nested node to be modified
   nestedNodeMap = new Map<ItemNode, ItemFlatNode>(); // keep the same object for selection
@@ -125,6 +125,10 @@ export class ChildFormComponent implements OnInit {
 
   public getChildrenDatabase() {
     return this._database.dataChange.getValue();
+  }
+
+  public getIfHasChild() {
+    return this.hasChild;
   }
 
   public addNewItem(node: ItemFlatNode) {
