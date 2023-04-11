@@ -29,6 +29,8 @@ import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
@@ -51,6 +53,8 @@ import { AddressesComponent } from './components/addresses/addresses.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { EmployeeComponent } from './components/employee/employee.component';
 import { DocumentationComponent } from './components/documentation/documentation.component';
+import { PersonalDocumentationComponent } from './components/personal-information-form/personal-documentation-form/personal-documentation-form.component';
+import { FileDragAndDropBoxComponent } from './components/file-drag-and-drop-box/file-drag-and-drop-box.component';
 
 @NgModule({
   declarations: [
@@ -74,6 +78,8 @@ import { DocumentationComponent } from './components/documentation/documentation
     ProfileComponent,
     EmployeeComponent,
     DocumentationComponent,
+    PersonalDocumentationComponent,
+    FileDragAndDropBoxComponent,
   ],
   imports: [
     BrowserModule,
@@ -104,6 +110,8 @@ import { DocumentationComponent } from './components/documentation/documentation
     MatTreeModule,
     MatPaginatorModule,
     MatGridListModule,
+    DragDropModule,
+    MatProgressBarModule,
   ],
   providers: [
     {

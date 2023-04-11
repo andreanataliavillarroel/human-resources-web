@@ -1,0 +1,37 @@
+<div>
+  <div class="file-drop" appDnd (fileDropped)="onFileDropped($event)">
+    <input
+      type="file"
+      name="file"
+      id="uploadFile"
+      class="file-drop__input"
+      (change)="onFileSelected($event)"
+      required
+      #uploadFile
+      multiple />
+    <mat-icon class="file-drop__icon">cloud_upload</mat-icon>
+    <div class="file-drop__text">Arrastra y suelta tus archivos aquí</div>
+    <div class="file-drop__text">o</div>
+    <label class="file-drop__label" for="uploadFile">Explorar archivos</label>
+  </div>
+  <div class="files-list" *ngIf="files && files.length > 0">
+    <div
+      class="files-list__single-file"
+      *ngFor="let file of files; let i = index">
+      <mat-icon class="files-list__icon" alt="file">insert_drive_file</mat-icon>
+      <div class="files-list__info">
+        <h4 class="files-list__name">
+          {{ file?.name }}
+        </h4>
+        <p class="files-list__size">
+          {{ formatBytes(file?.size) }}
+        </p>
+        <mat-progress-bar mode="determinate" [value]="file?.progress">
+        </mat-progress-bar>
+      </div>
+      <button (click)="deleteFile(i)" mat-icon-button aria-label="Delete">
+        <mat-icon alt="file">clear</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>
