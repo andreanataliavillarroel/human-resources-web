@@ -4,10 +4,9 @@
       <mat-card-header>
         <mat-card-title>Registro de Datos Personales</mat-card-title>
       </mat-card-header>
-      <!-- <mat-vertical-stepper [linear]="true" #stepper> -->
       <mat-horizontal-stepper [linear]="false" #stepper>
         <mat-step [stepControl]="employee_form && employee_form.form">
-          <ng-template matStepLabel>Información personal</ng-template>
+          <ng-template matStepLabel> Datos personales </ng-template>
           <app-employee-form></app-employee-form>
           <mat-card-footer>
             <mat-card-actions class="form-content__actions">
@@ -24,7 +23,7 @@
         </mat-step>
 
         <mat-step [stepControl]="contact_form && contact_form.form">
-          <ng-template matStepLabel> Información de contacto </ng-template>
+          <ng-template matStepLabel> Contacto </ng-template>
           <app-contact-form></app-contact-form>
           <mat-card-footer>
             <mat-card-actions class="form-content__actions">
@@ -63,7 +62,7 @@
           [stepControl]="
             finantial_information_form && finantial_information_form.form
           ">
-          <ng-template matStepLabel>Información bancaria</ng-template>
+          <ng-template matStepLabel>Información financiera</ng-template>
           <app-finantial-information-form></app-finantial-information-form>
           <mat-card-footer>
             <mat-card-actions class="form-content__actions">
@@ -83,9 +82,10 @@
           </mat-card-footer>
         </mat-step>
 
-        <mat-step [stepControl]="child_form && child_form.form">
-          <ng-template matStepLabel>Hijos</ng-template>
-          <app-child-form></app-child-form>
+        <mat-step [stepControl]="documentation_form && documentation_form.form">
+          <ng-template matStepLabel>Documentos</ng-template>
+          <app-personal-documentation-form
+            #documentation></app-personal-documentation-form>
           <mat-card-footer>
             <mat-card-actions class="form-content__actions">
               <button mat-raised-button matStepperPrevious>Atras</button>
@@ -93,8 +93,27 @@
                 mat-raised-button
                 matStepperNext
                 class="card__button"
-                (click)="getChildrenFormData()">
-                Siguiente
+                [disabled]="isUploaded"
+                (click)="getPersonalDocumentationFormData()">
+                Guardar
+              </button>
+            </mat-card-actions>
+          </mat-card-footer>
+        </mat-step>
+
+        <mat-step [stepControl]="child_form && child_form.form" optional>
+          <ng-template matStepLabel>Hijos</ng-template>
+          <app-child-form #child></app-child-form>
+          <mat-card-footer>
+            <mat-card-actions class="form-content__actions">
+              <button mat-raised-button matStepperPrevious>Atras</button>
+              <button
+                mat-raised-button
+                matStepperNext
+                class="card__button"
+                (click)="getChildrenFormData()"
+                [disabled]="child.getIfHasChild()">
+                Guardar
               </button>
             </mat-card-actions>
           </mat-card-footer>

@@ -11,6 +11,9 @@ import { ContactFormComponent } from './contact-form/contact-form.component';
 import { AddressFormComponent } from './address-form/address-form.component';
 import { FinantialInformationFormComponent } from './finantial-information-form/finantial-information-form.component';
 import { ChildFormComponent } from './child-form/child-form.component';
+import { PersonalDocumentationComponent } from './personal-documentation-form/personal-documentation-form.component';
+import { DocumentationService } from 'src/app/services/documentation/documentation.service';
+import { createPersonalDocumentationDto } from 'src/app/dto/personal-documentation.dto';
 
 @Component({
   selector: 'app-personal-information-form',
@@ -24,17 +27,23 @@ export class PersonalInformationFormComponent implements OnInit {
   public finantialInformation!: createFinantialInformationDto;
 
   private employeeId: string = '';
+  private folderId: string = '';
+  public isUploaded: boolean = false;
 
   @ViewChild(EmployeeFormComponent) employee_form!: EmployeeFormComponent;
   @ViewChild(ContactFormComponent) contact_form!: ContactFormComponent;
   @ViewChild(AddressFormComponent) address_form!: AddressFormComponent;
   @ViewChild(FinantialInformationFormComponent)
   finantial_information_form!: FinantialInformationFormComponent;
-  @ViewChild(ChildFormComponent) child_form!: ChildFormComponent;
+  @ViewChild('child') child_form!: ChildFormComponent;
+  @ViewChild('documentation')
+  documentation_form!: PersonalDocumentationComponent;
+  await: any;
 
   constructor(
     private snackBar: MatSnackBar,
     private employeeService: EmployeeService,
+    private documentationService: DocumentationService,
     private cdref: ChangeDetectorRef
   ) {}
 
@@ -44,8 +53,9 @@ export class PersonalInformationFormComponent implements OnInit {
     this.cdref.detectChanges();
   }
 
-  public getEmployeeFormData() {
+  public async getEmployeeFormData() {
     this.employee = this.employee_form.buildEmployeePayload();
+    await this.createGoogleDriveFolder();
   }
 
   public getContactFormData() {
@@ -87,12 +97,81 @@ export class PersonalInformationFormComponent implements OnInit {
         });
       });
     }
+
     this.clearForm();
+  }
+
+  public async getPersonalDocumentationFormData() {
+    this.documentation_form.setFolderId(this.folderId);
+    this.documentation_form.onSubmitData();
+    let ciDriveId = await this.documentation_form.getCIDriveId();
+    let cvDriveId = await this.documentation_form.getCVDriveId();
+    if (ciDriveId && cvDriveId) {
+      let ciDocumentation = this.buildPersonalDocumentationPayload(
+        'CI / DNI',
+        ciDriveId
+      );
+
+      let cvDocumentation = this.buildPersonalDocumentationPayload(
+        'CV',
+        cvDriveId
+      );
+
+      console.log(this.documentation_form.getCIDriveId());
+      console.log(this.documentation_form.getCVDriveId());
+      this.onSubmitDocumentationData(ciDocumentation);
+      this.onSubmitDocumentationData(cvDocumentation);
+      this.isUploaded = true;
+    }
+  }
+
+  public buildPersonalDocumentationPayload(
+    name: string,
+    drive_id: string
+  ): createPersonalDocumentationDto {
+    let newPersonalDocumentation = new createPersonalDocumentationDto();
+    newPersonalDocumentation.name = name;
+    newPersonalDocumentation.drive_id = drive_id;
+    newPersonalDocumentation.employee_id = this.employeeId;
+
+    return newPersonalDocumentation;
+  }
+
+  public async onSubmitDocumentationData(
+    documentation: createPersonalDocumentationDto
+  ) {
+    this.documentationService
+      .createPersonalDocumentation(documentation)
+      .subscribe({
+        next: (data: any) => {},
+        error: (data: any) => {
+          this.snackBar.open(data.error.message, 'OK', { duration: 5000 });
+        },
+      });
+  }
+
+  public async createGoogleDriveFolder() {
+    if (!this.folderId) {
+      const data = {
+        folderName: `${this.employee.firstName} ${this.employee.lastName} - ${this.employee.dni}`,
+      };
+      try {
+        const response: any = await this.documentationService
+          .createFolder(data)
+          .toPromise();
+        if (response && response.folderId) {
+          this.folderId = response.folderId;
+        }
+      } catch (error: any) {
+        this.snackBar.open(error.error, 'OK', { duration: 5000 });
+      }
+    }
   }
 
   public async onSubmitEmployeeData() {
     await this.employeeService.createEmployee(this.employee).subscribe({
       next: (data: any) => {
+        console.log(data);
         this.employeeId = data.id;
         this.address.employee_id = this.employeeId;
         this.onSubmitAddressData();
@@ -101,6 +180,7 @@ export class PersonalInformationFormComponent implements OnInit {
         });
       },
       error: (data: any) => {
+        console.log(data);
         this.snackBar.open(data.error.message, 'OK', { duration: 5000 });
       },
     });

@@ -1,1 +1,105 @@
-<p>documentation works!</p>
+<div class="container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Subir archivo</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <!-- <div
+        class="drop-zone"
+        matFileUpload
+        accept=".pdf,.doc,.docx,.xls,.xlsx"
+        (fileOver)="fileOver($event)"
+        (onFileDropped)="onFileDropped($event)">
+        Arrastra y suelta archivos aquí o haz clic para seleccionar archivos
+      </div> -->
+
+      <!-- <div class="file-drop-container">
+        <div
+          cdkDropList
+          (cdkDropListDropped)="onFileDropped($event)"
+          [cdkDropListDisabled]="uploading"
+          class="file-preview-container">
+          <div class="file-preview" cdkDrag *ngFor="let file of files">
+            {{ file.name }}
+          </div>
+          <div *ngIf="files.length === 0" class="empty-placeholder">
+            Arrastra aquí los archivos que quieras subir.
+          </div>
+        </div>
+        <button
+          class="file-details"
+          mat-raised-button
+          color="primary"
+          [disabled]="uploading || files.length === 0"
+          (click)="uploadFiles()">
+          Subir archivos
+        </button>
+      </div> -->
+
+      <div
+        cdkDropList
+        (cdkDropListDropped)="onFileDropped($event)"
+        class="file-drop-container">
+        <div class="file-drop" cdkDrag>
+          <mat-icon>cloud_upload</mat-icon>
+          <div class="file-drop-text">
+            Arrastra y suelta tus archivos aquí o haz clic para seleccionarlos
+          </div>
+          <input type="file" (change)="onFileSelected($event)" multiple />
+        </div>
+        <div class="file-preview-container" *ngIf="files.length > 0">
+          <div class="file-preview" *ngFor="let f of files">
+            <!-- <img [src]="file.preview" alt="{{ file.name }}" /> -->
+            <img [src]="f" alt="{{ f.name }}" />
+            <div class="file-details">
+              <!-- {{ file.name }} ({{ file.size | fileSize }}) -->
+              {{ f.name }} ({{ f.size }})
+            </div>
+          </div>
+        </div>
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="uploadFiles()"
+          [disabled]="files.length === 0 || uploading">
+          Subir archivos
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <form [formGroup]="form">
+    <div class="file-upload">
+      <br />
+      <input
+        type="file"
+        name="file"
+        formControlName="file"
+        (change)="onFileSelected($event)"
+        required
+        multiple />
+      <button
+        mat-raised-button
+        (click)="onSubmit()"
+        [disabled]="form.invalid"
+        class="card__button">
+        Subir archivo
+      </button>
+    </div>
+  </form>
+</div>
+
+<mat-grid-list cols="3" rowHeight="250px">
+  <mat-grid-tile *ngFor="let file of files">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>{{ file.name }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <a href="{{ file }}" target="_blank">
+          <img [src]="file" alt="{{ file.name }}" />
+        </a>
+      </mat-card-content>
+    </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>

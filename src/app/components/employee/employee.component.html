@@ -1,0 +1,142 @@
+<div class="container">
+  <div class="title-container">
+    <h1 class="title-container__title">Informacion del empleado</h1>
+    <h2 *ngIf="employee">{{ employee.firstName }}{{ employee.lastName }}</h2>
+  </div>
+
+  <mat-card class="profile-card" *ngIf="employee">
+    <mat-vertical-stepper [linear]="false" #stepper>
+      <mat-step>
+        <ng-template matStepLabel> Información personal </ng-template>
+        <!-- <mat-card-header>
+          <mat-card-title>Informacion Personal</mat-card-title>
+        </mat-card-header> -->
+        <mat-card-content>
+          <mat-grid-list cols="2" rowHeight="50px">
+            <mat-grid-tile>
+              <div class="content">
+                <mat-icon class="material-icons">account_circle</mat-icon>
+                Nombre: {{ employee.firstName }}
+                {{ employee.lastName }}
+              </div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <div class="content">
+                <mat-icon class="material-icons">info</mat-icon>
+                CI: {{ employee.dni }}
+              </div>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <div class="content">
+                <mat-icon class="material-icons">info</mat-icon>
+                Nickname: {{ employee.nickname }}
+              </div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <div class="content">
+                <mat-icon class="material-icons">calendar_today</mat-icon>
+                Cumpleaños: {{ employee.birthdate }}
+              </div>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <div class="content">
+                <mat-icon class="material-icons">info</mat-icon>
+                Genero: {{ employee.sex }}
+              </div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <div class="content">
+                <mat-icon class="material-icons">info</mat-icon>
+                Estado Civil: {{ employee.marital_status }}
+              </div>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <div class="content">
+                <mat-icon class="material-icons">email</mat-icon>
+                Correo: {{ employee.email }}
+              </div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <div class="content">
+                <mat-icon class="material-icons">phone</mat-icon>
+                Telefono: {{ employee.phone }}
+              </div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <div class="content">
+                <mat-icon class="material-icons">phone</mat-icon>
+                Telefono de Emergencia: {{ employee.emergencyPhone }}
+              </div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <div class="content">
+                <mat-icon class="material-icons">location_on</mat-icon>
+                Domicilio: {{ employee.address }}
+              </div>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <div class="content">
+                <mat-icon class="material-icons">info</mat-icon>
+                Categoria: {{ employee.category_id }}
+              </div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <div class="content">
+                <mat-icon class="material-icons">info</mat-icon>
+                Clasificacion: {{ employee.classification }}
+              </div>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <div class="content">
+                <mat-icon class="material-icons">info</mat-icon>
+                Fecha de Ingreso: {{ employee.recruitmentDate }}
+              </div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <div class="content">
+                <mat-icon class="material-icons">info</mat-icon>
+                Estado: Activo
+              </div>
+            </mat-grid-tile>
+          </mat-grid-list>
+        </mat-card-content>
+      </mat-step>
+
+      <mat-step>
+        <ng-template matStepLabel> Información Academica </ng-template>
+        <mat-card-content>
+          <mat-grid-list cols="2" rowHeight="50px">
+            <mat-grid-tile>
+              <div class="content">
+                <mat-icon class="material-icons">account_circle</mat-icon>
+                Ocupacion: {{ academicProfile.occupation }}
+              </div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <div class="content">
+                <mat-icon class="material-icons">account_circle</mat-icon>
+                Nivel de ingles: {{ academicProfile.english_level }}
+              </div>
+            </mat-grid-tile>
+          </mat-grid-list>
+        </mat-card-content>
+      </mat-step>
+    </mat-vertical-stepper>
+  </mat-card>
+
+  <mat-card class="profile-card">
+    <mat-card-header>
+      <mat-card-title>Archivos adjuntos</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <iframe
+        class="frame-container"
+        src="https://docs.google.com/viewer?srcid=1yOLZmWFYYvGPjIJz-MYs8SV9n-2nxJqY&pid=explorer&efh=false&a=v&chrome=false&embedded=true"></iframe>
+    </mat-card-content>
+  </mat-card>
+</div>

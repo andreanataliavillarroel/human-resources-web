@@ -16,3 +16,36 @@
   }
 }
 
+.material-icons {
+  margin-right: 8px;
+  margin-left: 2px;
+  // font-size: 16px;
+  color: $purple-text-color;
+}
+.profile-card {
+  width: 100%;
+  max-width: 800px;
+  margin: 10px;
+  align-items: left; 
+  
+}
+
+.frame-container{
+  width:600px;
+  height:700px;
+  margin-left: 100px;
+}
+
+mat-grid-tile {
+  justify-self: start;
+  align-self: start;
+  align-items: start;
+
+}
+
+.content{
+  margin-left: 5pxpx;
+  width: 95%;
+  display: flex;
+  text-align: left;
+}
