@@ -1,17 +1,11 @@
 {
   "root": true,
-  "ignorePatterns": [
-    "projects/**/*"
-  ],
+  "ignorePatterns": ["projects/**/*"],
   "overrides": [
     {
-      "files": [
-        "*.ts"
-      ],
+      "files": ["*.ts"],
       "parserOptions": {
-        "project": [
-          "tsconfig.json"
-        ],
+        "project": ["tsconfig.json"],
         "createDefaultProgram": true
       },
       "extends": [
@@ -42,20 +36,14 @@
             "style": "kebab-case"
           }
         ],
-        "@angular-eslint/use-lifecycle-interface": [
-          "error"
-        ],
+        "@angular-eslint/use-lifecycle-interface": ["error"],
         "@typescript-eslint/member-ordering": 0,
         "@typescript-eslint/naming-convention": 0
       }
     },
     {
-      "files": [
-        "*.html"
-      ],
-      "extends": [
-        "plugin:@angular-eslint/template/recommended"
-      ],
+      "files": ["*.html"],
+      "extends": ["plugin:@angular-eslint/template/recommended"],
       "rules": {}
     },
     {
@@ -64,8 +52,7 @@
       "extends": ["plugin:prettier/recommended"],
       "rules": {
         "prettier/prettier": ["error", { "parser": "angular" }]
-      } 
+      }
     }
-    
   ]
 }
