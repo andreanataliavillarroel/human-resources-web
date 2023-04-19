@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
@@ -21,9 +21,13 @@ export class HeaderComponent implements OnInit {
   constructor(
     private authenticationService: AuthenticationService,
     public snackBar: MatSnackBar,
-    private router: Router
+    private router: Router,
+    private cdref: ChangeDetectorRef
   ) {}
 
+  ngAfterContentChecked() {
+    this.cdref.detectChanges();
+  }
   public getUser() {
     this.authenticationService.getUser().subscribe({
       next: (data: any) => {

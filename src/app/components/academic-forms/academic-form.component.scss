@@ -1,5 +1,20 @@
 @import "../../../styles/colors";
 
+.modal-content{
+  width: 100%;
+  
+  &__input{
+      width: 95%;
+  };
+  &__radio-and-checkbox{
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-around;
+  }
+
+}
+
 .main {
   background-image: url('/assets/images/background-image.png');
   background-size: 100% auto;

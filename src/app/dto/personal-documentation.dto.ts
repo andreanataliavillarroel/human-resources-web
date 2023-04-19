@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, IsUUID } from 'class-validator';
+import { IsNotEmpty, IsString, IsUUID, IsDate } from 'class-validator';
 
 export class createPersonalDocumentationDto {
   @IsNotEmpty()
@@ -12,4 +12,8 @@ export class createPersonalDocumentationDto {
   @IsNotEmpty()
   @IsUUID()
   employee_id!: string;
+
+  @IsNotEmpty()
+  @IsDate()
+  date!: string;
 }

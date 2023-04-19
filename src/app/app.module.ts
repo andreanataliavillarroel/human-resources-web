@@ -31,6 +31,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
@@ -55,6 +56,7 @@ import { EmployeeComponent } from './components/employee/employee.component';
 import { DocumentationComponent } from './components/documentation/documentation.component';
 import { PersonalDocumentationComponent } from './components/personal-information-form/personal-documentation-form/personal-documentation-form.component';
 import { FileDragAndDropBoxComponent } from './components/file-drag-and-drop-box/file-drag-and-drop-box.component';
+import { ChartsComponent } from './components/charts/charts.component';
 
 @NgModule({
   declarations: [
@@ -80,6 +82,7 @@ import { FileDragAndDropBoxComponent } from './components/file-drag-and-drop-box
     DocumentationComponent,
     PersonalDocumentationComponent,
     FileDragAndDropBoxComponent,
+    ChartsComponent,
   ],
   imports: [
     BrowserModule,
@@ -112,6 +115,7 @@ import { FileDragAndDropBoxComponent } from './components/file-drag-and-drop-box
     MatGridListModule,
     DragDropModule,
     MatProgressBarModule,
+    MatProgressSpinnerModule,
   ],
   providers: [
     {

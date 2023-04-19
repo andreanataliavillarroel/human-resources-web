@@ -57,12 +57,16 @@
       <input
         matInput
         readonly
+        [max]="maxDate"
+        [min]="minDate"
         [matDatepicker]="datepicker"
-        formControlName="birthdate" />
+        formControlName="birthdate"
+        (click)="datepicker.open()" />
       <mat-datepicker-toggle
         matSuffix
         [for]="datepicker"></mat-datepicker-toggle>
-      <mat-datepicker #datepicker disabled="false"></mat-datepicker>
+      <mat-datepicker #datepicker startView="multi-year"></mat-datepicker>
+
       <mat-error> Este campo es requerido. </mat-error>
     </mat-form-field>
 

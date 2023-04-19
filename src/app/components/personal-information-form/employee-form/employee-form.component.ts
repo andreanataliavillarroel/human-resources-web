@@ -32,6 +32,8 @@ export class EmployeeFormComponent implements OnInit {
 
   public pipe = new DatePipe('en-US');
   public currentDate = this.pipe.transform(Date.now(), 'yyyy-MM-dd');
+  public minDate = new Date(1950, 1, 1);
+  public maxDate = new Date();
 
   ngOnInit() {
     this.buildForm();

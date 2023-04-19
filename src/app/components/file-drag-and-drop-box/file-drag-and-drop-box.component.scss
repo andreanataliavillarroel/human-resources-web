@@ -105,3 +105,30 @@
     margin-bottom: 0.25rem;
   }
 }
+
+.form-content{
+  margin-left: 40px;
+  width: 95%;
+  display: flex;
+
+  &__input{
+    width: 85%;
+    padding-left: 15px ;
+  }
+
+  &__column{
+    width: 50%;
+  }
+
+  &__all{
+    padding-left: 25%;    
+    width: 50%;
+  }
+
+  &__actions{
+    display: flex;
+    justify-content: right;
+    padding-right: 60px;
+ }
+
+}

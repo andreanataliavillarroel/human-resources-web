@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import {
+  AbstractControl,
   FormBuilder,
   FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
 import { createEmployeeDto } from 'src/app/dto/employee.dto';
-import { EMAIL_REGULAR_EXPRESSION } from 'src/regex';
+import { EMAIL_REGULAR_EXPRESSION, PHONE_REGULAR_EXPRESSION } from 'src/regex';
 
 @Component({
   selector: 'app-contact-form',
@@ -28,9 +29,26 @@ export class ContactFormComponent implements OnInit {
         Validators.required,
         Validators.pattern(EMAIL_REGULAR_EXPRESSION),
       ]),
-      phone: new FormControl('', [Validators.required]), // TODO: suggestion other db --- Table Contact
-      emergencyPhone: new FormControl('', [Validators.required]), //TODO:  suggestion other db --- Table Contact
+      phone: new FormControl('', [
+        Validators.required,
+        Validators.pattern(PHONE_REGULAR_EXPRESSION),
+      ]), // TODO: suggestion other db --- Table Contact
+      emergencyPhone: new FormControl('', [
+        Validators.required,
+        Validators.pattern(PHONE_REGULAR_EXPRESSION),
+        this.validateEmergencyPhone(),
+      ]), //TODO:  suggestion other db --- Table Contact
     });
+  }
+
+  private validateEmergencyPhone() {
+    return (control: AbstractControl) => {
+      return !!control.parent &&
+        !!control.parent.value &&
+        control.value === control.parent.get('phone')?.value
+        ? { errorMatching: true }
+        : null;
+    };
   }
 
   public buildContactPayload(): createEmployeeDto {

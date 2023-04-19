@@ -19,9 +19,9 @@ export class EmployeeService {
   }
 
   public getEmployees() {
-    let header = new HttpHeaders().set('Type-content', 'application/json');
+    // let header = new HttpHeaders().set('Type-content', 'application/json');
     return this.http.get(environment.employeeApiUrl.concat('/employee'), {
-      headers: header,
+      // headers: header,
     });
   }
 

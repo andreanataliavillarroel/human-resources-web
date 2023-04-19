@@ -12,6 +12,7 @@ import { AddressesComponent } from './components/addresses/addresses.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { EmployeeComponent } from './components/employee/employee.component';
 import { DocumentationComponent } from './components/documentation/documentation.component';
+import { ChartsComponent } from './components/charts/charts.component';
 
 const routes: Routes = [
   {
@@ -46,6 +47,10 @@ const routes: Routes = [
     ],
   },
   {
+    path: 'chart',
+    component: ChartsComponent,
+  },
+  {
     path: 'sign-up',
     component: SignUpComponent,
   },
@@ -54,7 +59,7 @@ const routes: Routes = [
     component: LogInComponent,
   },
   {
-    path: 'personal-information-form',
+    path: 'form',
     component: PersonalInformationFormComponent,
   },
   {

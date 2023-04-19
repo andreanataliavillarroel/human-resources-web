@@ -19,8 +19,8 @@ import { createPersonalDocumentationDto } from 'src/app/dto/personal-documentati
 export class PersonalDocumentationComponent implements OnInit {
   public form!: FormGroup;
   private folderId: string = '';
-  private filesCI: string[] = [];
-  private filesCV: string[] = [];
+  private filesCI!: string;
+  private filesCV!: string;
   public formData = new FormData();
   public nextStep: boolean = false;
   @ViewChild('ciUpload') ci!: FileDragAndDropBoxComponent;
@@ -47,11 +47,11 @@ export class PersonalDocumentationComponent implements OnInit {
   }
 
   public async getCIDriveId() {
-    return await this.getDriveId(this.filesCI);
+    return await this.filesCI;
   }
 
   public async getCVDriveId() {
-    return await this.getDriveId(this.filesCV);
+    return await this.filesCV;
   }
 
   public getDriveId(ids: string[]) {
@@ -69,11 +69,13 @@ export class PersonalDocumentationComponent implements OnInit {
   public async onSubmitData() {
     if (this.folderId) {
       this.ci.uploadData();
-      this.filesCI = await this.getDataToUpload(this.ci.getFiles());
-      console.log(this.filesCI);
+      this.filesCI = this.getDriveId(
+        await this.getDataToUpload(this.ci.getFiles())
+      );
       this.cv.uploadData();
-      this.filesCV = await this.getDataToUpload(this.cv.getFiles());
-      console.log(this.filesCV);
+      this.filesCV = this.getDriveId(
+        await this.getDataToUpload(this.cv.getFiles())
+      );
     } else {
       this.snackBar.open(`No es posible subir los archivos`, 'OK', {
         duration: 5000,
@@ -118,7 +120,6 @@ export class PersonalDocumentationComponent implements OnInit {
   }
 
   public goNextStep() {
-    // this.ci.uploadFilesSimulator(0);
-    // this.filesCI = this.getDataToUpload(this.ci.getFiles());
+    this.nextStep = true;
   }
 }

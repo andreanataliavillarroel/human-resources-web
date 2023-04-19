@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -11,6 +11,8 @@ import { DatePipe } from '@angular/common';
 import { EnglishLevel } from 'src/app/enum/english-level.enum';
 import { AcademicDegree } from 'src/app/enum/academic-degree.enum';
 import { AcademiaDigitalType } from 'src/app/enum/academia-digital-type.enum';
+import { FileDragAndDropBoxComponent } from '../file-drag-and-drop-box/file-drag-and-drop-box.component';
+import { DocumentationService } from 'src/app/services/documentation/documentation.service';
 
 @Component({
   selector: 'app-form',
@@ -20,7 +22,17 @@ import { AcademiaDigitalType } from 'src/app/enum/academia-digital-type.enum';
 export class AcademicFormComponent implements OnInit {
   public academiaDigitalProfileForm!: FormGroup;
   public academicProfileForm!: FormGroup;
-  // public personalDocumentationForm!: FormGroup;
+  //
+  @ViewChild('certification')
+  certification!: FileDragAndDropBoxComponent;
+
+  @ViewChild('undergraduateStudies')
+  undergraduateCertification!: FileDragAndDropBoxComponent;
+
+  @ViewChild('postgraduatedStudies')
+  postgraduateCertification!: FileDragAndDropBoxComponent;
+
+  public personalDocumentationForm!: FormGroup;
   public certificationForm!: FormGroup;
   public underGraduateStudiesForm!: FormGroup;
   public postGraduateStudiesForm!: FormGroup;
@@ -35,34 +47,27 @@ export class AcademicFormComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private snackBar: MatSnackBar,
-    private employeeService: EmployeeService
+    private employeeService: EmployeeService,
+    private documentationService: DocumentationService,
+    private cdref: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
     this.buildForm();
   }
 
-  public onSubmit() {
-    // this.employeeService.createEmployee(this.buildEmployeePayload()).subscribe({
-    //   next: (data: any) => {
-    //     console.log(data);
-    //     this.snackBar.open('Success', 'OK', { duration: 5000 });
-    //     this.form.reset();
-    //     this.onSubmitFinantialInformation(data.id);
-    //   },
-    //   error: (data: any) => {
-    //     this.snackBar.open(data.error.message, 'OK', { duration: 5000 });
-    //   },
-    // });
+  ngAfterContentChecked() {
+    this.cdref.detectChanges();
   }
+  public onSubmit() {}
 
   private buildForm() {
     this.academicProfileForm = this.formBuilder.group({
       occupation: new FormControl('', [Validators.required]),
       english_level: new FormControl('', [Validators.required]),
+      highestAcademicDegree: new FormControl('', [Validators.required]), //academicDegrees
 
       hasAcademiaDigitalProfile: new FormControl('', [Validators.required]), //booleano
-      highestAcademicDegree: new FormControl('', [Validators.required]), //academicDegrees
       hasCertifications: new FormControl('', [Validators.required]), //booleano
     });
 

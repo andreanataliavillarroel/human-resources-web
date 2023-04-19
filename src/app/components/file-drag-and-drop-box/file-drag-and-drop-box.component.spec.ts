@@ -8,9 +8,8 @@ describe('FileDragAndDropBoxComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FileDragAndDropBoxComponent ]
-    })
-    .compileComponents();
+      declarations: [FileDragAndDropBoxComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(FileDragAndDropBoxComponent);
     component = fixture.componentInstance;

@@ -1,4 +1,4 @@
-import { IsEnum, IsNotEmpty, IsUUID } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsString, IsUUID } from 'class-validator';
 import { EnglishLevel } from '../enum/english-level.enum';
 
 export class createAcademicProfileDto {
@@ -7,8 +7,8 @@ export class createAcademicProfileDto {
   occupation!: string;
 
   @IsNotEmpty()
-  @IsUUID()
-  skill_id!: string;
+  @IsString()
+  employee_id!: string;
 
   @IsEnum([EnglishLevel.A12, EnglishLevel.B12, EnglishLevel.C12], {
     each: true,

@@ -15,18 +15,21 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class FileDragAndDropBoxComponent implements OnInit {
   public files: any[];
 
-  public allowedTypes = [
-    'image/jpeg',
-    'image/png',
-    'application/pdf',
-    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-  ];
-  public maxNumberOfFiles = 2;
+  public allowedTypes = ['image/jpeg', 'image/png', 'application/pdf'];
+  public maxNumberOfFiles: number = 2;
 
   @ViewChild('uploadFile', { static: false }) uploadFile!: ElementRef;
 
   constructor(private snackBar: MatSnackBar, private cdref: ChangeDetectorRef) {
     this.files = [];
+  }
+
+  public setMaxNumberOfFiles(max: number) {
+    this.maxNumberOfFiles = max;
+  }
+
+  public getMaxNumberOfFiles() {
+    return this.maxNumberOfFiles;
   }
 
   ngOnInit(): void {}

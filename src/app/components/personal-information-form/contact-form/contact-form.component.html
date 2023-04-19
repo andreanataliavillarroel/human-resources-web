@@ -13,8 +13,11 @@
     <mat-form-field class="form-content__input">
       <mat-label>Número de Telefono</mat-label>
       <input matInput placeholder="Telefono" formControlName="phone" />
+      <mat-error *ngIf="form.hasError('pattern', 'phone')">
+        Ingrese un número de teléfono válido (Debe contener de 7 a 8 dígitos).
+      </mat-error>
       <mat-error *ngIf="form.hasError('required', 'phone')">
-        El campo de classification es requerido
+        El campo telefono es requerido
       </mat-error>
     </mat-form-field>
 
@@ -24,8 +27,15 @@
         matInput
         placeholder="Telefono de emergencia"
         formControlName="emergencyPhone" />
+      <mat-error *ngIf="form.hasError('pattern', 'emergencyPhone')">
+        Ingrese un número de teléfono válido (Debe contener de 7 a 8 dígitos).
+      </mat-error>
       <mat-error *ngIf="form.hasError('required', 'emergencyPhone')">
-        El campo Telefono de emergencia es requerido
+        El campo telefono de emergencia es requerido
+      </mat-error>
+      <mat-error *ngIf="form.hasError('errorMatching', 'emergencyPhone')">
+        El telefono de emergencia debe ser distinto al numero de telefono
+        anterior.
       </mat-error>
     </mat-form-field>
   </mat-card-content>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
@@ -12,4 +12,8 @@ import { AuthenticationService } from 'src/app/services/authentication/authentic
 })
 export class SidenavContentComponent implements OnInit {
   ngOnInit() {}
+  constructor(private cdref: ChangeDetectorRef) {}
+  ngAfterContentChecked() {
+    this.cdref.detectChanges();
+  }
 }

@@ -5,7 +5,7 @@
         <mat-card-title>Registro de Datos Académicos</mat-card-title>
       </mat-card-header>
       <!-- <mat-vertical-stepper [linear]="true" #stepper> -->
-      <mat-horizontal-stepper [linear]="true" #stepper>
+      <mat-horizontal-stepper [linear]="false" #stepper>
         <mat-step [stepControl]="academicProfileForm">
           <form [formGroup]="academicProfileForm" class="form-content">
             <ng-template matStepLabel> Información académica </ng-template>
@@ -69,21 +69,27 @@
             </mat-card-content>
 
             <mat-card-content class="form-content__column">
-              <div>
+              <div class="form-content__input">
                 <mat-label>
                   ¿Forma o ha formado parte de Academia Digital como Trainee o
                   Pasante de Prácticas Empresariales en la empresa?
                 </mat-label>
-                <!-- <mat-form-field #field floatLabel="always">
-                <input matInput [hidden]="true" /> -->
+
                 <br />
                 <mat-radio-group
                   #group
+                  required="Debe escoger una opcion"
                   class="modal-content__radio-and-checkbox"
                   formControlName="hasAcademiaDigitalProfile">
                   <mat-radio-button value="true">Si</mat-radio-button>
                   <mat-radio-button value="false">No</mat-radio-button>
                 </mat-radio-group>
+              </div>
+
+              <div>
+                <!-- <mat-form-field #field floatLabel="always">
+                <input matInput [hidden]="true" /> -->
+
                 <!-- <mat-error
                   *ngIf="
                     academicProfileForm.hasError(
@@ -99,7 +105,7 @@
               <br />
 
               <!-- <mat-form-field #field floatLabel="always"> -->
-              <div>
+              <div class="form-content__input">
                 <mat-label>¿Cuenta con alguna certificación?</mat-label>
                 <!-- <input matInput [hidden]="true" /> -->
                 <br />
@@ -123,10 +129,7 @@
               </div>
               <div>
                 <mat-card-actions align="end">
-                  ><button
-                    mat-raised-button
-                    matStepperNext
-                    class="card__button">
+                  <button mat-raised-button matStepperNext class="card__button">
                     Siguiente
                   </button>
                 </mat-card-actions>
@@ -138,8 +141,33 @@
         <mat-step [stepControl]="academiaDigitalProfileForm">
           <form [formGroup]="academiaDigitalProfileForm" class="form-content">
             <ng-template matStepLabel>Academia Digital</ng-template>
-            <mat-card-content class="form-content__column">
-              <mat-form-field
+            <mat-card-content class="form-content__all">
+              <div class="form-content__input">
+                <mat-label>
+                  ¿Actualmente es parte de academia Digital como Pasante o
+                  Trainee?
+                </mat-label>
+                <!-- <input matInput [hidden]="true" /> -->
+                <br />
+                <mat-radio-group
+                  #group
+                  class="modal-content__radio-and-checkbox"
+                  formControlName="status">
+                  <mat-radio-button value="true">Si</mat-radio-button>
+                  <mat-radio-button value="false">No</mat-radio-button>
+                </mat-radio-group>
+                <!-- <mat-error
+                  *ngIf="
+                    academicProfileForm.hasError(
+                      'required',
+                      'hasCertifications'
+                    )
+                  ">
+                  El campo es requerido.
+                </mat-error>
+              </mat-form-field> -->
+              </div>
+              <!-- <mat-form-field
                 #field
                 floatLabel="always"
                 class="form-content__input">
@@ -161,7 +189,7 @@
                   ">
                   El campo es requerido.
                 </mat-error>
-              </mat-form-field>
+              </mat-form-field> -->
 
               <mat-form-field class="form-content__input">
                 <mat-label>Rol</mat-label>
@@ -222,8 +250,17 @@
                 </mat-error>
               </mat-form-field>
 
-              <mat-form-field class="form-content__input">
-                <mat-label>Link de Google Drive</mat-label>
+              <div>
+                <br />
+                <br />
+                <mat-label
+                  >Agregue el archivo adjunto de la certificacion</mat-label
+                >
+                <app-file-drag-and-drop-box
+                  #certification></app-file-drag-and-drop-box>
+              </div>
+              <!-- <mat-form-field class="form-content__input">
+                <mat-label>Link de Googlfilee Drive</mat-label>
                 <input
                   matInput
                   placeholder="Link de Google Drive"
@@ -232,7 +269,7 @@
                   *ngIf="certificationForm.hasError('required', 'link_drive')">
                   El campo Link de Google Drive es requerido
                 </mat-error>
-              </mat-form-field>
+              </mat-form-field> -->
 
               <div>
                 <mat-card-actions align="end">
@@ -253,7 +290,7 @@
         <mat-step [stepControl]="underGraduateStudiesForm">
           <form [formGroup]="underGraduateStudiesForm" class="form-content">
             <ng-template matStepLabel> Estudios de PreGrado </ng-template>
-            <mat-card-content class="form-content__column">
+            <mat-card-content class="form-content__all">
               <mat-form-field class="form-content__input">
                 <mat-label>Carrera</mat-label>
                 <input
@@ -282,7 +319,7 @@
                 </mat-error>
               </mat-form-field>
 
-              <mat-form-field class="form-content__input">
+              <!-- <mat-form-field class="form-content__input">
                 <mat-label>Link de Google Drive</mat-label>
                 <input
                   matInput
@@ -294,7 +331,16 @@
                   ">
                   El campo Link de Google Drive es requerido
                 </mat-error>
-              </mat-form-field>
+              </mat-form-field> -->
+              <div>
+                <br />
+                <br />
+                <mat-label
+                  >Agregue el archivo adjunto del titulo de pregrado</mat-label
+                >
+                <app-file-drag-and-drop-box
+                  #undergraduateStudies></app-file-drag-and-drop-box>
+              </div>
 
               <!-- <mat-card-actions class="form-content__actions"> -->
               <div>
@@ -316,7 +362,7 @@
         <mat-step [stepControl]="postGraduateStudiesForm">
           <form [formGroup]="postGraduateStudiesForm" class="form-content">
             <ng-template matStepLabel>Estudios de PostGrado</ng-template>
-            <mat-card-content class="form-content__column">
+            <mat-card-content class="form-content__all">
               <mat-form-field class="form-content__input">
                 <mat-label>Nombre</mat-label>
                 <input matInput placeholder="Nombre" formControlName="name" />
@@ -349,7 +395,7 @@
                 </mat-error>
               </mat-form-field>
 
-              <mat-form-field class="form-content__input">
+              <!-- <mat-form-field class="form-content__input">
                 <mat-label>Link de Google Drive</mat-label>
                 <input
                   matInput
@@ -361,7 +407,7 @@
                   ">
                   El campo Link de Google Drive es requerido
                 </mat-error>
-              </mat-form-field>
+              </mat-form-field> -->
 
               <!-- <mat-form-field appearance="fill">
                 <mat-label>Toppings</mat-label>
@@ -369,6 +415,15 @@
                   <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
                 </mat-select>
               </mat-form-field> -->
+              <div>
+                <br />
+                <br />
+                <mat-label
+                  >Agregue el archivo adjunto del titulo de pregrado</mat-label
+                >
+                <app-file-drag-and-drop-box
+                  #postgraduatedStudies></app-file-drag-and-drop-box>
+              </div>
               <div>
                 <mat-card-actions align="end">
                   <button mat-raised-button matStepperPrevious>Atras</button
