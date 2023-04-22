@@ -1,0 +1,29 @@
+@import "../../../styles/colors";
+
+.container{
+    margin: 25px;
+    display: flex;
+}
+
+.card {
+    background-color: white;
+    color: $dark-grey;
+    transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
+    display: block;
+    position: relative;
+    border-radius: 10px;
+    box-shadow: 3px 3px 8px 0px $shadow;
+    border: 1px solid $border;
+    width: 750px;
+    height: 500px;
+    align-self: center;
+    align-content: center;
+    align-items: center;
+    
+    &__title{
+        margin-top: 15px;
+        font-size: 18px; 
+        color: #171A1FFF; 
+    }
+
+}

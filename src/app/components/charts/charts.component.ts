@@ -1,122 +1,134 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import * as d3 from 'd3';
 import { EmployeeService } from 'src/app/services/employee/employee.service';
 @Component({
   selector: 'app-charts',
   templateUrl: './charts.component.html',
-  styleUrls: ['./charts.component.css'],
+  styleUrls: ['./charts.component.scss'],
 })
 export class ChartsComponent implements OnInit {
   private employees: any;
-  private data = [
-    { Framework: 'Vue', Stars: '166443', Released: '2014' },
-    { Framework: 'React', Stars: '150793', Released: '2013' },
-    { Framework: 'Angular', Stars: '62342', Released: '2016' },
-    { Framework: 'Backbone', Stars: '27647', Released: '2010' },
-    { Framework: 'Ember', Stars: '21471', Released: '2011' },
-  ];
   private svg: any;
-  private margin = 50;
-  private width = 750 - this.margin * 2;
-  private height = 400 - this.margin * 2;
+  private margin = 25;
+  private width = 700 - this.margin * 3;
+  private height = 400 - this.margin * 3;
+
+  private x: any;
+  private y: any;
   ngOnInit() {
-    // this.getData();
-    // this.getEmployees();
+    this.getData();
     this.createSvg();
-    this.drawBars(this.data);
-    // console.log(this.employees);
   }
 
-  constructor(public employeeService: EmployeeService) {}
-
-  // public getEmployees() {
-  //   this.employeeService.getEmployees().subscribe((response: any) => {
-  //     this.employees = response.map((item: any) => {
-  //       return {
-  //         id: item.id,
-  //         name: `${item.firstName.toUpperCase()} ${item.lastName.toUpperCase()}`,
-  //         recruitmentDate: item.recruitmentDate,
-  //       };
-  //     });
-  //   });
-  // }
-  // public getEmployees() {
-  //   this.employeeService.getEmployees().subscribe((response: any) => {
-  //     this.employees = response.map((item: any) => {
-  //       return {
-  //         id: item.id,
-  //         firstName: item.firstName,
-  //         lastName: item.lastName,
-  //       };
-  //     });
-  //   });
-  // }
+  constructor(
+    public employeeService: EmployeeService,
+    private snackBar: MatSnackBar
+  ) {}
 
   public getData() {
     this.employeeService.getEmployees().subscribe({
       next: (response: any) => {
-        // console.log(response);
-        this.employees = response.map((item: any) => {
-          // console.log(item);
+        this.employees = response
+          .filter((item: any) => item.recruitmentDate !== undefined)
+          .map((item: any) => {
+            return {
+              id: item.id,
+              name: `${item.firstName} ${item.lastName}`,
+              recruitmentDate: item.recruitmentDate,
+            };
+          });
 
-          return {
-            id: item.id,
-            // name: `${item.firstName.toUpperCase()} ${item.lastName.toUpperCase()}`,
-            // recruitmentDate: item.recruitmentDate,
-          };
-        });
-        console.log(this.employees);
+        this.initAxis(this.employees);
       },
       error: message => {
-        // this.snackBar.open(message, 'OK', { duration: 5000 });
-        console.log(message);
+        this.snackBar.open(message, 'OK', { duration: 5000 });
       },
     });
   }
 
+  private getMinDate() {
+    const oldestWorker = this.employees.reduce((prev: any, curr: any) => {
+      return Date.parse(prev.recruitmentDate) < Date.parse(curr.recruitmentDate)
+        ? prev
+        : curr;
+    });
+    return oldestWorker.recruitmentDate;
+  }
+
   private createSvg(): void {
     this.svg = d3
-      .select('figure#bar')
+      .select('figure#fig')
       .append('svg')
       .attr('width', this.width + this.margin * 2)
       .attr('height', this.height + this.margin * 2)
+      .attr('viewBox', [0, 0, this.width, this.height])
+      .attr(
+        'style',
+        'max-width: 100%; height: auto; height: intrinsic; overflow: visible;'
+      )
       .append('g')
       .attr('transform', 'translate(' + this.margin + ',' + this.margin + ')');
   }
 
-  private drawBars(data: any[]): void {
-    // Create the X-axis band scale
-    const x = d3
-      .scaleBand()
+  private initAxis(data: any) {
+    this.x = d3
+      .scaleTime()
       .range([0, this.width])
-      .domain(data.map(d => d.Framework))
-      .padding(0.2);
+      .domain([new Date(this.getMinDate()), new Date()]);
 
-    // Draw the X-axis on the DOM
     this.svg
       .append('g')
       .attr('transform', 'translate(0,' + this.height + ')')
-      .call(d3.axisBottom(x))
-      .selectAll('text')
-      .attr('transform', 'translate(-10,0)rotate(-45)')
-      .style('text-anchor', 'end');
+      .call(d3.axisBottom(this.x))
+      .append('text')
+      .attr('fill', '#1c1c1c')
+      .attr('x', this.width / 2)
+      .attr('y', this.margin + 10)
+      .text('Fecha');
 
-    // Create the Y-axis band scale
-    const y = d3.scaleLinear().domain([0, 200000]).range([this.height, 0]);
-
-    // Draw the Y-axis on the DOM
-    this.svg.append('g').call(d3.axisLeft(y));
-
-    // Create and fill the bars
+    this.y = d3.scaleLinear().domain([0, data.length]).range([this.height, 0]);
     this.svg
-      .selectAll('bars')
-      .data(data)
-      .enter()
-      .append('rect')
-      .attr('x', (d: any) => x(d.Framework))
-      .attr('y', (d: any) => y(d.Stars))
-      .attr('width', x.bandwidth())
-      .attr('height', (d: any) => this.height - y(d.Stars))
-      .attr('fill', '#d04a35');
+      .append('g')
+      .call(d3.axisLeft(this.y))
+      .append('text')
+      .attr('fill', '#1c1c1c')
+      .attr('y', this.margin / 2 - 50)
+      .attr('x', -this.height / 2 + 55)
+      .attr('transform', 'translate(0,' + this.height + ')')
+      .attr('transform', 'rotate(-90)')
+      .text('Cantidad de empleados');
+
+    this.draw(data);
+  }
+
+  private draw(data: any) {
+    const dataByDate = d3.group(data, (d: any) =>
+      d.recruitmentDate.slice(0, 10)
+    );
+
+    const points = Array.from(dataByDate, ([key, value]) => ({
+      date: new Date(key),
+      count: value.length,
+    }));
+
+    const line = d3
+      .line()
+      .curve(d3.curveLinear)
+      .x((d: any) => this.x(new Date(d.date)))
+      .y((d: any) => this.y(d.count));
+
+    this.svg
+      .append('path')
+      .datum(points)
+      .attr('fill', 'none')
+      .attr('stroke', '#6ec1da')
+      .attr('stroke-width', 1.5)
+      .attr('r', 5)
+      .transition()
+      .duration(1000)
+      .transition()
+      .attr('r', 10)
+      .attr('d', line);
   }
 }
