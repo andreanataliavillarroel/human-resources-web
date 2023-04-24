@@ -44,12 +44,13 @@ const routes: Routes = [
         path: 'employees/:id',
         component: EmployeeComponent,
       },
+      {
+        path: 'chart',
+        component: ChartsComponent,
+      },
     ],
   },
-  {
-    path: 'chart',
-    component: ChartsComponent,
-  },
+
   {
     path: 'sign-up',
     component: SignUpComponent,

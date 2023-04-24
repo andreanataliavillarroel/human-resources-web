@@ -57,6 +57,8 @@ import { DocumentationComponent } from './components/documentation/documentation
 import { PersonalDocumentationComponent } from './components/personal-information-form/personal-documentation-form/personal-documentation-form.component';
 import { FileDragAndDropBoxComponent } from './components/file-drag-and-drop-box/file-drag-and-drop-box.component';
 import { ChartsComponent } from './components/charts/charts.component';
+import { FormComponent } from './components/form/form.component';
+import { PersonalAcademicFormComponent } from './components/personal-academic-form/personal-academic-form.component';
 
 @NgModule({
   declarations: [
@@ -83,6 +85,8 @@ import { ChartsComponent } from './components/charts/charts.component';
     PersonalDocumentationComponent,
     FileDragAndDropBoxComponent,
     ChartsComponent,
+    FormComponent,
+    PersonalAcademicFormComponent,
   ],
   imports: [
     BrowserModule,

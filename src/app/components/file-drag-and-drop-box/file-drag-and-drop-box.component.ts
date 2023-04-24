@@ -16,7 +16,7 @@ export class FileDragAndDropBoxComponent implements OnInit {
   public files: any[];
 
   public allowedTypes = ['image/jpeg', 'image/png', 'application/pdf'];
-  public maxNumberOfFiles: number = 2;
+  public maxNumberOfFiles: number = 5;
 
   @ViewChild('uploadFile', { static: false }) uploadFile!: ElementRef;
 
