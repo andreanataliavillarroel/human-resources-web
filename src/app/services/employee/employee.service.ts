@@ -2,8 +2,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { createAddressDto } from 'src/app/dto/address.dto';
 import { createChildDto } from 'src/app/dto/child.dto';
+import { createEmployeeSkillDto } from 'src/app/dto/employee-skill.dto';
 import { createEmployeeDto } from 'src/app/dto/employee.dto';
 import { createFinantialInformationDto } from 'src/app/dto/finantial-information.dto';
+import { createSkillDto } from 'src/app/dto/skill.dto';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -19,10 +21,22 @@ export class EmployeeService {
   }
 
   public getEmployees() {
-    // let header = new HttpHeaders().set('Type-content', 'application/json');
-    return this.http.get(environment.employeeApiUrl.concat('/employee'), {
-      // headers: header,
-    });
+    return this.http.get(environment.employeeApiUrl.concat('/employee'), {});
+  }
+
+  public getSkills() {
+    return this.http.get(environment.employeeApiUrl.concat('/skill'), {});
+  }
+
+  public createSkill(skillDto: createSkillDto) {
+    return this.http.post(`${environment.employeeApiUrl}/skill`, skillDto);
+  }
+
+  public createEmployeeSkill(employeeSkillDto: createEmployeeSkillDto) {
+    return this.http.post(
+      `${environment.employeeApiUrl}/employee-skill`,
+      employeeSkillDto
+    );
   }
 
   public getEmployeeById(id: string) {

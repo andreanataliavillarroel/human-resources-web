@@ -1,0 +1,152 @@
+<div class="main">
+  <div class="main__container">
+    <mat-card class="card">
+      <mat-card-header>
+        <mat-card-title>Registro de Datos Académicos</mat-card-title>
+      </mat-card-header>
+      <mat-horizontal-stepper [linear]="false" #stepper>
+        <mat-step
+          [stepControl]="academic_profile_form && academic_profile_form.form">
+          <ng-template matStepLabel> Información académica </ng-template>
+          <app-academic-profile-form></app-academic-profile-form>
+
+          <mat-card-footer>
+            <mat-card-actions class="form-content__actions">
+              <button mat-raised-button matStepperPrevious>Atras</button>
+              <button
+                mat-raised-button
+                matStepperNext
+                class="card__button"
+                [disabled]="
+                  academic_profile_form && academic_profile_form.form.invalid
+                "
+                (click)="getAcademicProfileFormData()">
+                Siguiente
+              </button>
+            </mat-card-actions>
+          </mat-card-footer>
+        </mat-step>
+
+        <mat-step
+          [stepControl]="academia_digital_form && academia_digital_form.form">
+          <ng-template matStepLabel>Academia Digital</ng-template>
+          <app-academia-digital-form></app-academia-digital-form>
+          <mat-card-footer>
+            <mat-card-actions class="form-content__actions">
+              <button mat-raised-button matStepperPrevious>Atras</button>
+              <button
+                mat-raised-button
+                matStepperNext
+                class="card__button"
+                [disabled]="
+                  academia_digital_form && academia_digital_form.form.invalid
+                "
+                (click)="getAcademiaDigitalFormData()">
+                Siguiente
+              </button>
+            </mat-card-actions>
+          </mat-card-footer>
+        </mat-step>
+
+        <mat-step [stepControl]="certification_form && certification_form.form">
+          <ng-template matStepLabel> Certificaciones </ng-template>
+          <app-certification-form
+            [folderId]="folderId"></app-certification-form>
+          <mat-card-footer>
+            <mat-card-actions class="form-content__actions">
+              <button mat-raised-button matStepperPrevious>Atras</button>
+              <button
+                mat-raised-button
+                matStepperNext
+                class="card__button"
+                [disabled]="
+                  (certification_form && certification_form.form.invalid) ||
+                  (certification_form &&
+                    certification_form.certification.files.length === 0)
+                "
+                (click)="getCertificationFormData()">
+                Siguiente
+              </button>
+            </mat-card-actions>
+          </mat-card-footer>
+        </mat-step>
+
+        <mat-step
+          [stepControl]="
+            undergraduate_studies_form && undergraduate_studies_form.form
+          ">
+          <ng-template matStepLabel> Estudios de Pregrado </ng-template>
+          <app-undergraduate-studies-form [folderId]="folderId">
+          </app-undergraduate-studies-form>
+          <mat-card-footer>
+            <mat-card-actions class="form-content__actions">
+              <button mat-raised-button matStepperPrevious>Atras</button>
+              <button
+                mat-raised-button
+                matStepperNext
+                class="card__button"
+                [disabled]="
+                  (undergraduate_studies_form &&
+                    undergraduate_studies_form.form.invalid) ||
+                  (undergraduate_studies_form &&
+                    undergraduate_studies_form.status &&
+                    undergraduate_studies_form.undergraduate_certification &&
+                    undergraduate_studies_form.undergraduate_certification.files
+                      .length === 0)
+                "
+                (click)="getUndergraduateStudiesFormData()">
+                Siguiente
+              </button>
+            </mat-card-actions>
+          </mat-card-footer>
+        </mat-step>
+
+        <mat-step
+          [stepControl]="
+            postgraduate_studies_form && postgraduate_studies_form.form
+          ">
+          <ng-template matStepLabel>Estudios de PostGrado</ng-template>
+          <app-postgraduate-studies-form [folderId]="folderId">
+          </app-postgraduate-studies-form>
+          <mat-card-footer>
+            <mat-card-actions class="form-content__actions">
+              <button mat-raised-button matStepperPrevious>Atras</button>
+              <button
+                mat-raised-button
+                matStepperNext
+                class="card__button"
+                [disabled]="
+                  (postgraduate_studies_form &&
+                    postgraduate_studies_form.form.invalid) ||
+                  (postgraduate_studies_form &&
+                    postgraduate_studies_form.status &&
+                    postgraduate_studies_form.postgraduate_certification &&
+                    postgraduate_studies_form.postgraduate_certification.files
+                      .length === 0)
+                "
+                (click)="getPostgraduateStudiesFormData()">
+                Siguiente
+              </button>
+            </mat-card-actions>
+          </mat-card-footer>
+        </mat-step>
+
+        <mat-step>
+          <ng-template matStepLabel>Información técnica</ng-template>
+          <app-skills-form [employeeId]="employeeId"></app-skills-form>
+          <mat-card-actions class="form-content__actions">
+            <button mat-raised-button matStepperPrevious>Atras</button>
+            <button
+              mat-raised-button
+              matStepperNext
+              class="card__button"
+              [disabled]="skills_form && !skills_form.selectedOptions"
+              (click)="onSubmitEmployeeSkills()">
+              Siguiente
+            </button>
+          </mat-card-actions>
+        </mat-step>
+      </mat-horizontal-stepper>
+    </mat-card>
+  </div>
+</div>

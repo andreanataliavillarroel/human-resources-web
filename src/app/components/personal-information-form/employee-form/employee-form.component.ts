@@ -12,7 +12,6 @@ import { Classification } from 'src/app/enum/classification.enum';
 import { Sex } from 'src/app/enum/gender.enum';
 import { MaritalStatus } from 'src/app/enum/marital-status.enum';
 import { CategoryService } from 'src/app/services/category/category.service';
-import { EmployeeService } from 'src/app/services/employee/employee.service';
 import { NAME_REGULAR_EXPRESSION } from 'src/regex';
 import * as uuid from 'uuid';
 
@@ -42,7 +41,6 @@ export class EmployeeFormComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private snackBar: MatSnackBar,
-    private employeeService: EmployeeService,
     private categoryService: CategoryService
   ) {
     this.loadCategories();
@@ -85,7 +83,7 @@ export class EmployeeFormComponent implements OnInit {
     newEmployee.lastName = this.form.get('lastName')?.value;
     newEmployee.recruitmentDate = this.currentDate
       ? this.currentDate
-      : '2023-01-08'; // TODO: suggestion --- in backend ...
+      : '2023-01-08';
 
     newEmployee.category_id = parseInt(this.form.get('category')?.value);
     newEmployee.classification = this.form.get('classification')?.value;
@@ -93,10 +91,10 @@ export class EmployeeFormComponent implements OnInit {
     newEmployee.dni = this.form.get('dni')?.value;
     newEmployee.nickname = this.form.get('nickname')?.value;
     newEmployee.sex = this.form.get('gender')?.value;
-    newEmployee.account_id = uuid.v4(); //TODO: EndPoint ...
+    newEmployee.account_id = uuid.v4();
     newEmployee.marital_status = this.form.get('maritalStatus')?.value;
 
-    newEmployee.country_id = 1; // TODO: Volver a pedir country ms
+    newEmployee.country_id = 1;
 
     let birthdate = this.pipe.transform(
       new Date(this.form.get('birthdate')?.value),
@@ -104,7 +102,6 @@ export class EmployeeFormComponent implements OnInit {
     );
 
     newEmployee.birthdate = birthdate ? birthdate : '';
-    newEmployee.end_date = this.currentDate ? this.currentDate : '2023-01-08';
     return newEmployee;
   }
 }

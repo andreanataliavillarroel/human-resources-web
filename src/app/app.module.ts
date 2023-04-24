@@ -57,8 +57,13 @@ import { DocumentationComponent } from './components/documentation/documentation
 import { PersonalDocumentationComponent } from './components/personal-information-form/personal-documentation-form/personal-documentation-form.component';
 import { FileDragAndDropBoxComponent } from './components/file-drag-and-drop-box/file-drag-and-drop-box.component';
 import { ChartsComponent } from './components/charts/charts.component';
-import { FormComponent } from './components/form/form.component';
 import { PersonalAcademicFormComponent } from './components/personal-academic-form/personal-academic-form.component';
+import { AcademicProfileFormComponent } from './components/personal-academic-form/academic-profile-form/academic-profile-form.component';
+import { AcademiaDigitalFormComponent } from './components/personal-academic-form/academia-digital-form/academia-digital-form.component';
+import { CertificationFormComponent } from './components/personal-academic-form/certification-form/certification-form.component';
+import { UndergraduateStudiesFormComponent } from './components/personal-academic-form/undergraduate-studies-form/undergraduate-studies-form.component';
+import { PostgraduateStudiesFormComponent } from './components/personal-academic-form/postgraduate-studies-form/postgraduate-studies-form.component';
+import { SkillsFormComponent } from './components/personal-academic-form/skills-form/skills-form.component';
 
 @NgModule({
   declarations: [
@@ -85,8 +90,13 @@ import { PersonalAcademicFormComponent } from './components/personal-academic-fo
     PersonalDocumentationComponent,
     FileDragAndDropBoxComponent,
     ChartsComponent,
-    FormComponent,
     PersonalAcademicFormComponent,
+    AcademicProfileFormComponent,
+    AcademiaDigitalFormComponent,
+    CertificationFormComponent,
+    UndergraduateStudiesFormComponent,
+    PostgraduateStudiesFormComponent,
+    SkillsFormComponent,
   ],
   imports: [
     BrowserModule,

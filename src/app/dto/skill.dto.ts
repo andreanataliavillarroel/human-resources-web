@@ -4,12 +4,4 @@ export class createSkillDto {
   @IsNotEmpty()
   @IsString()
   type!: string;
-
-  @IsNotEmpty()
-  @IsString()
-  description!: string;
-
-  @IsNotEmpty()
-  @IsString()
-  area!: string;
 }

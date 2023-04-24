@@ -96,9 +96,11 @@ export class PersonalDocumentationComponent {
       .subscribe({
         next: (data: any) => {
           console.log(data);
+          this.snackBar.open('Success', 'OK', { duration: 5000 });
         },
         error: (data: any) => {
           console.log(data);
+          this.snackBar.open(data.error.message, 'OK', { duration: 5000 });
         },
       });
   }

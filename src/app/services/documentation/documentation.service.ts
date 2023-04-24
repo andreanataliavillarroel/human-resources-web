@@ -98,7 +98,6 @@ export class DocumentationService {
   }
 
   public getAcademicProfile(id: string) {
-
     let header = new HttpHeaders().set('Type-content', 'application/json');
     return this.http.get(
       `${environment.documentationApiUrl}/academic-profile/${id}`,
