@@ -1,0 +1,99 @@
+<div class="form-content">
+  <mat-card-content class="form-content__all">
+    <div class="form-content__input">
+      <mat-label>
+        ¿Actualmente es parte de academia Digital como Pasante o Trainee?
+      </mat-label>
+      <br />
+      <mat-radio-group
+        required="Debe escoger una opcion"
+        class="modal-content__radio-and-checkbox"
+        [(ngModel)]="status">
+        <mat-radio-button [value]="true" (change)="radioChange($event)">
+          Si
+        </mat-radio-button>
+        <mat-radio-button [value]="false" (change)="radioChange($event)">
+          No
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+    <br />
+    <br />
+    <!-- <mat-form-field
+          #field
+          floatLabel="always"
+          class="form-content__input">
+          <mat-label>
+            ¿Actualmente es parte de academia Digital como Pasante o
+            Trainee?
+          </mat-label>
+          <input matInput [hidden]="true" />
+          <mat-radio-group
+            #group
+            class="modal-content__radio-and-checkbox"
+            formControlName="status">
+            <mat-radio-button value="1">Si</mat-radio-button>
+            <mat-radio-button value="0">No</mat-radio-button>
+          </mat-radio-group>
+          <mat-error
+            *ngIf="
+              academiaDigitalProfileForm.hasError('required', 'status')
+            ">
+            El campo es requerido.
+          </mat-error>
+        </mat-form-field> -->
+    <form [formGroup]="form">
+      <mat-form-field class="form-content__input">
+        <mat-label>Rol</mat-label>
+        <mat-select matNativeControl required formControlName="type">
+          <mat-option
+            *ngFor="let roleType of academiaDigitalOptions"
+            [value]="roleType"
+            >{{ roleType }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.hasError('required', 'type')">
+          Este campo es requerido.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="form-content__input">
+        <mat-label>Fecha de Inicio</mat-label>
+        <input
+          matInput
+          readonly
+          [max]="maxDate"
+          [min]="minDate"
+          [matDatepicker]="startDatePicker"
+          formControlName="start_date"
+          (click)="startDatePicker.open()" />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="startDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker
+          #startDatePicker
+          startView="multi-year"></mat-datepicker>
+
+        <mat-error> Este campo es requerido. </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="form-content__input">
+        <mat-label>Fecha Fin</mat-label>
+        <input
+          matInput
+          readonly
+          [max]="maxDate"
+          [min]="minDate"
+          [matDatepicker]="endDatePicker"
+          formControlName="end_date"
+          (click)="endDatePicker.open()" />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="endDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #endDatePicker startView="multi-year"></mat-datepicker>
+
+        <mat-error> Este campo es requerido. </mat-error>
+      </mat-form-field>
+    </form>
+  </mat-card-content>
+</div>

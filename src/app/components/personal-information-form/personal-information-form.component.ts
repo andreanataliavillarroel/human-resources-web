@@ -60,12 +60,12 @@ export class PersonalInformationFormComponent {
   ) {}
 
   ngAfterViewInit() {
-    const childComponent = this.academic_form;
     if (this.employeeId !== '' && this.folderId !== '') {
-      childComponent.employeeId = this.employeeId;
-      childComponent.folderId = this.folderId;
+      this.academic_form.employeeId = this.employeeId;
+      this.academic_form.folderId = this.folderId;
     }
   }
+
   ngAfterContentChecked() {
     this.cdref.detectChanges();
   }
@@ -131,21 +131,6 @@ export class PersonalInformationFormComponent {
     }
   }
 
-  public async onSubmitDocumentationData(
-    documentation: createPersonalDocumentationDto
-  ) {
-    this.documentationService
-      .createPersonalDocumentation(documentation)
-      .subscribe({
-        next: (data: any) => {
-          console.log(data);
-        },
-        error: (data: any) => {
-          console.log(data);
-        },
-      });
-  }
-
   public async createGoogleDriveFolder() {
     if (!this.folderId) {
       const data = {
@@ -171,9 +156,9 @@ export class PersonalInformationFormComponent {
         this.employeeId = data.id;
         this.address.employee_id = this.employeeId;
         this.onSubmitAddressData();
-        // this.snackBar.open('Employee-Address-Data was saved', 'OK', {
-        //   duration: 5000,
-        // });
+        this.snackBar.open('Success', 'OK', {
+          duration: 5000,
+        });
       },
       error: (data: any) => {
         console.log(data);
@@ -187,7 +172,7 @@ export class PersonalInformationFormComponent {
       .createFinantialInformationForEmployee(this.finantialInformation)
       .subscribe({
         next: () => {
-          // this.snackBar.open('Success', 'OK', { duration: 5000 });
+          this.snackBar.open('Success', 'OK', { duration: 5000 });
         },
         error: (data: any) => {
           this.snackBar.open(data.error.message, 'OK', { duration: 5000 });
@@ -200,7 +185,7 @@ export class PersonalInformationFormComponent {
       .createAddressForEmployee(this.address)
       .subscribe({
         next: () => {
-          // this.snackBar.open('Success', 'OK', { duration: 5000 });
+          this.snackBar.open('Success', 'OK', { duration: 5000 });
         },
         error: (data: any) => {
           this.snackBar.open(data.error.message, 'OK', { duration: 5000 });

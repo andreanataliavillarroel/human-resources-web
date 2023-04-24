@@ -1,0 +1,46 @@
+<div class="form-content">
+  <mat-card-content class="form-content__column">
+    <form [formGroup]="form">
+      <mat-form-field class="form-content__input">
+        <mat-label>Ocupación</mat-label>
+        <input matInput placeholder="Ocupación" formControlName="occupation" />
+        <mat-error *ngIf="form.hasError('required', 'occupation')">
+          El campo de Ocupación es requerido
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="form-content__input">
+        <mat-label>Nivel de Inglés</mat-label>
+        <mat-select matNativeControl required formControlName="english_level">
+          <mat-option *ngFor="let level of englishOptions" [value]="level"
+            >{{ level }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.hasError('required', 'english_level')">
+          El campo para el nivel de ingles es requerido.
+        </mat-error>
+      </mat-form-field>
+    </form>
+  </mat-card-content>
+
+  <mat-card-content class="form-content__column">
+    <div class="form-content__input">
+      <mat-label>
+        ¿Forma o ha formado parte de Academia Digital como Trainee o Pasante de
+        Prácticas Empresariales en la empresa?
+      </mat-label>
+      <br />
+      <mat-radio-group
+        required="Debe escoger una opcion"
+        class="modal-content__radio-and-checkbox"
+        [(ngModel)]="hasAcademiaDigitalProfile">
+        <mat-radio-button [value]="true" (change)="radioChange($event)">
+          Si
+        </mat-radio-button>
+        <mat-radio-button [value]="false" (change)="radioChange($event)">
+          No
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+  </mat-card-content>
+</div>

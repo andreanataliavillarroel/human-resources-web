@@ -1,0 +1,38 @@
+<form [formGroup]="form" class="form-content">
+  <mat-card-content class="form-content__all">
+    <mat-form-field class="form-content__input">
+      <mat-label>Nombre</mat-label>
+      <input
+        matInput
+        placeholder="Nombre de la certificación"
+        formControlName="name" />
+      <mat-error *ngIf="form.hasError('required', 'name')">
+        El campo Nombre de certificación es requerido
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form-content__input">
+      <mat-label>Descripción</mat-label>
+      <input
+        matInput
+        placeholder="Descripción de la certificación"
+        formControlName="description" />
+      <mat-error *ngIf="form.hasError('required', 'description')">
+        El campo de Descripción es requerido
+      </mat-error>
+    </mat-form-field>
+
+    <br />
+    <br />
+
+    <div class="drag-and-drop-container">
+      <span class="title"> Agregue el archivo adjunto de la certificacion</span>
+      <br />
+      <mat-card-subtitle>
+        Puede subir hasta cinco archivos <br />Formatos permitidos: .png, .jpeg
+        y .pdf
+      </mat-card-subtitle>
+      <app-file-drag-and-drop-box #certification></app-file-drag-and-drop-box>
+    </div>
+  </mat-card-content>
+</form>

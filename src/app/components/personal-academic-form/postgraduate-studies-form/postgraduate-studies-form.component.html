@@ -1,0 +1,61 @@
+<div class="form-content">
+  <mat-card-content class="form-content__all">
+    <form [formGroup]="form">
+      <mat-form-field class="form-content__input">
+        <mat-label>Nombre</mat-label>
+        <input matInput placeholder="Nombre" formControlName="name" />
+        <mat-error *ngIf="form.hasError('required', 'name')">
+          El campo Nombre es requerido
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="form-content__input">
+        <mat-label>Area</mat-label>
+        <input matInput placeholder="Area" formControlName="area" />
+        <mat-error *ngIf="form.hasError('required', 'area')">
+          El campo Area es requerido
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="form-content__input">
+        <mat-label>Especialidad</mat-label>
+        <input
+          matInput
+          placeholder="Especialidad"
+          formControlName="speciality" />
+        <mat-error *ngIf="form.hasError('required', 'speciality')">
+          El campo Especialidad es requerido
+        </mat-error>
+      </mat-form-field>
+    </form>
+    <div class="form-content__input">
+      <mat-label> ¿Ya finalizó sus estudios? </mat-label>
+      <br />
+      <mat-radio-group
+        required="Debe escoger una opcion"
+        class="modal-content__radio-and-checkbox"
+        [(ngModel)]="status">
+        <mat-radio-button [value]="true" (change)="radioChange($event)">
+          Si
+        </mat-radio-button>
+        <mat-radio-button [value]="false" (change)="radioChange($event)">
+          No
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+    <br />
+    <br />
+    <div class="drag-and-drop-container" *ngIf="status">
+      <span class="title">
+        Agregue el archivo adjunto del titulo de postgrado</span
+      >
+      <br />
+      <mat-card-subtitle>
+        Puede subir hasta cinco archivos <br />Formatos permitidos: .png, .jpeg
+        y .pdf
+      </mat-card-subtitle>
+      <app-file-drag-and-drop-box
+        #postgraduatedStudies></app-file-drag-and-drop-box>
+    </div>
+  </mat-card-content>
+</div>

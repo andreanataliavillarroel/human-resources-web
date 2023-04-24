@@ -1,0 +1,180 @@
+@import "../../../styles/colors";
+
+.main {
+  background-image: url('/assets/images/background-image.png');
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  background-position: bottom;
+  height: 100%;
+
+  &__container{
+    padding-top: 120px;
+    display: flex;
+    align-content: center;
+    justify-content: center; 
+  }
+}
+
+.card {
+  background-color: white;
+  color: $dark-grey;
+  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  display: block;
+  border-radius: 15px;
+  box-shadow: 3px 3px 8px 0px $shadow;
+  border: 1px solid $border;
+  width: 1050px;
+  align-content: flex-start;
+  align-items: flex-start;
+
+
+  &__button {
+    // margin-top: 75px;
+    // padding: 4px;
+    // width: 20%;
+    background-color: $button;
+    color: white;
+  }
+}
+
+
+.mat-step-label {
+  text-size-adjust: 12px;
+}
+.form-content{
+  margin-left: 40px;
+  width: 95%;
+  display: flex;
+
+  &__input{
+    width: 85%;
+    padding-left: 15px ;
+  }
+
+  &__column{
+    width: 50%;
+  }
+
+  &__all{
+    padding-left: 25%;    
+    width: 50%;
+  }
+
+  &__actions{
+    display: flex;
+    justify-content: right;
+    padding-right: 60px;
+ }
+
+}
+
+mat-card-header {
+  width: 100%;
+  display: block;
+  font-weight: bold;
+  padding: 20px 0px;
+}
+
+
+mat-form-field{
+  width: 80%;
+  margin-top: 0.75em;
+}
+
+
+.modal-content{
+  width: 100%;
+  
+  &__input{
+      width: 95%;
+  };
+  &__radio-and-checkbox{
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-around;
+  }
+
+}
+
+.skills-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.skill {
+  display: flex;
+  align-items: center;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  padding: 4px 8px;
+  background-color: #eee;
+  border-radius: 4px;
+}
+
+.skill-icon {
+  margin-right: 4px;
+}
+
+.skill-label {
+  font-size: 14px;
+}
+
+
+.my-form-field {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.my-select {
+  width: 100%;
+  font-size: 16px;
+  color: #333;
+}
+
+
+
+// 
+// 
+// 
+.new-skill-container {
+  display: flex;
+  align-items: center;
+}
+
+.new-skill-container input {
+  flex: 1;
+  margin-left: 8px;
+}
+
+.selected-skills-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.selected-skill {
+  display: flex;
+  align-items: center;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  padding: 4px 8px;
+  background-color: #eee;
+  border-radius: 4px;
+}
+
+.selected-skill-icon {
+  margin-right: 4px;
+}
+
+.selected-skill-label {
+  font-size: 14px;
+}
+.title{
+  font-size: 16px; 
+  color: #171A1FFF;
+}
+
+.drag-and-drop-container{
+  margin-left: 18px;
+}
