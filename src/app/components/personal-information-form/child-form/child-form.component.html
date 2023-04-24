@@ -38,8 +38,8 @@
         {{ node.data.sex }}
       </mat-label>
 
-      <button mat-button (click)="updateNode(node)">Update</button>
-      <button mat-button (click)="deleteNode(node)">Delete</button>
+      <button mat-button (click)="updateNode(node)">Actualizar</button>
+      <button mat-button (click)="deleteNode(node)">Eliminar</button>
     </mat-tree-node>
 
     <mat-tree-node
@@ -60,12 +60,14 @@
           <input
             matInput
             readonly
+            [max]="maxDate"
             [matDatepicker]="datepicker"
-            formControlName="birthdate" />
+            formControlName="birthdate"
+            (click)="datepicker.open()" />
           <mat-datepicker-toggle
             matSuffix
             [for]="datepicker"></mat-datepicker-toggle>
-          <mat-datepicker #datepicker disabled="false"></mat-datepicker>
+          <mat-datepicker #datepicker startView="multi-year"></mat-datepicker>
           <mat-error> Este campo es requerido. </mat-error>
         </mat-form-field>
 
@@ -80,7 +82,9 @@
             Este campo es requerido.
           </mat-error>
         </mat-form-field>
-        <button mat-button type="submit" [disabled]="form.invalid">Save</button>
+        <button mat-button type="submit" [disabled]="form.invalid">
+          Guardar
+        </button>
       </form>
     </mat-tree-node>
 

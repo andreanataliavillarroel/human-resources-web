@@ -1,9 +1,11 @@
 import {
+  IsDate,
   IsEnum,
   IsNotEmpty,
   IsNumber,
   IsOptional,
   IsString,
+  IsUUID,
 } from 'class-validator';
 import { AcademiaDigitalType } from '../enum/academia-digital-type.enum';
 
@@ -14,17 +16,20 @@ export class createAcademiaDigitalProfileDto {
   })
   type!: AcademiaDigitalType;
 
-  @IsOptional()
-  // @IsNotEmpty()
-  @IsNumber()
-  grades!: number;
-
-  @IsOptional()
-  // @IsNotEmpty()
-  @IsString()
-  comment!: string;
-
   @IsNotEmpty()
   @IsNumber()
   status!: number;
+
+  @IsNotEmpty()
+  @IsDate()
+  start_date!: string;
+
+  @IsNotEmpty()
+  @IsDate()
+  end_date!: string;
+
+  @IsNotEmpty()
+  @IsUUID()
+  employee_id!: string;
+
 }

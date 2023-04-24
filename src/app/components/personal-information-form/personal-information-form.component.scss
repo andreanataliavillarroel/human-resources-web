@@ -97,3 +97,76 @@ mat-form-field{
   }
 
 }
+
+.skills-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.skill {
+  display: flex;
+  align-items: center;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  padding: 4px 8px;
+  background-color: #eee;
+  border-radius: 4px;
+}
+
+.skill-icon {
+  margin-right: 4px;
+}
+
+.skill-label {
+  font-size: 14px;
+}
+
+
+.my-form-field {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.my-select {
+  width: 100%;
+  font-size: 16px;
+  color: #333;
+}
+
+
+
+// 
+// 
+// 
+.new-skill-container {
+  display: flex;
+  align-items: center;
+}
+
+.new-skill-container input {
+  flex: 1;
+  margin-left: 8px;
+}
+
+.selected-skills-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.selected-skill {
+  display: flex;
+  align-items: center;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  padding: 4px 8px;
+  background-color: #eee;
+  border-radius: 4px;
+}
+
+.selected-skill-icon {
+  margin-right: 4px;
+}
+
+.selected-skill-label {
+  font-size: 14px;
+}

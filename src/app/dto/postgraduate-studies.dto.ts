@@ -1,9 +1,9 @@
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsString, IsUUID } from 'class-validator';
 
 export class createPostgraduateStudiesDto {
-  // @IsNotEmpty()
-  // @IsNumber()
-  // status!: number;
+  @IsNotEmpty()
+  @IsNumber()
+  status!: number;
 
   @IsNotEmpty()
   @IsString()
@@ -18,5 +18,9 @@ export class createPostgraduateStudiesDto {
   speciality!: string;
 
   @IsString()
-  link_drive!: string;
+  drive_id!: string;
+
+  @IsNotEmpty()
+  @IsUUID()
+  academic_profile_id!: string;
 }

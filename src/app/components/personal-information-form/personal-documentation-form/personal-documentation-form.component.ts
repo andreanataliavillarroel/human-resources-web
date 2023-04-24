@@ -1,13 +1,7 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import {
-  FormGroup,
-  FormBuilder,
-  FormControl,
-  Validators,
-} from '@angular/forms';
+import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DocumentationService } from 'src/app/services/documentation/documentation.service';
-import { EmployeeService } from 'src/app/services/employee/employee.service';
 import { FileDragAndDropBoxComponent } from '../../file-drag-and-drop-box/file-drag-and-drop-box.component';
 import { createPersonalDocumentationDto } from 'src/app/dto/personal-documentation.dto';
 
@@ -16,20 +10,18 @@ import { createPersonalDocumentationDto } from 'src/app/dto/personal-documentati
   templateUrl: './personal-documentation-form.component.html',
   styleUrls: ['./personal-documentation-form.component.scss'],
 })
-export class PersonalDocumentationComponent implements OnInit {
+export class PersonalDocumentationComponent {
   public form!: FormGroup;
   private folderId: string = '';
-  private filesCI!: string;
-  private filesCV!: string;
   public formData = new FormData();
   public nextStep: boolean = false;
   @ViewChild('ciUpload') ci!: FileDragAndDropBoxComponent;
   @ViewChild('cvUpload') cv!: FileDragAndDropBoxComponent;
-  ngOnInit() {}
 
   ngAfterContentChecked() {
     this.cdref.detectChanges();
   }
+
   constructor(
     private snackBar: MatSnackBar,
     private cdref: ChangeDetectorRef,
@@ -46,36 +38,49 @@ export class PersonalDocumentationComponent implements OnInit {
     return this.folderId;
   }
 
-  public async getCIDriveId() {
-    return await this.filesCI;
+  public buildDocumentationPayload(
+    name: string,
+    drive_id: string,
+    employee_id: string
+  ): createPersonalDocumentationDto {
+    let newPersonalDocumentation = new createPersonalDocumentationDto();
+    newPersonalDocumentation.name = name;
+    newPersonalDocumentation.drive_id = drive_id;
+    newPersonalDocumentation.employee_id = employee_id;
+
+    return newPersonalDocumentation;
   }
 
-  public async getCVDriveId() {
-    return await this.filesCV;
-  }
-
-  public getDriveId(ids: string[]) {
-    let driveId = '';
-    for (const id of ids) {
-      driveId.concat(id);
-
-      if (ids.length > 1) {
-        driveId.concat('/');
-      }
-    }
-    return driveId;
-  }
-
-  public async onSubmitData() {
+  public async onSubmitData(employeeId: string) {
     if (this.folderId) {
       this.ci.uploadData();
-      this.filesCI = this.getDriveId(
+      const filesCI = (
         await this.getDataToUpload(this.ci.getFiles())
+      ).toString();
+
+      const ciPayload = this.buildDocumentationPayload(
+        'CI/DNI',
+        filesCI,
+        employeeId
       );
+
       this.cv.uploadData();
-      this.filesCV = this.getDriveId(
+      const filesCV = (
         await this.getDataToUpload(this.cv.getFiles())
+      ).toString();
+
+      const cvPayload = this.buildDocumentationPayload(
+        'CV',
+        filesCV,
+        employeeId
       );
+
+      const promises = [
+        this.onSubmitDocumentationData(ciPayload),
+        this.onSubmitDocumentationData(cvPayload),
+      ];
+
+      await Promise.all(promises);
     } else {
       this.snackBar.open(`No es posible subir los archivos`, 'OK', {
         duration: 5000,
@@ -83,8 +88,23 @@ export class PersonalDocumentationComponent implements OnInit {
     }
   }
 
+  public async onSubmitDocumentationData(
+    documentation: createPersonalDocumentationDto
+  ) {
+    this.documentationService
+      .createPersonalDocumentation(documentation)
+      .subscribe({
+        next: (data: any) => {
+          console.log(data);
+        },
+        error: (data: any) => {
+          console.log(data);
+        },
+      });
+  }
+
   public async getDataToUpload(files: any[]) {
-    let responseList: any[] = [];
+    let responseList: string[] = [];
 
     if (files) {
       for (const file of files) {
@@ -98,23 +118,15 @@ export class PersonalDocumentationComponent implements OnInit {
             .toPromise();
           if (response && response.id) {
             responseList.push(response.id);
-            this.snackBar.open(
-              `El archivo ${file.name} se subio correctamente`,
-              'OK',
-              {
-                duration: 5000,
-              }
-            );
           }
         } catch (error: any) {
           this.snackBar.open(error.error, 'OK', { duration: 5000 });
         }
-
         this.formData.delete('file');
-        this.snackBar.open(`Los archivos se subieron correctamente`, 'OK', {
-          duration: 5000,
-        });
       }
+      this.snackBar.open(`Los archivos se subieron correctamente`, 'OK', {
+        duration: 5000,
+      });
     }
     return responseList;
   }

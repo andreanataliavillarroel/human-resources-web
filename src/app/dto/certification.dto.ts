@@ -10,9 +10,9 @@ export class createCertificationDto {
   description!: string;
 
   @IsString()
-  link_drive!: string;
+  drive_id!: string;
 
-  // @IsNotEmpty()
-  // @IsUUID()
-  // academic_profile_id!: string;
+  @IsNotEmpty()
+  @IsUUID()
+  academic_profile_id!: string;
 }

@@ -15,6 +15,7 @@ import {
 import { createChildDto } from 'src/app/dto/child.dto';
 import { Sex } from 'src/app/enum/gender.enum';
 import { TreeList, ItemFlatNode, ItemNode } from '../tree-list.component';
+import { NAME_REGULAR_EXPRESSION } from 'src/regex';
 
 @Component({
   selector: 'app-child-form',
@@ -28,9 +29,11 @@ export class ChildFormComponent implements OnInit {
 
   public pipe = new DatePipe('en-US');
   public currentDate = this.pipe.transform(Date.now(), 'yyyy-MM-dd');
+  public maxDate = new Date();
 
   public isAddItem: boolean = false;
   public hasChild: boolean = false;
+  public buttonSaveWasClicked: boolean = false;
 
   flatNodeMap = new Map<ItemFlatNode, ItemNode>(); //help to find the nested node to be modified
   nestedNodeMap = new Map<ItemNode, ItemFlatNode>(); // keep the same object for selection
@@ -92,7 +95,10 @@ export class ChildFormComponent implements OnInit {
 
   private buildForm() {
     this.form = this.formBuilder.group({
-      name: new FormControl('', [Validators.required]),
+      name: new FormControl('', [
+        Validators.required,
+        Validators.pattern(NAME_REGULAR_EXPRESSION),
+      ]),
       gender: new FormControl('', [Validators.required]),
       birthdate: new FormControl('', [Validators.required]),
     });
@@ -131,9 +137,14 @@ export class ChildFormComponent implements OnInit {
     return this.hasChild;
   }
 
+  public checkIfButonSaveData() {
+    return this.isAddItem;
+  }
+
   public addNewItem(node: ItemFlatNode) {
     this.buildForm();
     this.isAddItem = true;
+    this.buttonSaveWasClicked = false;
 
     this.treeControl.expand(node);
 
@@ -158,5 +169,8 @@ export class ChildFormComponent implements OnInit {
   }
   public radioChange(event: MatRadioChange) {
     this.hasChild = event.value;
+    if (!this.hasChild) {
+      this.form.reset();
+    }
   }
 }

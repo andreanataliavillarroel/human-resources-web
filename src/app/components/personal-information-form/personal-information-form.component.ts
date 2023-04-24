@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { createEmployeeDto } from 'src/app/dto/employee.dto';
 import { EmployeeService } from 'src/app/services/employee/employee.service';
@@ -14,19 +14,9 @@ import { ChildFormComponent } from './child-form/child-form.component';
 import { PersonalDocumentationComponent } from './personal-documentation-form/personal-documentation-form.component';
 import { DocumentationService } from 'src/app/services/documentation/documentation.service';
 import { createPersonalDocumentationDto } from 'src/app/dto/personal-documentation.dto';
-import { AcademicFormComponent } from '../academic-forms/academic-form.component';
 import { DatePipe } from '@angular/common';
-import {
-  FormGroup,
-  FormControl,
-  Validators,
-  FormBuilder,
-} from '@angular/forms';
-import { AcademiaDigitalType } from 'src/app/enum/academia-digital-type.enum';
-import { AcademicDegree } from 'src/app/enum/academic-degree.enum';
-import { EnglishLevel } from 'src/app/enum/english-level.enum';
-import { FileDragAndDropBoxComponent } from '../file-drag-and-drop-box/file-drag-and-drop-box.component';
-import { createAcademicProfileDto } from 'src/app/dto/academic.profile.dto';
+import { FormBuilder } from '@angular/forms';
+import { PersonalAcademicFormComponent } from '../personal-academic-form/personal-academic-form.component';
 
 @Component({
   selector: 'app-personal-information-form',
@@ -34,13 +24,13 @@ import { createAcademicProfileDto } from 'src/app/dto/academic.profile.dto';
   styleUrls: ['./personal-information-form.component.scss'],
   providers: [TreeList],
 })
-export class PersonalInformationFormComponent implements OnInit {
+export class PersonalInformationFormComponent {
   public employee!: createEmployeeDto;
   public address!: createAddressDto;
   public finantialInformation!: createFinantialInformationDto;
 
-  private employeeId: string = '';
-  private folderId: string = '';
+  public employeeId: string = '';
+  public folderId: string = '';
   public isUploaded: boolean = false;
   public nextPart: boolean = false;
   ciDocumentation: any;
@@ -55,30 +45,12 @@ export class PersonalInformationFormComponent implements OnInit {
   @ViewChild('documentation')
   documentation_form!: PersonalDocumentationComponent;
 
-  // @ViewChild('academic') academic_form!: AcademicFormComponent;
-  public academiaDigitalProfileForm!: FormGroup;
-  public academicProfileForm!: FormGroup;
-  //
-  @ViewChild('certification')
-  certification!: FileDragAndDropBoxComponent;
-
-  @ViewChild('undergraduateStudies')
-  undergraduateCertification!: FileDragAndDropBoxComponent;
-
-  @ViewChild('postgraduatedStudies')
-  postgraduateCertification!: FileDragAndDropBoxComponent;
-
-  public personalDocumentationForm!: FormGroup;
-  public certificationForm!: FormGroup;
-  public underGraduateStudiesForm!: FormGroup;
-  public postGraduateStudiesForm!: FormGroup;
+  @ViewChild('academic', { static: true })
+  academic_form!: PersonalAcademicFormComponent;
 
   public pipe = new DatePipe('en-US');
   public currentDate = this.pipe.transform(Date.now(), 'yyyy-MM-dd');
 
-  public englishOptions = Object.values(EnglishLevel);
-  public academicDegreesOptions = Object.values(AcademicDegree);
-  public academiaDigitalOptions = Object.values(AcademiaDigitalType);
   constructor(
     private formBuilder: FormBuilder,
     private snackBar: MatSnackBar,
@@ -87,21 +59,23 @@ export class PersonalInformationFormComponent implements OnInit {
     private cdref: ChangeDetectorRef
   ) {}
 
-  ngOnInit() {
-    this.buildacademicProfileForm();
-    this.buildacademiaDigitalProfileForm();
-    this.buildcertificationForm();
-    this.buildunderGraduateStudiesForm();
-    this.buildPostGraduateStudies();
+  ngAfterViewInit() {
+    const childComponent = this.academic_form;
+    if (this.employeeId !== '' && this.folderId !== '') {
+      childComponent.employeeId = this.employeeId;
+      childComponent.folderId = this.folderId;
+    }
   }
-
   ngAfterContentChecked() {
     this.cdref.detectChanges();
   }
 
+  public getEmployeeId() {
+    return this.employeeId;
+  }
+
   public async getEmployeeFormData() {
     this.employee = this.employee_form.buildEmployeePayload();
-    await this.createGoogleDriveFolder();
   }
 
   public getContactFormData() {
@@ -117,21 +91,19 @@ export class PersonalInformationFormComponent implements OnInit {
     this.employee.city = this.address.city;
     this.employee.workLocation = this.address.workplace_district;
     this.employee.address = this.address.address;
-
     await this.onSubmitEmployeeData();
+    await this.createGoogleDriveFolder();
   }
 
-  public getFinantialInformationFormData() {
+  public async getFinantialInformationFormData() {
     this.finantialInformation =
       this.finantial_information_form.buildFinantialInformationPayload();
     this.finantialInformation.employee_id = this.employeeId;
 
-    this.onSubmitFinantialInformation();
+    await this.onSubmitFinantialInformation();
   }
 
   public getChildrenFormData() {
-    this.onSubmitDocumentationData(this.ciDocumentation);
-    this.onSubmitDocumentationData(this.cvDocumentation);
     let child: createChildDto;
     if (this.child_form.getChildrenDatabase()) {
       this.child_form.getChildrenDatabase().forEach(childData => {
@@ -151,46 +123,12 @@ export class PersonalInformationFormComponent implements OnInit {
   public async getPersonalDocumentationFormData() {
     try {
       this.documentation_form.setFolderId(this.folderId);
-      await this.documentation_form.onSubmitData();
+      await this.documentation_form.onSubmitData(this.employeeId);
 
-      let ciDriveId: string = await this.documentation_form.getCIDriveId();
-      let cvDriveId: string = await this.documentation_form.getCVDriveId();
-      // if (ciDriveId !== '' && cvDriveId !== '') {
-      //   this.ciDocumentation = this.buildPersonalDocumentationPayload(
-      //     'CI / DNI',
-      //     ciDriveId
-      //   );
-
-      //   this.cvDocumentation = this.buildPersonalDocumentationPayload(
-      //     'CV',
-      //     cvDriveId
-      //   );
-      // } else {
-      this.ciDocumentation = this.buildPersonalDocumentationPayload(
-        'CI / DNI',
-        this.folderId
-      );
-      this.cvDocumentation = this.buildPersonalDocumentationPayload(
-        'CV',
-        this.folderId
-      );
-      // }
       this.isUploaded = true;
     } catch (error) {
       console.error(error);
     }
-  }
-
-  public buildPersonalDocumentationPayload(
-    name: string,
-    drive_id: string
-  ): createPersonalDocumentationDto {
-    let newPersonalDocumentation = new createPersonalDocumentationDto();
-    newPersonalDocumentation.name = name;
-    newPersonalDocumentation.drive_id = drive_id;
-    newPersonalDocumentation.employee_id = this.employeeId;
-
-    return newPersonalDocumentation;
   }
 
   public async onSubmitDocumentationData(
@@ -203,7 +141,7 @@ export class PersonalInformationFormComponent implements OnInit {
           console.log(data);
         },
         error: (data: any) => {
-          this.snackBar.open(data.error.message, 'OK', { duration: 5000 });
+          console.log(data);
         },
       });
   }
@@ -289,111 +227,4 @@ export class PersonalInformationFormComponent implements OnInit {
     this.child_form.form.reset();
     this.nextPart = true;
   }
-  //
-  //
-  //
-
-  public buildacademicProfileFormPayload() {
-    //   contact Table
-    let academicProfile = new createAcademicProfileDto();
-    academicProfile.occupation =
-      this.academicProfileForm.get('occupation')?.value;
-    academicProfile.employee_id = this.employeeId;
-    academicProfile.english_level =
-      this.academicProfileForm.get('english_level')?.value;
-    return academicProfile;
-  }
-
-  private buildacademicProfileForm() {
-    this.academicProfileForm = this.formBuilder.group({
-      occupation: new FormControl('', [Validators.required]),
-      english_level: new FormControl('', [Validators.required]),
-      // highestAcademicDegree: new FormControl('', [Validators.required]), //academicDegrees
-
-      hasAcademiaDigitalProfile: new FormControl('', [Validators.required]), //booleano
-      hasCertifications: new FormControl('', [Validators.required]), //booleano
-    });
-
-    // this.personalDocumentationForm = this.formBuilder.group({});
-  }
-
-  buildacademiaDigitalProfileForm() {
-    this.academiaDigitalProfileForm = this.formBuilder.group({
-      type: new FormControl('', [Validators.required]),
-      grades: new FormControl('', []), // TODO: Ask for academia digital grades?
-      comments: new FormControl('', []), // TODO: Ask for academia digital comments?
-      status: new FormControl('', [Validators.required]), // int
-    });
-  }
-  buildcertificationForm() {
-    this.certificationForm = this.formBuilder.group({
-      name: new FormControl('', [Validators.required]),
-      description: new FormControl('', [Validators.required]),
-    });
-  }
-  buildunderGraduateStudiesForm() {
-    this.underGraduateStudiesForm = this.formBuilder.group({
-      status: new FormControl('', [Validators.required]), // int
-      career: new FormControl('', [Validators.required]),
-      university: new FormControl('', [Validators.required]),
-    });
-  }
-  buildPostGraduateStudies() {
-    this.postGraduateStudiesForm = this.formBuilder.group({
-      name: new FormControl('', [Validators.required]),
-      area: new FormControl('', [Validators.required]),
-      speciality: new FormControl('', [Validators.required]),
-    });
-  }
-  public async onSubmitAcademicProfile() {
-    // await this.employeeService
-    //   .createAddressForEmployee(this.address)
-    //   .subscribe({
-    //     next: () => {
-    //       // this.snackBar.open('Success', 'OK', { duration: 5000 });
-    //     },
-    //     error: (data: any) => {
-    //       this.snackBar.open(data.error.message, 'OK', { duration: 5000 });
-    //     },
-    //   });
-  }
-
-  public async onSubmitAcademiaDigitalData() {
-    // await this.employeeService
-    //   .createAddressForEmployee(this.address)
-    //   .subscribe({
-    //     next: () => {
-    //       // this.snackBar.open('Success', 'OK', { duration: 5000 });
-    //     },
-    //     error: (data: any) => {
-    //       this.snackBar.open(data.error.message, 'OK', { duration: 5000 });
-    //     },
-    //   });
-  }
-
-  public async onSubmitCertificationData() {
-    // await this.employeeService
-    //   .createAddressForEmployee(this.address)
-    //   .subscribe({
-    //     next: () => {
-    //       // this.snackBar.open('Success', 'OK', { duration: 5000 });
-    //     },
-    //     error: (data: any) => {
-    //       this.snackBar.open(data.error.message, 'OK', { duration: 5000 });
-    //     },
-    //   });
-  }
-  public async onSubmitUnderGraduateData() {
-    // await this.employeeService
-    //   .createAddressForEmployee(this.address)
-    //   .subscribe({
-    //     next: () => {
-    //       // this.snackBar.open('Success', 'OK', { duration: 5000 });
-    //     },
-    //     error: (data: any) => {
-    //       this.snackBar.open(data.error.message, 'OK', { duration: 5000 });
-    //     },
-    //   });
-  }
-  public async onSubmitPostGraduateData() {}
 }
