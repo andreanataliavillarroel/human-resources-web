@@ -1,7 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Category } from 'src/app/interfaces/category.model';
-import { Employee } from 'src/app/interfaces/employee.interface';
 import { CategoryService } from 'src/app/services/category/category.service';
 import { EmployeeService } from 'src/app/services/employee/employee.service';
 import { MatTableDataSource } from '@angular/material/table';
@@ -83,7 +82,9 @@ export class EmployeesComponent implements OnInit {
   }
 
   public getCategory(id: number): string {
-    let category = this.categories.find(item => item.id === id);
+    let category = this.categories
+      ? this.categories.find(item => item.id === id)
+      : null;
     return category ? category.name : 'Sin Categoria?';
   }
 
@@ -107,12 +108,6 @@ export class EmployeesComponent implements OnInit {
     const endIndex = startIndex + this.paginator.pageSize;
     return data.slice(startIndex, endIndex);
   }
-
-  // public pageChangeEvent(event: PageEvent) {
-  //   this.pageIndex = event.pageIndex;
-  //   this.pageSize = event.pageSize;
-  //   this.getMatTable(this.employees);
-  // }
 
   public onSearchKeyUp($event: Event) {
     this.target = $event.target as HTMLInputElement;
