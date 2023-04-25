@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -17,14 +17,18 @@ import { AuthenticationService } from 'src/app/services/authentication/authentic
 })
 export class LogInComponent implements OnInit {
   logInForm!: FormGroup;
-  public user!: CreateUserDto;
 
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private authenticationService: AuthenticationService,
-    public snackBar: MatSnackBar
+    public snackBar: MatSnackBar,
+    private cdref: ChangeDetectorRef
   ) {}
+
+  ngAfterContentChecked() {
+    this.cdref.detectChanges();
+  }
 
   ngOnInit(): void {
     this.buildLogInForm();
@@ -43,6 +47,7 @@ export class LogInComponent implements OnInit {
       },
       error: (data: any) => {
         this.snackBar.open(data.error.message, 'OK', { duration: 5000 });
+        this.router.navigate(['/login']);
       },
     });
   }

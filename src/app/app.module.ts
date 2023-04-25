@@ -53,7 +53,6 @@ import { HomeComponent } from './components/home/home.component';
 import { AddressesComponent } from './components/addresses/addresses.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { EmployeeComponent } from './components/employee/employee.component';
-import { DocumentationComponent } from './components/documentation/documentation.component';
 import { PersonalDocumentationComponent } from './components/personal-information-form/personal-documentation-form/personal-documentation-form.component';
 import { FileDragAndDropBoxComponent } from './components/file-drag-and-drop-box/file-drag-and-drop-box.component';
 import { ChartsComponent } from './components/charts/charts.component';
@@ -86,7 +85,6 @@ import { SkillsFormComponent } from './components/personal-academic-form/skills-
     AddressesComponent,
     ProfileComponent,
     EmployeeComponent,
-    DocumentationComponent,
     PersonalDocumentationComponent,
     FileDragAndDropBoxComponent,
     ChartsComponent,

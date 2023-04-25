@@ -98,7 +98,10 @@ export class AddressesComponent implements OnInit {
   }
 
   public getEmployee(id: string): string {
-    let employee = this.employees.find(item => item.id === id);
+    let employee = this.employees
+      ? this.employees.find(item => item.id === id)
+      : null;
+
     return employee
       ? employee.firstName + ' ' + employee.lastName
       : 'Sin Employee?';

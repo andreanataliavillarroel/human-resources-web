@@ -39,6 +39,11 @@ export class ChartsComponent implements OnInit {
             };
           });
 
+        this.employees.sort(
+          (a: any, b: any) =>
+            new Date(a.recruitmentDate).getTime() -
+            new Date(b.recruitmentDate).getTime()
+        );
         this.initAxis(this.employees);
       },
       error: message => {

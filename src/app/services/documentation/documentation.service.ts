@@ -97,13 +97,39 @@ export class DocumentationService {
     );
   }
 
-  public getAcademicProfile(id: string) {
-    let header = new HttpHeaders().set('Type-content', 'application/json');
+  public getAcademicProfileByEmployeeId(id: string) {
     return this.http.get(
-      `${environment.documentationApiUrl}/academic-profile/${id}`,
-      {
-        headers: header,
-      }
+      `${environment.documentationApiUrl}/academic-profile/employee/${id}`
+    );
+  }
+
+  public getAcademiaDigitalProfileByEmployeeId(id: string) {
+    return this.http.get(
+      `${environment.documentationApiUrl}/academia-digital-profile/employee/${id}`
+    );
+  }
+
+  public getCertificationsByAcademicProfile(id: string) {
+    return this.http.get(
+      `${environment.documentationApiUrl}/certification/academic-profile/${id}`
+    );
+  }
+
+  public getUndergraduateStudiesByAcademicProfile(id: string) {
+    return this.http.get(
+      `${environment.documentationApiUrl}/undergraduate-studies/academic-profile/${id}`
+    );
+  }
+
+  public getPostgraduateStudiesByAcademicProfile(id: string) {
+    return this.http.get(
+      `${environment.documentationApiUrl}/postgraduate-studies/academic-profile/${id}`
+    );
+  }
+
+  public getPersonalDocumentationByEmployeeId(id: string) {
+    return this.http.get(
+      `${environment.documentationApiUrl}/documentation/employee/${id}`
     );
   }
 }

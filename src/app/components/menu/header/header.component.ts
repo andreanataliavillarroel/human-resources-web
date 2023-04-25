@@ -32,9 +32,10 @@ export class HeaderComponent implements OnInit {
     this.authenticationService.getUser().subscribe({
       next: (data: any) => {
         this.user = data;
-        this.snackBar.open('Success - Login', 'OK', { duration: 5000 });
+        this.snackBar.open('Success', 'OK', { duration: 5000 });
       },
       error: (errorData: any) => {
+        this.router.navigate(['/login']);
         this.snackBar.open(errorData.error.message, 'OK', { duration: 5000 });
       },
     });

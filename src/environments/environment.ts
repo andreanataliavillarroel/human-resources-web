@@ -8,6 +8,8 @@ export const environment = {
   employeeApiUrl: 'http://localhost:4000',
   categoryApiUrl: 'http://localhost:4005',
   documentationApiUrl: 'http://localhost:4007',
+  googleMapsApiUrl:
+    'https://maps.googleapis.com/maps/api/js?key=AIzaSyDIJE1GemZ63beL0kuctNAE2AaNW676qE0&callback=Function.prototype',
 };
 
 /*

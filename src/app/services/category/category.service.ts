@@ -10,4 +10,8 @@ export class CategoryService {
   public getCategories() {
     return this.http.get(`${environment.categoryApiUrl}/category`);
   }
+
+  public getCategoryById(id: number) {
+    return this.http.get(`${environment.categoryApiUrl}/category/${id}`);
+  }
 }

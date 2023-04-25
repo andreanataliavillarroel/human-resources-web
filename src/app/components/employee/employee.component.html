@@ -8,22 +8,19 @@
     <mat-vertical-stepper [linear]="false" #stepper>
       <mat-step>
         <ng-template matStepLabel> Información personal </ng-template>
-        <!-- <mat-card-header>
-          <mat-card-title>Informacion Personal</mat-card-title>
-        </mat-card-header> -->
         <mat-card-content>
           <mat-grid-list cols="2" rowHeight="50px">
             <mat-grid-tile>
               <div class="content">
                 <mat-icon class="material-icons">account_circle</mat-icon>
-                Nombre: {{ employee.firstName }}
+                Nombre completo: {{ employee.firstName }}
                 {{ employee.lastName }}
               </div>
             </mat-grid-tile>
             <mat-grid-tile>
               <div class="content">
                 <mat-icon class="material-icons">info</mat-icon>
-                CI: {{ employee.dni }}
+                Genero: {{ employee.sex }}
               </div>
             </mat-grid-tile>
 
@@ -35,21 +32,21 @@
             </mat-grid-tile>
             <mat-grid-tile>
               <div class="content">
-                <mat-icon class="material-icons">calendar_today</mat-icon>
-                Cumpleaños: {{ employee.birthdate }}
+                <mat-icon class="material-icons">info</mat-icon>
+                Estado Civil: {{ employee.marital_status }}
               </div>
             </mat-grid-tile>
 
             <mat-grid-tile>
               <div class="content">
                 <mat-icon class="material-icons">info</mat-icon>
-                Genero: {{ employee.sex }}
+                CI: {{ employee.dni }}
               </div>
             </mat-grid-tile>
             <mat-grid-tile>
               <div class="content">
-                <mat-icon class="material-icons">info</mat-icon>
-                Estado Civil: {{ employee.marital_status }}
+                <mat-icon class="material-icons">calendar_today</mat-icon>
+                Cumpleaños: {{ employee.birthdate }}
               </div>
             </mat-grid-tile>
 
@@ -59,6 +56,13 @@
                 Correo: {{ employee.email }}
               </div>
             </mat-grid-tile>
+            <mat-grid-tile>
+              <div class="content">
+                <mat-icon class="material-icons">location_on</mat-icon>
+                Domicilio: {{ employee.address }}
+              </div>
+            </mat-grid-tile>
+
             <mat-grid-tile>
               <div class="content">
                 <mat-icon class="material-icons">phone</mat-icon>
@@ -71,10 +75,19 @@
                 Telefono de Emergencia: {{ employee.emergencyPhone }}
               </div>
             </mat-grid-tile>
+
             <mat-grid-tile>
               <div class="content">
-                <mat-icon class="material-icons">location_on</mat-icon>
-                Domicilio: {{ employee.address }}
+                <mat-icon class="material-icons">info</mat-icon>
+                Fecha de Ingreso: {{ employee.recruitmentDate }}
+              </div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <div class="content">
+                <mat-icon class="material-icons">info</mat-icon>
+                Estado:
+                <label *ngIf="employee.status">Activo</label>
+                <label *ngIf="!employee.status">Inactivo</label>
               </div>
             </mat-grid-tile>
 
@@ -90,53 +103,237 @@
                 Clasificacion: {{ employee.classification }}
               </div>
             </mat-grid-tile>
-
-            <mat-grid-tile>
-              <div class="content">
-                <mat-icon class="material-icons">info</mat-icon>
-                Fecha de Ingreso: {{ employee.recruitmentDate }}
-              </div>
-            </mat-grid-tile>
-            <mat-grid-tile>
-              <div class="content">
-                <mat-icon class="material-icons">info</mat-icon>
-                Estado: Activo
-              </div>
-            </mat-grid-tile>
           </mat-grid-list>
         </mat-card-content>
       </mat-step>
 
-      <!-- <mat-step>
+      <mat-step>
         <ng-template matStepLabel> Información Academica </ng-template>
         <mat-card-content>
-          <mat-grid-list cols="2" rowHeight="50px">
-            <mat-grid-tile>
-              <div class="content">
-                <mat-icon class="material-icons">account_circle</mat-icon>
-                Ocupacion: {{ academicProfile.occupation }}
-              </div>
-            </mat-grid-tile>
-            <mat-grid-tile>
-              <div class="content">
-                <mat-icon class="material-icons">account_circle</mat-icon>
-                Nivel de ingles: {{ academicProfile.english_level }}
-              </div>
-            </mat-grid-tile>
-          </mat-grid-list>
+          <div *ngIf="academicProfile">
+            <mat-grid-list cols="2" rowHeight="50px">
+              <mat-grid-tile>
+                <div class="content">
+                  <mat-icon class="material-icons">account_circle</mat-icon>
+                  Ocupacion: {{ academicProfile.occupation }}
+                </div>
+              </mat-grid-tile>
+              <mat-grid-tile>
+                <div class="content">
+                  <mat-icon class="material-icons">account_circle</mat-icon>
+                  Nivel de ingles: {{ academicProfile.english_level }}
+                </div>
+              </mat-grid-tile>
+            </mat-grid-list>
+          </div>
+          <label *ngIf="!academicProfile">
+            No hay informacion academica disponible</label
+          >
         </mat-card-content>
-      </mat-step> -->
-    </mat-vertical-stepper>
-  </mat-card>
 
-  <mat-card class="profile-card">
-    <mat-card-header>
-      <mat-card-title>Archivos adjuntos</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <iframe
-        class="frame-container"
-        src="https://docs.google.com/viewer?srcid=1yOLZmWFYYvGPjIJz-MYs8SV9n-2nxJqY&pid=explorer&efh=false&a=v&chrome=false&embedded=true"></iframe>
-    </mat-card-content>
+        <mat-card-subtitle>Academia Digital</mat-card-subtitle>
+        <mat-card-content>
+          <div *ngIf="academiaDigitalProfile">
+            <mat-grid-list cols="2" rowHeight="50px">
+              <mat-grid-tile>
+                <div class="content">
+                  <mat-icon class="material-icons">account_circle</mat-icon>
+                  Rol: {{ academiaDigitalProfile.type }}
+                </div>
+              </mat-grid-tile>
+              <mat-grid-tile>
+                <div class="content">
+                  <mat-icon class="material-icons">calendar_today</mat-icon>
+                  Estado:
+                  <label *ngIf="academiaDigitalProfile.status">Activo</label>
+                  <label *ngIf="!academiaDigitalProfile.status">Inactivo</label>
+                </div>
+              </mat-grid-tile>
+              <mat-grid-tile>
+                <div class="content">
+                  <mat-icon class="material-icons">calendar_today</mat-icon>
+                  Fecha de Inicio: {{ academiaDigitalProfile.start_date }}
+                </div>
+              </mat-grid-tile>
+
+              <mat-grid-tile *ngIf="academiaDigitalProfile.end_date">
+                <div class="content">
+                  <mat-icon class="material-icons">calendar_today</mat-icon>
+                  Fecha de Fin: {{ academiaDigitalProfile.end_date }}
+                </div>
+              </mat-grid-tile>
+            </mat-grid-list>
+          </div>
+          <label *ngIf="!academiaDigitalProfile">
+            No hay informacion disponible de Academia Digital
+          </label>
+        </mat-card-content>
+      </mat-step>
+
+      <mat-step>
+        <ng-template matStepLabel> Documentacion Personal </ng-template>
+        <div *ngIf="documentation">
+          <mat-card-content *ngFor="let doc of documentation">
+            <mat-grid-list cols="2" rowHeight="50px">
+              <mat-grid-tile>
+                <div class="content">
+                  <mat-icon class="material-icons">info</mat-icon>
+                  Nombre: {{ doc.name }}
+                </div>
+              </mat-grid-tile>
+
+              <mat-grid-tile>
+                <div class="content">
+                  <mat-icon class="material-icons">calendar_today</mat-icon>
+                  Fecha: {{ doc.date }}
+                </div>
+              </mat-grid-tile>
+            </mat-grid-list>
+
+            <div *ngIf="doc.drive_id.length">
+              <iframe
+                *ngFor="let link of doc.drive_id"
+                [src]="getLink(link)"
+                class="frame-container">
+              </iframe>
+            </div>
+          </mat-card-content>
+        </div>
+        <mat-card-content>
+          <label *ngIf="!documentation">
+            No hay informacion disponible sobre la Documentacion Personal
+          </label>
+        </mat-card-content>
+      </mat-step>
+
+      <mat-step>
+        <ng-template matStepLabel> Certificationes </ng-template>
+        <div *ngIf="certifications">
+          <mat-card-content *ngFor="let certification of certifications">
+            <mat-grid-list cols="2" rowHeight="50px">
+              <mat-grid-tile>
+                <div class="content">
+                  <mat-icon class="material-icons">info</mat-icon>
+                  Nombre: {{ certification.name }}
+                </div>
+              </mat-grid-tile>
+
+              <mat-grid-tile>
+                <div class="content">
+                  <mat-icon class="material-icons">info</mat-icon>
+                  Descripcion: {{ certification.description }}
+                </div>
+              </mat-grid-tile>
+            </mat-grid-list>
+
+            <div *ngIf="certification.drive_id.length">
+              <iframe
+                *ngFor="let link of certification.drive_id"
+                [src]="getLink(link)"
+                class="frame-container">
+              </iframe>
+            </div>
+          </mat-card-content>
+        </div>
+        <mat-card-content>
+          <label *ngIf="!certifications">
+            No hay informacion disponible de Certificaciones
+          </label>
+        </mat-card-content>
+      </mat-step>
+
+      <mat-step>
+        <ng-template matStepLabel> Estudios de Pregrado </ng-template>
+        <div *ngIf="undergraduateStudies">
+          <mat-card-content *ngFor="let studies of undergraduateStudies">
+            <mat-grid-list cols="2" rowHeight="50px">
+              <mat-grid-tile>
+                <div class="content">
+                  <mat-icon class="material-icons">info</mat-icon>
+                  Universidad: {{ studies.university }}
+                </div>
+              </mat-grid-tile>
+
+              <mat-grid-tile>
+                <div class="content">
+                  <mat-icon class="material-icons">info</mat-icon>
+                  Carrera: {{ studies.career }}
+                </div>
+              </mat-grid-tile>
+
+              <mat-grid-tile>
+                <div class="content">
+                  <mat-icon class="material-icons">info</mat-icon>
+                  Estado: {{ studies.status }}
+                </div>
+              </mat-grid-tile>
+            </mat-grid-list>
+
+            <div *ngIf="studies.drive_id.length">
+              <iframe
+                *ngFor="let link of studies.drive_id"
+                [src]="getLink(link)"
+                class="frame-container">
+              </iframe>
+            </div>
+          </mat-card-content>
+        </div>
+        <mat-card-content>
+          <label *ngIf="!undergraduateStudies">
+            No hay informacion disponible para estudios de pregrado
+          </label>
+        </mat-card-content>
+      </mat-step>
+
+      <mat-step>
+        <ng-template matStepLabel> Estudios de Postgrado </ng-template>
+        <div *ngIf="postgraduateStudies">
+          <mat-card-content *ngFor="let studies of postgraduateStudies">
+            <mat-grid-list cols="2" rowHeight="50px">
+              <mat-grid-tile>
+                <div class="content">
+                  <mat-icon class="material-icons">info</mat-icon>
+                  Nombre: {{ studies.name }}
+                </div>
+              </mat-grid-tile>
+
+              <mat-grid-tile>
+                <div class="content">
+                  <mat-icon class="material-icons">info</mat-icon>
+                  Area: {{ studies.area }}
+                </div>
+              </mat-grid-tile>
+
+              <mat-grid-tile>
+                <div class="content">
+                  <mat-icon class="material-icons">info</mat-icon>
+                  Especialidad: {{ studies.speciality }}
+                </div>
+              </mat-grid-tile>
+
+              <mat-grid-tile>
+                <div class="content">
+                  <mat-icon class="material-icons">info</mat-icon>
+                  Estado: {{ studies.status }}
+                </div>
+              </mat-grid-tile>
+            </mat-grid-list>
+
+            <div *ngIf="studies.drive_id.length">
+              <iframe
+                *ngFor="let link of studies.drive_id"
+                [src]="getLink(link)"
+                class="frame-container">
+              </iframe>
+            </div>
+          </mat-card-content>
+        </div>
+        <mat-card-content>
+          <label *ngIf="!postgraduateStudies">
+            No hay informacion disponible para estudios de postgrado
+          </label>
+        </mat-card-content>
+      </mat-step>
+    </mat-vertical-stepper>
   </mat-card>
 </div>

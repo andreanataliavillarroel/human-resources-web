@@ -11,9 +11,7 @@ import { HomeComponent } from './components/home/home.component';
 import { AddressesComponent } from './components/addresses/addresses.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { EmployeeComponent } from './components/employee/employee.component';
-import { DocumentationComponent } from './components/documentation/documentation.component';
 import { ChartsComponent } from './components/charts/charts.component';
-import { PersonalAcademicFormComponent } from './components/personal-academic-form/personal-academic-form.component';
 
 const routes: Routes = [
   {
@@ -64,14 +62,7 @@ const routes: Routes = [
     path: 'form',
     component: PersonalInformationFormComponent,
   },
-  {
-    path: 'academic-profile-form',
-    component: AcademicFormComponent,
-  },
-  {
-    path: 'doc',
-    component: DocumentationComponent,
-  },
+
   {
     path: '**',
     redirectTo: '/',
